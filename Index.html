@@ -1,0 +1,3606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Benditos 2027 — Encontro dos Varões | IBAC</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Benditos 2027 — Encontro dos Varões | IBAC">
+  <meta property="og:description" content="Plataforma oficial de inscrição, presença e carnê digital do Encontro dos Varões.">
+  <meta property="og:image" content="./banner.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --iron: #16191d;
+      --iron-light: #22272e;
+      --bronze: #b87d4b;
+      --bronze-dark: #8f5d32;
+      --bronze-soft: #f7f1eb;
+      --stone: #f4f3ef;
+      --surface: #ffffff;
+      --border: #dcd9d0;
+      --text-main: #1e2229;
+      --text-muted: #5c6370;
+      --green: #1b7a43;
+      --green-bg: #e7f5ed;
+      --crimson: #9e2a2b;
+      --crimson-bg: #fbeaea;
+      --amber: #b45309;
+      --amber-bg: #fef3c7;
+      --blue: #255799;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--stone); color: var(--text-main); }
+
+    /* ================= CABEÇALHO ESPARTANO ================= */
+    .hero-header {
+      background-color: var(--iron);
+      background-image:
+        linear-gradient(to bottom,
+          rgba(22, 25, 29, 0.45) 0%,
+          rgba(22, 25, 29, 0.72) 55%,
+          #16191d 100%),
+        url('./banner.png');
+      background-position: center top;
+      background-size: cover;
+      background-repeat: no-repeat;
+      text-align: center;
+      position: relative;
+      width: 100%;
+      border-bottom: 4px solid var(--bronze);
+      padding: clamp(90px, 16vw, 220px) 20px 36px 20px;
+    }
+
+    .hero-emblem {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--bronze);
+      border: 1px solid rgba(184, 125, 75, 0.45);
+      background: rgba(22, 25, 29, 0.8);
+      padding: 5px 16px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .hero-brand-title {
+      font-family: 'Cinzel', serif;
+      color: #ffffff;
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
+    }
+
+    .hero-brand-title span { color: var(--bronze); }
+
+    .hero-brand-sub {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-date-display {
+      display: inline-block;
+      color: #f8fafc;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(34, 39, 46, 0.85);
+      border: 1px solid rgba(184, 125, 75, 0.5);
+      padding: 7px 20px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+
+    /* Bloco do Versículo Dinâmico */
+    .hero-verse-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: rgba(22, 25, 29, 0.78);
+      border-left: 3px solid var(--bronze);
+      border-right: 3px solid var(--bronze);
+      padding: 14px 20px;
+      border-radius: 6px;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-verse-box p {
+      margin: 0 0 8px 0;
+      font-family: 'Cinzel', serif;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .hero-verse-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-verse-box span {
+      font-size: 12px;
+      color: var(--bronze);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn-refresh-verse {
+      background: transparent;
+      border: 1px solid rgba(184, 125, 75, 0.45);
+      color: #cbd5e1;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-refresh-verse:hover { background: var(--bronze); color: var(--iron); }
+
+    /* Botão Liderança */
+    .btn-lider {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(22, 25, 29, 0.82);
+      color: #f8fafc;
+      border: 1px solid var(--bronze);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.25s;
+      z-index: 10;
+    }
+    .btn-lider:hover { background: var(--bronze); color: var(--iron); }
+
+    /* ================= BARRA PÚBLICA & CONTAGEM ================= */
+    .info-evento-publico {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    .countdown { display: flex; justify-content: center; gap: 12px; margin: 12px 0; }
+    .cd-box {
+      background: var(--iron);
+      color: var(--bronze);
+      padding: 10px 12px;
+      border-radius: 6px;
+      min-width: 64px;
+      border-bottom: 3px solid var(--bronze);
+    }
+    .cd-box span { display: block; font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; }
+    .cd-box small { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; }
+
+    .valor-ingresso { font-size: 18px; color: var(--iron); font-weight: 700; margin-top: 10px; }
+    .sub-valor-ingresso { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+    .public-actions-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
+    /* ================= CONTAINER PRINCIPAL ================= */
+    .container {
+      max-width: 980px;
+      margin: 22px auto 40px auto;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 24px rgba(22, 25, 29, 0.06);
+      overflow: hidden;
+    }
+
+    /* ================= ABAS DE NAVEGAÇÃO DO PAINEL ================= */
+    .admin-tabs-bar {
+      display: flex;
+      background: var(--iron);
+      border-bottom: 2px solid var(--bronze);
+      overflow-x: auto;
+    }
+    .admin-tab-btn {
+      flex: 1;
+      min-width: 140px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 14px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .admin-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.04); }
+    .admin-tab-btn.active { background: var(--bronze); color: var(--iron); }
+
+    .admin-tab-panel { display: none; padding: 22px 20px; background: #faf9f6; }
+    .admin-tab-panel.active { display: block; }
+
+    /* Dashboard */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+
+    .alert-bloqueio {
+      background: var(--crimson-bg);
+      border: 1px solid #f5c2c2;
+      color: var(--crimson);
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 15px 20px 0 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .dash-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--iron-light);
+      color: #fff;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .dash-card {
+      background: var(--surface);
+      padding: 15px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--iron);
+      text-align: center;
+    }
+    .dash-card h4 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--iron); margin: 0; }
+    .dash-card p { font-size: 11px; color: var(--text-muted); margin: 5px 0 0 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+    .dash-card small { display: block; font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+    .dash-card.finance { border-top-color: var(--bronze); background: var(--bronze-soft); }
+    .dash-card.finance h4 { color: var(--bronze-dark); }
+    .dash-card.alert { border-top-color: var(--crimson); }
+    .dash-card.alert h4 { color: var(--crimson); }
+
+    /* Gráficos */
+    .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chart-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-box.bronze-accent { border-top: 3px solid var(--bronze); }
+    .chart-box.iron-accent { border-top: 3px solid var(--iron); }
+
+    .chart-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid #eceae4;
+      padding-bottom: 10px;
+    }
+    .chart-header-bar h5 { margin: 0; color: var(--iron); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    .chart-pill-group { display: inline-flex; background: var(--stone); padding: 3px; border-radius: 6px; border: 1px solid var(--border); gap: 2px; }
+    .chart-pill-btn { border: none; background: transparent; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--text-muted); border-radius: 4px; cursor: pointer; transition: 0.2s; }
+    .chart-pill-btn.active { background: var(--iron); color: var(--bronze); }
+
+    .chart-export-row { display: flex; gap: 8px; margin-top: 14px; border-top: 1px solid #eceae4; padding-top: 12px; }
+    .btn-chart-export { flex: 1; padding: 9px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; cursor: pointer; border: none; color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+    .btn-chart-export.btn-red { background: var(--crimson); }
+    .btn-chart-export.btn-green { background: var(--green); }
+    .canvas-wrapper { position: relative; height: 205px; width: 100%; display: flex; justify-content: center; }
+
+    /* ================= BUSCA, FILTROS E PAGINAÇÃO ================= */
+    .search-filter-box { padding: 18px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+    .search-top-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .search-box-input { flex: 1; min-width: 220px; padding: 12px 14px; border: 2px solid var(--iron); border-radius: 6px; font-size: 14px; margin-bottom: 0; }
+    .page-size-select { width: auto !important; min-width: 130px; padding: 12px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--stone); margin-bottom: 0; font-weight: 600; }
+
+    .filters-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .filters-row select { flex: 1; min-width: 140px; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--stone); margin-bottom: 0; }
+
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: #faf9f6;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .pagination-controls { display: flex; align-items: center; gap: 6px; }
+    .btn-page {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--iron);
+      padding: 7px 13px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-page:hover:not(:disabled) { background: var(--iron); color: var(--bronze); border-color: var(--iron); }
+    .btn-page:disabled { opacity: 0.45; cursor: not-allowed; }
+    .page-indicator { font-weight: 700; color: var(--iron); padding: 0 8px; font-size: 12px; }
+
+    /* ================= LISTA DE PARTICIPANTES ================= */
+    .list { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--iron);
+      border-radius: 6px;
+      transition: 0.2s;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .item.bispo-destaque { border-left-color: var(--bronze); background: #fdfbf7; }
+    .item:hover { border-color: var(--bronze); box-shadow: 0 4px 12px rgba(22, 25, 29, 0.06); }
+
+    .casal-info { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 220px; }
+    .casal-nome { font-weight: 700; font-size: 15px; color: var(--iron); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .badge-dependente-pub {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bronze-soft);
+      color: var(--bronze-dark);
+      border: 1px solid rgba(184, 125, 75, 0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+    .casal-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+
+    /* ================= VISÃO OBJETIVA DE PAGAMENTO & BARRA MOTIVACIONAL ================= */
+    .finance-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .fin-box {
+      background: var(--stone);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .fin-box.paid {
+      background: var(--green-bg);
+      border-color: #86efac;
+    }
+    .fin-box.remaining {
+      background: var(--bronze-soft);
+      border-color: rgba(184, 125, 75, 0.45);
+    }
+    .fin-box span {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .fin-box strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: var(--iron);
+      margin-top: 3px;
+    }
+    .fin-box.paid strong { color: var(--green); }
+    .fin-box.remaining strong { color: var(--bronze-dark); }
+    .fin-box small {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Barra de Progresso */
+    .progress-track { width: 100%; height: 9px; background: #e5e3dc; border-radius: 4px; overflow: hidden; margin-top: 5px; position: relative; }
+    .progress-track.large { height: 24px; margin: 8px 0 10px 0; border-radius: 6px; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--bronze), var(--green)); transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+    .progress-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--iron); text-shadow: 0 0 5px rgba(255,255,255,0.95); }
+
+    /* Banner de Incentivo Dinâmico */
+    .encouragement-banner {
+      background: var(--iron);
+      color: #f8fafc;
+      border-left: 4px solid var(--bronze);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .encouragement-banner strong { color: var(--bronze); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+
+    /* Alerta Inteligente de Prazo (Exibido SOMENTE se atrasado ou próximo do evento) */
+    .deadline-alert-box {
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .deadline-alert-box.overdue {
+      background: var(--crimson-bg);
+      border: 1px solid #f5c2c2;
+      border-left: 4px solid var(--crimson);
+      color: var(--crimson);
+    }
+    .deadline-alert-box.near-event {
+      background: var(--amber-bg);
+      border: 1px solid #fde68a;
+      border-left: 4px solid var(--amber);
+      color: #78350f;
+    }
+    .deadline-ok-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--green);
+      background: var(--green-bg);
+      border: 1px solid #bbf7d0;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* Botão de Impressão Digital / Biometria */
+    .btn-biometric {
+      background: var(--iron-light);
+      color: #f8fafc;
+      border: 1px solid var(--bronze);
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .btn-biometric:hover {
+      background: var(--iron);
+      box-shadow: 0 4px 12px rgba(184, 125, 75, 0.25);
+    }
+    .btn-biometric.active-bio {
+      background: var(--green-bg);
+      color: var(--green);
+      border-color: #86efac;
+    }
+
+    /* Grid das 10 Cotas */
+    .carne-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0; }
+    .cota-card { border: 2px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; background: #fff; cursor: pointer; transition: 0.2s; user-select: none; }
+    .cota-card:hover:not(.pago) { border-color: var(--bronze); }
+    .cota-card.selecionada { border-color: var(--blue); background: #eff6ff; }
+    .cota-card.pago { border-color: #86efac; background: var(--green-bg); cursor: default; }
+    .cota-num { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; }
+    .cota-card.pago .cota-num { color: var(--green); }
+    .cota-card.selecionada .cota-num { color: var(--blue); }
+    .cota-val { font-size: 13.5px; font-weight: 700; color: var(--iron); display: block; margin: 4px 0; }
+    .cota-status { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+    .cota-status.st-pago { background: #dcfce7; color: var(--green); }
+    .cota-status.st-sel { background: #dbeafe; color: var(--blue); }
+    .cota-status.st-pend { background: var(--stone); color: var(--text-muted); }
+    .btn-cota-recibo { margin-top: 5px; background: var(--iron); color: var(--bronze); border: none; border-radius: 4px; padding: 3px 6px; font-size: 10px; font-weight: 700; cursor: pointer; width: 100%; }
+
+    /* Badges & Botões */
+    .badge-metodo { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+    .badge-pix { background: #e0f2fe; color: #0369a1; }
+    .badge-cartao { background: #f3e8ff; color: #6b21a8; }
+    .badge-dinheiro { background: #fef3c7; color: #92400e; }
+    .badge-indefinido { background: var(--stone); color: var(--text-muted); }
+    .badge-previsao { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fdf2f8; color: #be185d; }
+    .badge-atraso { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--crimson-bg); color: var(--crimson); }
+    .badge-em-dia { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--green-bg); color: var(--green); }
+    .badge-codigo { font-size: 10px; font-family: monospace; background: var(--stone); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--iron); }
+
+    .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn-check { display: flex; align-items: center; gap: 8px; background: var(--stone); border: 1px solid var(--border); padding: 7px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--text-muted); transition: 0.2s; min-width: 120px; justify-content: center; }
+    .btn-check.confirmed { background: var(--green-bg); border-color: #86efac; color: var(--green); }
+    .btn-check.confirmed[disabled] { cursor: not-allowed; opacity: 0.92; }
+    .check-box { width: 15px; height: 15px; border: 2px solid currentcolor; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+    .btn-check.confirmed .check-box { background: var(--green); border-color: var(--green); color: white; }
+
+    .btn-pagamento { font-size: 12px; padding: 7px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 5px; min-width: 118px; justify-content: center; }
+    .pago-quitado { background: var(--green-bg); color: var(--green); border: 1px solid #86efac; }
+    .pago-parcial { background: var(--bronze-soft); color: var(--bronze-dark); border: 1px solid rgba(184, 125, 75, 0.5); }
+    .pago-nao { background: var(--stone); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .btn-icon { padding: 8px 11px; border-radius: 6px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-weight: 600; }
+    .btn-zap.ativo { background: #25D366; color: white; }
+    .btn-zap.inativo { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
+    .btn-edit { background: var(--iron); color: var(--bronze); }
+    .btn-trash { background: var(--crimson-bg); color: var(--crimson); }
+    .btn-recibo { background: var(--iron); color: #fff; font-size: 11px; padding: 5px 9px; border-radius: 4px; font-weight: 600; border: none; cursor: pointer; }
+
+    /* Formulários & Modais */
+    input, select, textarea { width: 100%; padding: 11px 12px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; }
+    button.primary-btn { background: var(--iron); color: var(--bronze); padding: 12px 16px; border: 1px solid var(--iron); border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 14px; text-transform: uppercase; letter-spacing: 0.8px; transition: 0.2s; }
+    button.primary-btn:hover { background: var(--iron-light); }
+    button.bronze-btn { background: var(--bronze); color: var(--iron); border-color: var(--bronze); }
+    button.bronze-btn:hover { background: #c98c58; }
+    .btn-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .btn-row > * { flex: 1; margin-bottom: 0; min-width: 130px; }
+
+    .box-dependente { background: var(--bronze-soft); border: 1px solid rgba(184, 125, 75, 0.45); border-radius: 6px; padding: 12px; margin: 10px 0; text-align: left; }
+    .box-sugestao-nome { background: var(--stone); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 8px 0; text-align: left; }
+    .box-sugestao-nome span { font-size: 11px; color: var(--text-muted); }
+    .box-sugestao-nome strong { display: block; color: var(--iron); font-size: 14px; margin: 3px 0 6px 0; }
+
+    .pix-box { background: var(--green-bg); border: 1px dashed #86efac; padding: 14px; border-radius: 6px; margin: 10px 0; text-align: left; }
+    .pix-box strong { color: var(--green); display: block; margin-bottom: 4px; font-size: 13px; }
+    .pix-code { font-family: monospace; background: white; padding: 8px 10px; border-radius: 4px; border: 1px solid var(--border); font-size: 12px; word-break: break-all; display: block; margin-bottom: 8px; }
+
+    .password-wrapper { position: relative; width: 100%; margin-bottom: 10px; }
+    .password-wrapper input { padding-right: 42px; margin-bottom: 0; }
+    .btn-eye { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; display: flex; }
+    .btn-link-esqueci { background: none; border: none; color: var(--blue); font-size: 12px; cursor: pointer; text-decoration: underline; }
+
+    .sync-status { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 4px 10px; border-radius: 4px; background: rgba(27, 122, 67, 0.2); color: #6ee7b7; font-weight: 600; }
+    .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+    .table-lideres { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; background: #fff; border-radius: 6px; overflow: hidden; }
+    .table-lideres th, .table-lideres td { padding: 10px; text-align: left; border-bottom: 1px solid #eceae4; }
+    .badge-cargo { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .badge-alfa-tag { background: var(--bronze-soft); color: var(--bronze-dark); }
+    .badge-analista-tag { background: #e0e7ff; color: #3730a3; }
+    .badge-op-tag { background: var(--stone); color: var(--text-muted); }
+    .badge-bloqueado-tag { background: var(--crimson-bg); color: var(--crimson); }
+
+    .modal { display: none; position: fixed; inset: 0; background: rgba(22, 25, 29, 0.85); align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--surface); padding: 24px; border-radius: 8px; border-top: 4px solid var(--bronze); width: 100%; max-width: 550px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+    .modal-content h3 { font-family: 'Cinzel', serif; color: var(--iron); margin-top: 0; font-size: 20px; }
+    .btn-close { background: var(--stone); color: var(--iron); width: 100%; padding: 11px; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; margin-top: 10px; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .hero-header { padding: 72px 14px 26px 14px; }
+      .btn-lider { top: 10px; right: 10px; padding: 6px 11px; font-size: 11px; }
+      .container { margin: 12px 10px 30px 10px; }
+      input, select, textarea, .search-box-input { font-size: 16px !important; }
+      .public-actions-bar { flex-direction: column; }
+      .public-actions-bar .primary-btn { max-width: 100% !important; }
+      .dash-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-grid .dash-card:last-child { grid-column: span 2; }
+      .charts-container { grid-template-columns: 1fr; }
+      .finance-summary-grid { grid-template-columns: 1fr; gap: 6px; }
+      .carne-grid { grid-template-columns: repeat(2, 1fr); }
+      .item { flex-direction: column; align-items: stretch; }
+      .actions { width: 100%; }
+      .actions .btn-check { width: 100%; }
+      .actions .btn-pagamento { flex: 2; }
+      .actions .btn-icon { flex: 1; }
+      .table-lideres { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cabeçalho Espartano -->
+<div class="hero-header">
+  <button class="btn-lider" onclick="abrirLogin()">🔒 Liderança</button>
+
+  <div class="hero-emblem" id="hero-emblem-tag">⚔️ FORJADOS NA PALAVRA • IBAC</div>
+  <h1 class="hero-brand-title" id="hero-title-display">BENDITOS <span>2027</span></h1>
+  <div class="hero-brand-sub" id="hero-sub-display">Encontro dos Varões</div>
+  <div id="hero-data-evento" class="hero-date-display"></div>
+
+  <div class="hero-verse-box">
+    <p id="hero-verse-txt"></p>
+    <div class="hero-verse-footer">
+      <span id="hero-verse-ref"></span>
+      <button type="button" class="btn-refresh-verse" onclick="sortearVersiculoEncorajamento(true)">🔄 Nova Palavra</button>
+    </div>
+  </div>
+</div>
+
+<!-- Área Pública de Informações -->
+<div class="info-evento-publico" id="info-evento-area">
+  <div>
+    <h3 style="margin: 0 0 4px 0; color: var(--iron); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Contagem Regressiva</h3>
+    <div class="countdown" id="countdown-timer">
+      <div class="cd-box"><span id="cd-dias">00</span><small>Dias</small></div>
+      <div class="cd-box"><span id="cd-horas">00</span><small>Horas</small></div>
+      <div class="cd-box"><span id="cd-min">00</span><small>Min</small></div>
+    </div>
+  </div>
+  <div class="valor-ingresso" id="display-valor-publico">Investimento por Pessoa: R$ 200,00</div>
+  <div class="sub-valor-ingresso" id="display-parcela-publico">Plano Mensal: 10 cotas de R$ 20,00 por pessoa (pode incluir dependente no cadastro)</div>
+  
+  <div class="public-actions-bar">
+    <button class="primary-btn bronze-btn" style="max-width: 270px;" onclick="abrirAutoCadastro()">+ Fazer Minha Inscrição</button>
+    <button class="primary-btn" style="max-width: 270px;" onclick="abrirModalAutoAtualizacao()">💳 Meu Carnê / Pagamentos</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PAINEL ADMINISTRATIVO PAGINADO POR ABAS -->
+  <div class="dashboard" id="dashboard-panel">
+    <div class="dash-header-top">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <h2 style="margin:0; font-family:'Cinzel', serif; font-size:18px; color:var(--bronze);">⚔️ Comando Administrativo</h2>
+        <div class="sync-status"><div class="sync-dot"></div> Nuvem Ativa</div>
+      </div>
+      <span id="badge-cargo-painel" style="display:none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;"></span>
+    </div>
+
+    <div id="alerta-bloqueio-container" style="display:none;" class="alert-bloqueio">
+      <div>
+        <strong>⚠️ ALERTA DE SEGURANÇA:</strong>
+        <span id="alerta-bloqueio-texto"></span>
+      </div>
+      <small style="font-weight:600;">(Líderes desbloqueiam | Analistas redefinem senha)</small>
+    </div>
+
+    <!-- Navegação por Abas do Admin -->
+    <div class="admin-tabs-bar">
+      <button class="admin-tab-btn active" onclick="trocarAbaAdmin('tab-visao', this)">📊 Visão Geral & Gráficos</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Participante</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição, Prazos & Ano</button>
+      <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança & Acessos</button>
+    </div>
+
+    <!-- ABA 1: VISÃO GERAL -->
+    <div class="admin-tab-panel active" id="tab-visao">
+      <div class="dash-grid">
+        <div class="dash-card">
+          <h4 id="dash-pessoas-fisicas">0</h4>
+          <p>Pessoas (Físico)</p>
+          <small id="dash-titulares-sub">0 titulares + 0 dep.</small>
+        </div>
+        <div class="dash-card">
+          <h4 id="dash-ok" style="color:var(--green)">0</h4>
+          <p>Confirmados</p>
+          <small>Contagem física</small>
+        </div>
+        <div class="dash-card finance">
+          <h4 id="dash-pagos">0</h4>
+          <p>Carnês Quitados</p>
+          <small>100% concluídos</small>
+        </div>
+        <div class="dash-card finance">
+          <h4 id="dash-valor">R$ 0</h4>
+          <p>Arrecadado</p>
+          <small id="dash-meta-sub">Meta: R$ 0</small>
+        </div>
+        <div class="dash-card alert">
+          <h4 id="dash-falta">R$ 0</h4>
+          <p>Falta Arrecadar</p>
+          <small>Saldo pendente</small>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-box iron-accent">
+          <div class="chart-header-bar">
+            <h5>Presença Física</h5>
+            <div class="chart-pill-group" id="group-presenca">
+              <button class="chart-pill-btn active" onclick="alterarTipoVisual('presenca', 'doughnut', this)">Círculo</button>
+              <button class="chart-pill-btn" onclick="alterarTipoVisual('presenca', 'pie', this)">Pizza</button>
+              <button class="chart-pill-btn" onclick="alterarTipoVisual('presenca', 'bar', this)">Barras</button>
+            </div>
+          </div>
+          <div class="canvas-wrapper"><canvas id="graficoPresenca"></canvas></div>
+          <div class="chart-export-row">
+            <button class="btn-chart-export btn-red" onclick="exportarRelatorioPDF('presenca')">📄 Participantes - PDF</button>
+            <button class="btn-chart-export btn-green" onclick="exportarCSVModulo('presenca')">📊 Participantes - EXCEL</button>
+          </div>
+        </div>
+
+        <div class="chart-box bronze-accent">
+          <div class="chart-header-bar">
+            <h5 style="color: var(--bronze-dark);">Arrecadação & Cotas</h5>
+            <div class="chart-pill-group" id="group-financas">
+              <button class="chart-pill-btn active" onclick="alterarTipoVisual('financas', 'doughnut', this)">Status</button>
+              <button class="chart-pill-btn" onclick="alterarTipoVisual('financas', 'bar', this)">Por Cota (1-10)</button>
+              <button class="chart-pill-btn" onclick="alterarTipoVisual('financas', 'pie', this)">Pizza</button>
+            </div>
+          </div>
+          <div class="canvas-wrapper"><canvas id="graficoFinanceiro"></canvas></div>
+          <div class="chart-export-row">
+            <button class="btn-chart-export btn-red" onclick="exportarRelatorioPDF('financeiro')">📄 Financeiro - PDF</button>
+            <button class="btn-chart-export btn-green" onclick="exportarCSVModulo('financeiro')">📊 Financeiro - EXCEL</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 2: ADICIONAR / IMPORTAR -->
+    <div class="admin-tab-panel" id="tab-cadastrar">
+      <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Varão (com ou sem Dependente)</h4>
+      <input type="text" id="add-nome" placeholder="Nome Completo do Titular (Ex: JOÃO CARLOS DA SILVA)">
+      <div class="btn-row">
+        <input type="text" id="add-tel1" placeholder="WhatsApp Principal (Com DDD)">
+        <input type="text" id="add-tel2" placeholder="Telefone Secundário (Opcional)">
+      </div>
+
+      <div class="btn-row">
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Prazo / Previsão estipulada para pagamento (Opcional):</label>
+          <input type="date" id="add-previsao">
+        </div>
+      </div>
+
+      <div class="box-dependente">
+        <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
+          <input type="checkbox" id="add-tem-dep" onchange="toggleCamposDependente('add')" style="width:auto; margin:0;">
+          Incluir Dependente / Acompanhante sob responsabilidade deste titular (Filho, Irmão, Pai)
+        </label>
+        <div id="add-dep-campos" style="display:none; margin-top:10px;">
+          <div class="btn-row">
+            <input type="text" id="add-dep-nome" placeholder="Nome Completo do Dependente">
+            <select id="add-dep-parentesco">
+              <option value="Filho">Filho</option>
+              <option value="Irmão">Irmão</option>
+              <option value="Pai">Pai</option>
+              <option value="Sobrinho">Sobrinho</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top: 12px;">
+        <button class="primary-btn bronze-btn" onclick="adicionarVaraoAdmin()">Salvar Inscrição</button>
+        <input type="file" id="file-import" accept=".csv" style="display:none" onchange="processarImportacaoCSV(event)">
+        <button class="primary-btn" onclick="document.getElementById('file-import').click()">📥 Importar Planilha (CSV)</button>
+      </div>
+    </div>
+
+    <!-- ABA 3: CONFIGURAÇÕES E REAPROVEITAMENTO ANUAL -->
+    <div class="admin-tab-panel" id="tab-config">
+      <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Prazos & Reaproveitamento Anual</h4>
+      <div class="btn-row">
+        <div style="flex: 2;">
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Nome do Evento:</label>
+          <input type="text" id="config-titulo" placeholder="Ex: BENDITOS">
+        </div>
+        <div style="flex: 1;">
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Ano da Edição:</label>
+          <input type="number" id="config-ano" min="2025" max="2099" placeholder="2027">
+        </div>
+        <div style="flex: 2;">
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Subtítulo / Igreja:</label>
+          <input type="text" id="config-subtitulo" placeholder="Ex: Encontro dos Varões • IBAC">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Data e Hora do Evento:</label>
+          <input type="datetime-local" id="config-data">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:700; color: var(--bronze-dark);">📅 Prazo Final para Quitação (Liderança):</label>
+          <input type="date" id="config-data-limite" title="Data máxima estipulada pela liderança para concluir os pagamentos">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Valor por Pessoa (R$):</label>
+          <input type="number" id="config-valor" step="0.01">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Cotas Mensais:</label>
+          <input type="number" id="config-cotas" min="1" max="24" step="1">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Chave Pix Oficial:</label>
+          <input type="text" id="config-pix" placeholder="E-mail, CNPJ, Celular ou Aleatória">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Titular da Conta Pix:</label>
+          <input type="text" id="config-titular-pix" placeholder="Ex: IBAC">
+        </div>
+      </div>
+
+      <div>
+        <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Dados Bancários (Opcional):</label>
+        <input type="text" id="config-info-bancaria" placeholder="Banco | Agência | Conta | Favorecido">
+      </div>
+
+      <div style="background: var(--stone); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 10px;">
+        <label style="font-size: 12px; font-weight:700; color: var(--iron); display:block; margin-bottom:6px;">Modo do Versículo Bíblico no Topo:</label>
+        <select id="config-modo-versiculo" onchange="alternarCampoVersiculoFixo()" style="margin-bottom:8px;">
+          <option value="aleatorio">Aleatório a cada abertura da página (12 versículos de encorajamento)</option>
+          <option value="fixo">Fixar um versículo específico abaixo</option>
+        </select>
+        <div id="box-versiculo-fixo" style="display:none;">
+          <textarea id="config-versiculo-texto" rows="2" placeholder="Texto do versículo..."></textarea>
+          <input type="text" id="config-versiculo-ref" placeholder="Referência (Ex: Josué 1:9)" style="margin-bottom:0;">
+        </div>
+      </div>
+
+      <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Mensagem Padrão WhatsApp — Tags: <code>{nome}</code>, <code>{evento}</code>, <code>{ano}</code>, <code>{pagas}</code>, <code>{total_cotas}</code>, <code>{pago_valor}</code>, <code>{restante}</code>, <code>{codigo}</code>:</label>
+      <textarea id="msg-padrao" rows="4"></textarea>
+
+      <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Configurações da Edição</button>
+
+      <div id="zona-nova-edicao" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson);">
+        <p style="font-size:12px; color:var(--crimson); margin:0 0 8px 0; font-weight:700;">⚠️ Zona de Transição de Ano (Exclusivo Líder Alfa / Analista):</p>
+        <button type="button" class="primary-btn" style="background:var(--crimson); border-color:var(--crimson); color:#fff;" onclick="iniciarNovaEdicaoAnual()">🔄 Iniciar Novo Ano (Limpar Inscritos e Manter Apenas Bispo Jader)</button>
+      </div>
+    </div>
+
+    <!-- ABA 4: CONTROLE DE ACESSOS -->
+    <div class="admin-tab-panel" id="tab-alfa">
+      <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Perfil de Liderança</h4>
+      <div class="btn-row">
+        <input type="text" id="novo-lider-nome" placeholder="Nome">
+        <div class="password-wrapper">
+          <input type="password" id="novo-lider-senha" placeholder="Senha Padrão">
+          <button type="button" class="btn-eye" onclick="toggleMostrarSenha('novo-lider-senha', this)">👁️</button>
+        </div>
+        <select id="novo-lider-cargo">
+          <option value="Líder Operacional">Líder Operacional</option>
+          <option value="Líder Alfa">Líder Alfa (Administrador Total)</option>
+          <option value="Analista">Analista (Acesso Técnico & Total)</option>
+        </select>
+      </div>
+      <button class="primary-btn" onclick="cadastrarLider()">Cadastrar Usuário</button>
+
+      <h4 style="margin: 22px 0 8px 0; font-size: 14px; color: var(--iron);">Usuários Cadastrados:</h4>
+      <table class="table-lideres">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Função</th>
+            <th>Status</th>
+            <th style="text-align: right;">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-lideres-corpo"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BUSCA, FILTROS E PAGINAÇÃO -->
+  <div class="search-filter-box" id="area-filtros">
+    <div class="search-top-row">
+      <input type="text" id="busca-input-geral" class="search-box-input" placeholder="🔍 Buscar participante ou dependente na lista..." onkeyup="irParaPagina(1)">
+      <select id="itens-por-pagina" class="page-size-select" onchange="irParaPagina(1)">
+        <option value="10">10 por página</option>
+        <option value="20" selected>20 por página</option>
+        <option value="50">50 por página</option>
+      </select>
+    </div>
+
+    <div class="filters-row" id="filtros-lideranca" style="display: none;">
+      <select id="filtro-presenca" onchange="irParaPagina(1)">
+        <option value="todos">Presença: Todos</option>
+        <option value="confirmados">Somente Confirmados</option>
+        <option value="pendentes">Somente Pendentes</option>
+      </select>
+      <select id="filtro-pagamento" onchange="irParaPagina(1)">
+        <option value="todos">Cotas: Todos</option>
+        <option value="quitados">Quitados (100%)</option>
+        <option value="andamento">Em Andamento</option>
+        <option value="nao-iniciados">Não Iniciados (0%)</option>
+      </select>
+      <select id="filtro-prazo" onchange="irParaPagina(1)">
+        <option value="todos">Prazos: Todos</option>
+        <option value="atraso">⚠️ Em Atraso / Alerta</option>
+        <option value="no-prazo">✅ No Prazo / Quitado</option>
+      </select>
+      <select id="filtro-dependente" onchange="irParaPagina(1)">
+        <option value="todos">Tipo: Todos</option>
+        <option value="com-dep">Com Dependente (2 pessoas)</option>
+        <option value="sem-dep">Individual (1 pessoa)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- LISTA PAGINADA -->
+  <div id="area-exportacao">
+    <div class="list" id="lista-varoes"></div>
+  </div>
+
+  <!-- BARRA DE PAGINAÇÃO -->
+  <div class="pagination-bar" id="pagination-bar">
+    <span id="pagination-info">Exibindo 0 de 0</span>
+    <div class="pagination-controls">
+      <button type="button" class="btn-page" id="btn-prev-page" onclick="mudarPagina(-1)">← Anterior</button>
+      <span class="page-indicator" id="page-indicator">Página 1 de 1</span>
+      <button type="button" class="btn-page" id="btn-next-page" onclick="mudarPagina(1)">Próxima →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Login Liderança -->
+<div class="modal" id="modal-login">
+  <div class="modal-content" style="max-width: 420px;">
+    <h3>Acesso da Liderança</h3>
+    <select id="select-lider"></select>
+    <div class="password-wrapper">
+      <input type="password" id="senha-input" placeholder="Digite sua Senha">
+      <button type="button" class="btn-eye" onclick="toggleMostrarSenha('senha-input', this)">👁️</button>
+    </div>
+    <div style="text-align: right; margin-bottom: 14px;">
+      <button type="button" class="btn-link-esqueci" onclick="solicitarRecuperacaoSenha()">Esqueci minha senha</button>
+    </div>
+    <button class="primary-btn bronze-btn" onclick="fazerLogin()">Entrar</button>
+    <button class="btn-close" onclick="fecharModal('modal-login')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Primeiro Acesso Liderança -->
+<div class="modal" id="modal-primeiro-acesso">
+  <div class="modal-content" style="max-width: 420px;">
+    <h3>🔐 Primeiro Acesso</h3>
+    <p style="font-size: 13px; color: var(--text-muted);">
+      Olá, <strong id="primeiro-acesso-nome" style="color:var(--iron);"></strong>!<br>
+      Defina sua senha pessoal definitiva para continuar.
+    </p>
+    <div class="password-wrapper">
+      <input type="password" id="primeiro-acesso-nova-senha" placeholder="Nova Senha (mínimo 4 dígitos)">
+      <button type="button" class="btn-eye" onclick="toggleMostrarSenha('primeiro-acesso-nova-senha', this)">👁️</button>
+    </div>
+    <div class="password-wrapper">
+      <input type="password" id="primeiro-acesso-confirma-senha" placeholder="Confirme a Nova Senha">
+      <button type="button" class="btn-eye" onclick="toggleMostrarSenha('primeiro-acesso-confirma-senha', this)">👁️</button>
+    </div>
+    <button class="primary-btn bronze-btn" onclick="salvarSenhaPrimeiroAcesso()">Gravar Senha e Entrar</button>
+    <button class="btn-close" onclick="cancelarPrimeiroAcesso()">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Redefinir Senha Liderança -->
+<div class="modal" id="modal-redefinir-senha">
+  <div class="modal-content" style="max-width: 420px;">
+    <h3>🔑 Redefinir Senha</h3>
+    <p id="txt-redefinir-lider" style="font-weight: 700; color: var(--iron);"></p>
+    <input type="hidden" id="redefinir-lider-nome">
+    <div class="password-wrapper">
+      <input type="password" id="nova-senha-input" placeholder="Nova senha">
+      <button type="button" class="btn-eye" onclick="toggleMostrarSenha('nova-senha-input', this)">👁️</button>
+    </div>
+    <button class="primary-btn bronze-btn" onclick="confirmarRedefinicaoSenha()">Salvar & Desbloquear</button>
+    <button class="btn-close" onclick="fecharModal('modal-redefinir-senha')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Auto Cadastro Público -->
+<div class="modal" id="modal-auto-cadastro">
+  <div class="modal-content">
+    <h3 id="modal-cadastro-titulo">Nova Inscrição</h3>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Informe seus dados. Você pode definir sua senha pessoal de 4 dígitos e optar por incluir um dependente.</p>
+    
+    <input type="text" id="reg-nome1" placeholder="Seu Nome Completo (Responsável)" oninput="atualizarSugestaoNome('reg')">
+    
+    <div class="box-sugestao-nome" id="reg-box-sugestao" style="display:none;">
+      <span>Exibição na lista pública:</span>
+      <strong id="reg-txt-sugestao"></strong>
+      <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+        <input type="checkbox" id="reg-check-concorda" checked onchange="alternarCampoCustomNome('reg')" style="width:auto; margin:0;">
+        Concordo com esta exibição
+      </label>
+      <div id="reg-custom-container" style="display:none; margin-top:8px;">
+        <input type="text" id="reg-nome-custom" placeholder="Como deseja aparecer na lista?" style="margin-bottom:0;">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <input type="text" id="reg-tel1" placeholder="Seu WhatsApp (Com DDD)">
+      <input type="text" id="reg-tel2" placeholder="Telefone Secundário (Opcional)">
+    </div>
+
+    <div style="text-align:left; background:var(--stone); padding:10px 12px; border-radius:6px; border:1px solid var(--border); margin-bottom:10px;">
+      <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">🔑 Sua Senha Pessoal de Acesso (4 dígitos):</label>
+      <input type="text" id="reg-senha-pin" maxlength="4" inputmode="numeric" pattern="\d{4}" placeholder="Digite 4 números de sua preferência (ou deixe vazio para gerar)" style="margin-bottom:4px; font-family:monospace; letter-spacing:3px; font-weight:700;">
+      <small style="font-size:11px; color:var(--text-muted); display:block;">Você poderá alterar essa senha ou ativar sua Impressão Digital logo após concluir.</small>
+    </div>
+
+    <!-- OPÇÃO DE DEPENDENTE (FILHO / IRMÃO) -->
+    <div class="box-dependente">
+      <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
+        <input type="checkbox" id="reg-tem-dep" onchange="toggleCamposDependente('reg'); atualizarResumoCadastro();" style="width:auto; margin:0;">
+        Cadastrar também um Filho, Irmão ou Acompanhante (Serei o responsável pelo pagamento dele)
+      </label>
+      <div id="reg-dep-campos" style="display:none; margin-top:10px;">
+        <input type="text" id="reg-dep-nome" placeholder="Nome Completo do Dependente (Ex: LUCAS SILVA)">
+        <select id="reg-dep-parentesco" style="margin-bottom:4px;">
+          <option value="Filho">Vínculo: Filho</option>
+          <option value="Irmão">Vínculo: Irmão</option>
+          <option value="Pai">Vínculo: Pai</option>
+          <option value="Sobrinho">Vínculo: Sobrinho</option>
+          <option value="Outro">Vínculo: Outro Acompanhante</option>
+        </select>
+        <small style="font-size:11px; color:var(--bronze-dark); display:block;">
+          * Contará <strong>2 pessoas</strong> no evento e seu carnê mensal somará as 2 cotas automaticamente.
+        </small>
+      </div>
+    </div>
+    
+    <div style="text-align:left; margin: 8px 0 4px 0;">
+      <label style="font-size:12px; font-weight:700; color:var(--iron);">📅 Prazo / Previsão que você estipula para pagar a próxima cota:</label>
+      <input type="date" id="reg-data-previsao">
+    </div>
+
+    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin: 4px 0;">Deseja pagar alguma cota agora?</label>
+    <select id="reg-qtd-cotas-iniciais" onchange="atualizarResumoCadastro()">
+      <option value="0">Não agora (Gerar carnê e pagar depois)</option>
+      <option value="1">Sim — Pagar 1ª Cota Mensal</option>
+      <option value="2">Sim — Pagar 2 Cotas Mensais</option>
+      <option value="3">Sim — Pagar 3 Cotas Mensais</option>
+      <option value="5">Sim — Pagar 5 Cotas Mensais</option>
+      <option value="10">Sim — Quitar Evento Completo (100%)</option>
+    </select>
+
+    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin: 4px 0;">Forma de pagamento preferida:</label>
+    <select id="reg-forma-pagamento" onchange="alternarBoxPix('reg')">
+      <option value="indefinido">Ainda não sei (Definir depois)</option>
+      <option value="pix">Pix</option>
+      <option value="cartao">Cartão de Crédito/Débito</option>
+      <option value="dinheiro">Dinheiro</option>
+    </select>
+
+    <div id="reg-box-pix" class="pix-box" style="display:none;">
+      <strong>Dados para Pagamento Pix:</strong>
+      <span id="reg-valor-pix-pagar" style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;"></span>
+      <span style="font-size:11px; color:var(--text-muted);" id="reg-pix-titular"></span>
+      <div class="pix-code" id="reg-pix-chave"></div>
+      <div id="reg-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
+      <button type="button" class="primary-btn" style="padding:7px; font-size:12px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPix()">📋 Copiar Chave Pix</button>
+      
+      <div id="reg-upload-wrapper" style="display:none;">
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-top:10px;">Anexar Comprovante do Pix:</label>
+        <input type="file" id="reg-comprovante-file" accept="image/*,.pdf" style="margin-bottom:0;">
+      </div>
+    </div>
+
+    <button class="primary-btn bronze-btn" id="btn-salvar-cadastro" style="margin-top:14px;" onclick="salvarAutoCadastro()">Concluir Inscrição</button>
+    <button class="btn-close" onclick="fecharModal('modal-auto-cadastro')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Pós-Cadastro (Trocar Senha de 4 Dígitos + Ativar Impressão Digital) -->
+<div class="modal" id="modal-pos-cadastro">
+  <div class="modal-content" style="max-width: 450px;">
+    <h3>✅ Inscrição Concluída!</h3>
+    <p id="pos-cad-nome" style="font-weight:700; color:var(--iron); margin-bottom:6px;"></p>
+    <div style="background:var(--bronze-soft); border:1px solid var(--bronze); border-radius:6px; padding:12px; margin:10px 0;">
+      <span style="font-size:11px; color:var(--bronze-dark); font-weight:700; text-transform:uppercase;">Sua Senha de Acesso Atual</span>
+      <strong id="pos-cad-codigo" style="display:block; font-family:monospace; font-size:28px; color:var(--iron); letter-spacing:6px; margin-top:4px;">0000</strong>
+    </div>
+    <input type="hidden" id="pos-cad-id">
+
+    <div style="text-align:left; background:var(--stone); padding:12px; border-radius:6px; border:1px solid var(--border); margin:12px 0;">
+      <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:6px;">🔑 Quer personalizar sua senha de 4 dígitos agora?</label>
+      <div class="btn-row" style="margin-bottom:0;">
+        <input type="text" id="pos-cad-nova-senha" maxlength="4" inputmode="numeric" placeholder="Nova senha (4 dígitos)" style="font-family:monospace; letter-spacing:3px; font-weight:700;">
+        <button type="button" class="primary-btn" style="width:auto; padding:10px 14px; font-size:12px;" onclick="alterarPinPosCadastro()">Salvar Senha</button>
+      </div>
+    </div>
+
+    <button type="button" class="btn-biometric" id="btn-ativar-bio-pos" onclick="registrarBiometriaDispositivo(document.getElementById('pos-cad-id').value)">
+      👆 Ativar Impressão Digital neste Aparelho
+    </button>
+
+    <button type="button" class="primary-btn bronze-btn" style="margin-top:12px;" onclick="irParaCarneAposCadastro()">💳 Abrir Meu Carnê Digital</button>
+    <button type="button" class="btn-close" onclick="fecharModal('modal-pos-cadastro')">Concluir e Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: Confirmação de Presença na Lista Pública -->
+<div class="modal" id="modal-confirmar">
+  <div class="modal-content">
+    <h3>Confirmar Presença</h3>
+    <p id="texto-confirmar" style="font-size: 13px; color: var(--text-muted);"></p>
+    <input type="hidden" id="casal-id-confirmar">
+    
+    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:3px;">Seu Nome Completo:</label>
+    <input type="text" id="valida-nome1" placeholder="Digite seu nome completo" oninput="atualizarSugestaoNome('valida')">
+
+    <div class="box-sugestao-nome" id="valida-box-sugestao" style="display:none;">
+      <span>Exibição na lista principal:</span>
+      <strong id="valida-txt-sugestao"></strong>
+      <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+        <input type="checkbox" id="valida-check-concorda" checked onchange="alternarCampoCustomNome('valida')" style="width:auto; margin:0;">
+        Concordo com esta exibição
+      </label>
+      <div id="valida-custom-container" style="display:none; margin-top:8px;">
+        <input type="text" id="valida-nome-custom" placeholder="Digite como deseja aparecer" style="margin-bottom:0;">
+      </div>
+    </div>
+
+    <input type="text" id="valida-tel1" placeholder="Seu WhatsApp (Com DDD)">
+    <input type="text" id="valida-tel2" placeholder="Telefone Secundário (Opcional)">
+
+    <button class="primary-btn" style="background: var(--green); border-color: var(--green); color: white; margin-top:10px;" onclick="salvarConfirmacaoMembro()">✅ Confirmar Presença</button>
+    <button class="btn-close" onclick="fecharModal('modal-confirmar')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Carnê Digital Privado do Participante -->
+<div class="modal" id="modal-auto-atualizacao">
+  <div class="modal-content" style="max-width: 610px;">
+    <h3>💳 Meu Carnê Digital</h3>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Acesso privado para controle das suas cotas mensais e comprovantes.</p>
+    
+    <!-- Passo 1: Autenticação (Senha de 4 dígitos OU Impressão Digital) -->
+    <div id="step-auth-membro">
+      <input type="text" id="auth-membro-tel" placeholder="Seu WhatsApp cadastrado (Com DDD)">
+      <input type="password" id="auth-membro-codigo" maxlength="4" inputmode="numeric" placeholder="Sua Senha de 4 dígitos" style="letter-spacing:3px; font-weight:700;">
+      <button class="primary-btn bronze-btn" onclick="autenticarMembroAuto()">Acessar Meu Carnê</button>
+      <button type="button" class="btn-biometric" onclick="autenticarComBiometria()">
+        👆 Validar com Impressão Digital
+      </button>
+    </div>
+
+    <!-- Passo 2: Painel Financeiro Privado -->
+    <div id="step-update-membro" style="display:none; text-align:left;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+        <div>
+          <p id="auth-casal-nome" style="font-weight:700; color:var(--iron); font-size:17px; margin:0;"></p>
+          <span id="auth-dep-info" style="font-size:12px; color:var(--bronze-dark); font-weight:600;"></span>
+        </div>
+        <span id="auth-badge-bio-status" style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:4px; background:var(--stone); color:var(--text-muted);"></span>
+      </div>
+      <input type="hidden" id="auth-casal-id">
+
+      <!-- VISÃO CLARA E OBJETIVA: TOTAL / JÁ PAGO / FALTA PAGAR -->
+      <div class="finance-summary-grid">
+        <div class="fin-box">
+          <span>Investimento Total</span>
+          <strong id="auth-val-total">R$ 200,00</strong>
+          <small id="auth-cotas-total-txt">10 cotas</small>
+        </div>
+        <div class="fin-box paid">
+          <span>✅ Já Pago</span>
+          <strong id="auth-val-pago">R$ 0,00</strong>
+          <small id="auth-cotas-pagas-txt">0 cotas quitadas</small>
+        </div>
+        <div class="fin-box remaining">
+          <span>⏳ Falta Pagar</span>
+          <strong id="auth-val-falta">R$ 200,00</strong>
+          <small id="auth-cotas-falta-txt">10 cotas restantes</small>
+        </div>
+      </div>
+
+      <!-- BARRA DE PROGRESSO + MENSAGEM DE INCENTIVO DINÂMICA -->
+      <div class="progress-track large">
+        <div class="progress-fill" id="auth-progress-fill" style="width: 0%;"></div>
+        <div class="progress-label" id="auth-progress-label">0% Concluído</div>
+      </div>
+
+      <div class="encouragement-banner" id="auth-encouragement-box">
+        <div>
+          <strong id="auth-encouragement-title">⚔️ Força e Perseverança</strong>
+          <span id="auth-encouragement-msg">Cada passo firme te aproxima do propósito. Vamos juntos!</span>
+        </div>
+        <button type="button" class="btn-refresh-verse" onclick="atualizarMensagemIncentivo(true)" title="Nova mensagem">🔄</button>
+      </div>
+
+      <!-- ALERTA DE PRAZO (APARECE APENAS SE ESTIVER ATRASADO OU PERTO DO EVENTO; SE NO PRAZO, MOSTRA SELO POSITIVO) -->
+      <div id="auth-deadline-container"></div>
+
+      <p style="font-size:12px; color:var(--text-muted); margin: 0 0 8px 0;">
+        Toque nas cotas pendentes abaixo para selecionar uma ou mais parcelas que deseja pagar:
+      </p>
+
+      <div class="carne-grid" id="auth-carne-grid"></div>
+
+      <!-- Painel de Pagamento das Cotas Selecionadas -->
+      <div id="auth-painel-pagamento" style="display:none; background:var(--stone); border:1px solid var(--border); border-radius:6px; padding:14px; margin-top:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+          <strong style="color:var(--iron); font-size:13px;" id="auth-selecao-titulo">1 cota selecionada</strong>
+          <strong style="color:var(--green); font-size:16px;" id="auth-selecao-valor">Total: R$ 20,00</strong>
+        </div>
+
+        <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">Forma de Pagamento:</label>
+        <select id="auth-forma-pagamento" onchange="alternarBoxPix('auth')">
+          <option value="pix">Pix (Confirmação imediata com comprovante)</option>
+          <option value="dinheiro">Dinheiro (Entregar à liderança)</option>
+          <option value="cartao">Cartão de Crédito/Débito</option>
+        </select>
+
+        <div id="auth-box-pix" class="pix-box">
+          <strong>Dados para Pagamento Pix:</strong>
+          <span style="font-size:11px; color:var(--text-muted);" id="auth-pix-titular"></span>
+          <div class="pix-code" id="auth-pix-chave"></div>
+          <div id="auth-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
+          <button type="button" class="primary-btn" style="padding:7px; font-size:12px; background:var(--green); border-color:var(--green); color:white; margin-bottom:8px;" onclick="copiarPix()">📋 Copiar Chave Pix</button>
+          
+          <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem ou PDF):</label>
+          <input type="file" id="auth-comprovante-file" accept="image/*,.pdf" style="margin-bottom:0;">
+        </div>
+
+        <button class="primary-btn" id="btn-confirmar-cotas-membro" style="background:var(--green); border-color:var(--green); color:white; margin-top:10px;" onclick="salvarPagamentoCotasMembro()">✅ Confirmar Pagamento</button>
+      </div>
+
+      <!-- Prazo Estipulado pelo Participante -->
+      <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+        <div style="flex:1; min-width:160px;">
+          <label style="font-size:11px; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">📅 Meu Prazo / Previsão para Próximo Pagamento:</label>
+          <input type="date" id="auth-data-previsao" style="margin-bottom:0; padding:9px;">
+        </div>
+        <button type="button" class="primary-btn" style="width:auto; padding:10px 14px; font-size:12px;" onclick="salvarPrevisaoMembroAuto()">Salvar Prazo</button>
+      </div>
+
+      <!-- Segurança: Alterar Senha de 4 Dígitos & Ativar Impressão Digital -->
+      <div style="margin-top:14px; padding:12px; background:var(--stone); border:1px solid var(--border); border-radius:6px;">
+        <strong style="font-size:12px; color:var(--iron); display:block; margin-bottom:8px;">🔐 Segurança do Meu Carnê (Senha & Impressão Digital)</strong>
+        <div class="btn-row" style="margin-bottom:8px;">
+          <input type="text" id="auth-nova-senha-pin" maxlength="4" inputmode="numeric" placeholder="Nova senha de 4 dígitos" style="margin-bottom:0; padding:9px; font-family:monospace; letter-spacing:3px; font-weight:700;">
+          <button type="button" class="primary-btn" style="width:auto; padding:9px 14px; font-size:12px;" onclick="alterarSenhaMembroLogado()">Alterar Senha</button>
+        </div>
+        <button type="button" class="btn-biometric" id="btn-bio-carne" style="margin-top:0; padding:9px 12px; font-size:12px;" onclick="registrarBiometriaDispositivo(document.getElementById('auth-casal-id').value)">
+          👆 Cadastrar / Validar Impressão Digital neste Aparelho
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-close" onclick="fecharModal('modal-auto-atualizacao')">Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: Gerenciador Administrativo de Cotas -->
+<div class="modal" id="modal-admin-cotas">
+  <div class="modal-content" style="max-width: 600px;">
+    <h3 style="margin-bottom:4px;">📋 Controle de Cotas</h3>
+    <p id="admin-cotas-nome" style="font-weight:700; color:var(--iron); font-size:16px; margin:0 0 4px 0;"></p>
+    <p id="admin-cotas-resumo" style="font-size:13px; color:var(--text-muted); margin:0 0 10px 0;"></p>
+    <input type="hidden" id="admin-cotas-varao-id">
+
+    <div class="progress-track large">
+      <div class="progress-fill" id="admin-progress-fill" style="width: 0%;"></div>
+      <div class="progress-label" id="admin-progress-label">0%</div>
+    </div>
+
+    <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
+      Toque em uma cota pendente para dar baixa manual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
+    </p>
+
+    <div class="carne-grid" id="admin-carne-grid"></div>
+
+    <button class="btn-close" onclick="fecharModal('modal-admin-cotas')">Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: Editar Participante (Admin) -->
+<div class="modal" id="modal-editar-lider">
+  <div class="modal-content">
+    <h3>✏️ Editar Inscrição</h3>
+    <input type="hidden" id="edit-id-casal">
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Nome do Titular</label>
+    <input type="text" id="edit-nomes-casal" disabled>
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">WhatsApp Principal</label>
+    <input type="text" id="edit-tel1" placeholder="Telefone 1">
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Telefone Secundário</label>
+    <input type="text" id="edit-tel2" placeholder="Telefone 2">
+
+    <div class="box-dependente">
+      <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
+        <input type="checkbox" id="edit-tem-dep" onchange="toggleCamposDependente('edit')" style="width:auto; margin:0;">
+        Possui Dependente / Acompanhante vinculado
+      </label>
+      <div id="edit-dep-campos" style="display:none; margin-top:10px;">
+        <input type="text" id="edit-dep-nome" placeholder="Nome do Dependente">
+        <select id="edit-dep-parentesco" style="margin-bottom:0;">
+          <option value="Filho">Filho</option>
+          <option value="Irmão">Irmão</option>
+          <option value="Pai">Pai</option>
+          <option value="Sobrinho">Sobrinho</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">📅 Prazo / Previsão de Pagamento</label>
+    <input type="date" id="edit-data-previsao">
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Forma Preferida</label>
+    <select id="edit-forma-pagamento">
+      <option value="indefinido">Ainda não sabe</option>
+      <option value="pix">Pix</option>
+      <option value="cartao">Cartão</option>
+      <option value="dinheiro">Dinheiro</option>
+    </select>
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Senha de 4 Dígitos:</label>
+    <input type="text" id="edit-codigo-acesso" maxlength="4" style="background:var(--stone); font-family:monospace; font-weight:bold;">
+    <button class="primary-btn bronze-btn" onclick="salvarEdicaoLider()">Salvar Alterações</button>
+    <button class="btn-close" onclick="fecharModal('modal-editar-lider')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Escolha de WhatsApp -->
+<div class="modal" id="modal-escolha-zap">
+  <div class="modal-content" style="max-width: 380px;">
+    <h3>Enviar WhatsApp</h3>
+    <p id="escolha-zap-casal" style="font-weight:700; color:var(--iron); margin-bottom:10px;"></p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button id="btn-zap-tel1" class="primary-btn" style="background:#25D366; border-color:#25D366; color:white;">📱 WhatsApp 1: <span id="txt-zap-tel1"></span></button>
+      <button id="btn-zap-tel2" class="primary-btn" style="background:#128C7E; border-color:#128C7E; color:white;">📱 WhatsApp 2: <span id="txt-zap-tel2"></span></button>
+    </div>
+    <button class="btn-close" onclick="fecharModal('modal-escolha-zap')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Visualizador de Comprovante -->
+<div class="modal" id="modal-ver-comprovante">
+  <div class="modal-content" style="max-width: 520px;">
+    <h3>Comprovante de Pagamento</h3>
+    <p id="comprovante-casal-nome" style="font-weight: 700; color: var(--iron); font-size: 14px; margin-bottom: 10px;"></p>
+    <div id="comprovante-container" style="max-height: 420px; overflow-y: auto; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; padding: 10px; display:flex; justify-content:center; align-items:center; min-height:120px;"></div>
+    <button class="btn-close" onclick="fecharModal('modal-ver-comprovante')">Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: Editar Credencial de Usuário -->
+<div class="modal" id="modal-editar-credencial">
+  <div class="modal-content" style="max-width: 420px;">
+    <h3>⚙️ Editar Usuário</h3>
+    <input type="hidden" id="edit-lider-original">
+    <input type="text" id="edit-lider-nome" placeholder="Novo Nome">
+    <div class="password-wrapper">
+      <input type="password" id="edit-lider-senha" placeholder="Nova Senha">
+      <button type="button" class="btn-eye" onclick="toggleMostrarSenha('edit-lider-senha', this)">👁️</button>
+    </div>
+    <button class="primary-btn bronze-btn" onclick="salvarEdicaoCredencial()">Salvar</button>
+    <button class="btn-close" onclick="fecharModal('modal-editar-credencial')">Cancelar</button>
+  </div>
+</div>
+
+<script>
+  const DB_BASE = "https://arca-casais-ibac-2026-default-rtdb.firebaseio.com/benditos2027";
+  const DB_URL = `${DB_BASE}/dados.json`;
+
+  const iconeWhatsApp = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:15px; height:15px; fill:currentColor;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 413.3c-32.6 0-64.6-8.8-92.8-25.4l-6.7-4-69-18.1 18.4-67.3-4.4-7c-18.3-29-28-62.5-28-91.6 0-101.4 82.5-184 184.2-184 53.6 0 104 20.9 141.9 58.8 37.9 37.9 58.8 88.3 58.8 141.9 0 101.4-82.5 184-184.2 184zm101.3-138.4c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>`;
+  const iconeCheck = `<svg viewBox="0 0 448 512" style="width:12px; height:12px; fill:currentColor"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`;
+
+  const versiculosEncorajamento = [
+    { texto: "Permanecei vigilantes, firmai-vos na fé, portai-vos com coragem e sede fortes em tudo o que fizerdes.", ref: "1 Coríntios 16:13" },
+    { texto: "Sê forte e corajoso; não temas nem te acovardes, pois o Senhor teu Deus caminha contigo por onde quer que andares.", ref: "Josué 1:9" },
+    { texto: "Assim como o ferro afia o próprio ferro, um homem fortalece e aperfeiçoa o caráter do seu irmão.", ref: "Provérbios 27:17" },
+    { texto: "Revesti-vos de toda a armadura de Deus e fortalecei-vos no Senhor e na força do Seu poder.", ref: "Efésios 6:10-11" },
+    { texto: "Espera com firmeza no Senhor; tem bom ânimo, fortalece o teu coração e persevera na presença de Deus.", ref: "Salmos 27:14" },
+    { texto: "Deus não nos concedeu espírito de covardia, mas sim de poder, de amor e de domínio próprio.", ref: "2 Timóteo 1:7" },
+    { texto: "Tudo posso naquele que me fortalece e sustenta em cada batalha da vida.", ref: "Filipenses 4:13" },
+    { texto: "Os que esperam no Senhor renovam suas forças, sobem como águias, correm sem se fatigar e caminham sem desfalecer.", ref: "Isaías 40:31" },
+    { texto: "Praticar a justiça, amar a misericórdia e caminhar com humildade diante do teu Deus: eis o que o Senhor requer de ti.", ref: "Miqueias 6:8" },
+    { texto: "Bem-aventurado o homem que teme ao Senhor e tem grande prazer nos Seus mandamentos; sua descendência será abençoada.", ref: "Salmos 112:1-2" },
+    { texto: "Sede sóbrios e vigilantes; resisti firmes na fé diante das adversidades, sabendo que não estais sós.", ref: "1 Pedro 5:8-9" },
+    { texto: "Sede fortes e destemidos, não vos assusteis, porque o Senhor vosso Deus vai adiante de vós e jamais vos desamparará.", ref: "Deuteronômio 31:6" }
+  ];
+
+  // Mensagens de incentivo dinâmicas para a barra de progresso
+  const mensagensIncentivo = [
+    "Cada cota quitada é uma semente plantada no que Deus vai fazer na sua vida neste encontro!",
+    "Constância vence qualquer obstáculo: continue firme passo a passo, sua conquista já está em andamento.",
+    "Não desanime! O homem disciplinado colhe frutos duradouros. Você está construindo sua presença!",
+    "Fidelidade no pouco abre portas para o extraordinário. Continue avançando no seu ritmo!",
+    "Você não caminha sozinho: cada parcela concluída fortalece sua jornada rumo a esse tempo de renovo.",
+    "Falta menos do que ontem! Mantenha o foco e a constância, Deus honra o esforço de quem persevera.",
+    "Grande vitória! Quem persevera até o fim experimenta o melhor de Deus preparado para os Seus filhos.",
+    "Disciplina de guerreiro: passo a passo você está vencendo cada etapa sem pesar no orçamento."
+  ];
+
+  let isLider = false, isAlfa = false, isAnalista = false, liderAtual = "";
+  let liderPendentePrimeiroAcesso = null;
+  let graficoPresencaObj = null, graficoFinanceiroObj = null;
+  let timerInterval = null;
+  let emProcessamentoNuvem = false;
+
+  let tipoGraficoPresenca = 'doughnut';
+  let tipoGraficoFinancas = 'doughnut';
+
+  let paginaAtual = 1;
+  let cotasSelecionadasMembro = [];
+  let cacheComprovantes = {};
+  let ultimoIdxIncentivo = -1;
+
+  let configuracoes = {
+    tituloEvento: "BENDITOS",
+    anoEvento: "2027",
+    subtituloEvento: "Encontro dos Varões • IBAC",
+    mensagemPadrao: "Shalom, {nome}!\n\nPassando para lembrar do nosso \n⚔️ {evento} {ano} ⚔️\n\nVocê já quitou {pagas} de {total_cotas} cotas (R$ {pago_valor}). Falta apenas R$ {restante} para concluir!\n\n🔑 Sua senha de acesso: {codigo}\n\nContamos com você!",
+    valorCota: 200.00,
+    qtdCotas: 10,
+    dataEvento: "2027-11-20T19:00",
+    dataLimitePagamento: "2027-11-10",
+    chavePix: "",
+    titularPix: "",
+    infoBancaria: "",
+    modoVersiculo: "aleatorio",
+    versiculoTexto: "",
+    versiculoReferencia: ""
+  };
+
+  let lideres = [
+    { nome: "Joabe", cargo: "Analista", senha: "joabe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true },
+    { nome: "Felipe", cargo: "Analista", senha: "felipe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true },
+    { nome: "Bispo Jader", cargo: "Líder Alfa", senha: "jader2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true },
+    { nome: "Mayqui", cargo: "Líder Alfa", senha: "mayqui2027", alfa: true, fixo: false, bloqueado: false, primeiroAcesso: true }
+  ];
+
+  let varoes = [];
+  let varoesFiltrados = [];
+
+  // ==========================================
+  // BIOMETRIA / IMPRESSÃO DIGITAL (WEBAUTHN)
+  // ==========================================
+  function bufToBase64(buf) {
+    return btoa(String.fromCharCode(...new Uint8Array(buf)));
+  }
+
+  function base64ToBuf(b64) {
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes.buffer;
+  }
+
+  function obterMapaBiometriaLocal() {
+    try {
+      return JSON.parse(localStorage.getItem("benditos_bio_creds") || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function salvarMapaBiometriaLocal(mapa) {
+    localStorage.setItem("benditos_bio_creds", JSON.stringify(mapa));
+  }
+
+  window.registrarBiometriaDispositivo = async function(varaoId) {
+    const v = varoes.find(x => x.id == varaoId);
+    if (!v) return alert("Participante não localizado.");
+
+    if (!window.PublicKeyCredential || !navigator.credentials) {
+      return alert("Este navegador ou dispositivo não suporta validação por impressão digital (WebAuthn). Use sua senha de 4 dígitos.");
+    }
+
+    if (window.location.protocol === "file:") {
+      return alert("ℹ️ A validação por impressão digital do navegador exige que o site esteja hospedado em HTTPS (ou localhost) por política de segurança do dispositivo. Enquanto estiver abrindo direto do arquivo local, utilize sua senha de 4 dígitos.");
+    }
+
+    try {
+      const challenge = new Uint8Array(32);
+      window.crypto.getRandomValues(challenge);
+      const userIdBytes = new TextEncoder().encode(`benditos_user_${v.id}_${v.tel1}`);
+
+      const credential = await navigator.credentials.create({
+        publicKey: {
+          challenge: challenge,
+          rp: { name: `${configuracoes.tituloEvento || 'Benditos'} — IBAC` },
+          user: {
+            id: userIdBytes,
+            name: v.tel1 || v.nome,
+            displayName: v.nome
+          },
+          pubKeyCredParams: [
+            { alg: -7, type: "public-key" },
+            { alg: -257, type: "public-key" }
+          ],
+          authenticatorSelection: {
+            authenticatorAttachment: "platform",
+            userVerification: "required"
+          },
+          timeout: 60000
+        }
+      });
+
+      if (credential) {
+        const credIdB64 = bufToBase64(credential.rawId);
+        const mapa = obterMapaBiometriaLocal();
+        mapa[v.tel1] = { varaoId: v.id, credId: credIdB64, nome: v.nome };
+        mapa["ultimo_ativo"] = v.tel1;
+        salvarMapaBiometriaLocal(mapa);
+
+        v.biometriaAtiva = true;
+        await salvarNoBanco();
+
+        const btnPos = document.getElementById("btn-ativar-bio-pos");
+        if (btnPos) {
+          btnPos.classList.add("active-bio");
+          btnPos.innerText = "✅ Impressão Digital Ativada neste Aparelho!";
+        }
+        atualizarIndicadorBiometriaCarne(v);
+        alert("👆 Impressão digital cadastrada com sucesso! Nas próximas vezes, basta tocar em 'Validar com Impressão Digital'.");
+      }
+    } catch (err) {
+      console.warn("Erro biometria:", err);
+      alert("Não foi possível concluir a leitura da impressão digital neste momento. Você pode continuar usando sua senha de 4 dígitos.");
+    }
+  };
+
+  window.autenticarComBiometria = async function() {
+    if (!window.PublicKeyCredential || !navigator.credentials) {
+      return alert("Dispositivo sem suporte a biometria neste navegador. Entre com seu WhatsApp e senha de 4 dígitos.");
+    }
+    if (window.location.protocol === "file:") {
+      return alert("ℹ️ A impressão digital funciona quando o sistema está publicado em HTTPS ou localhost. Use seu WhatsApp e senha de 4 dígitos.");
+    }
+
+    const mapa = obterMapaBiometriaLocal();
+    const telDigitado = document.getElementById("auth-membro-tel").value.replace(/\D/g, '');
+    const chaveBusca = telDigitado && mapa[telDigitado] ? telDigitado : mapa["ultimo_ativo"];
+    const registro = chaveBusca ? mapa[chaveBusca] : null;
+
+    if (!registro || !registro.credId) {
+      return alert("Nenhuma impressão digital cadastrada neste aparelho ainda.\n\nEntre primeiro com seu WhatsApp + senha de 4 dígitos e clique em 'Cadastrar Impressão Digital'.");
+    }
+
+    try {
+      const challenge = new Uint8Array(32);
+      window.crypto.getRandomValues(challenge);
+
+      const assertion = await navigator.credentials.get({
+        publicKey: {
+          challenge: challenge,
+          allowCredentials: [{
+            id: base64ToBuf(registro.credId),
+            type: "public-key"
+          }],
+          userVerification: "required",
+          timeout: 60000
+        }
+      });
+
+      if (assertion) {
+        const v = varoes.find(x => x.id === registro.varaoId || x.tel1 === chaveBusca);
+        if (!v) return alert("Cadastro não encontrado na base atual.");
+        abrirPainelPrivadoCarne(v);
+      }
+    } catch (err) {
+      alert("Validação biométrica cancelada ou não reconhecida. Tente novamente ou use sua senha de 4 dígitos.");
+    }
+  };
+
+  function atualizarIndicadorBiometriaCarne(v) {
+    const badge = document.getElementById("auth-badge-bio-status");
+    const btn = document.getElementById("btn-bio-carne");
+    const mapa = obterMapaBiometriaLocal();
+    const temLocal = !!(v.tel1 && mapa[v.tel1]);
+
+    if (temLocal || v.biometriaAtiva) {
+      badge.innerText = "👆 Biometria Ativa";
+      badge.style.background = "var(--green-bg)";
+      badge.style.color = "var(--green)";
+      if (btn) {
+        btn.classList.add("active-bio");
+        btn.innerText = "✅ Impressão Digital Ativa (Clique para revalidar)";
+      }
+    } else {
+      badge.innerText = "🔑 Senha 4 Dígitos";
+      badge.style.background = "var(--stone)";
+      badge.style.color = "var(--text-muted)";
+      if (btn) {
+        btn.classList.remove("active-bio");
+        btn.innerText = "👆 Cadastrar Impressão Digital neste Aparelho";
+      }
+    }
+  }
+
+  // ==========================================
+  // CÁLCULO FÍSICO E CONTÁBIL (TITULAR + DEPENDENTE)
+  // ==========================================
+  function obterQtdPessoas(v) {
+    return (v && v.temDependente && v.nomeDependente) ? 2 : 1;
+  }
+
+  function obterValorParcelaIndividual() {
+    const total = parseFloat(configuracoes.valorCota) || 200;
+    const qtd = parseInt(configuracoes.qtdCotas) || 10;
+    return total / qtd;
+  }
+
+  function obterValorParcelaInscricao(v) {
+    return obterValorParcelaIndividual() * obterQtdPessoas(v);
+  }
+
+  function obterValorTotalInscricao(v) {
+    const total = parseFloat(configuracoes.valorCota) || 200;
+    return total * obterQtdPessoas(v);
+  }
+
+  function gerarCotasIniciais(qtd = null) {
+    const totalCotas = qtd || parseInt(configuracoes.qtdCotas) || 10;
+    const arr = [];
+    for (let i = 1; i <= totalCotas; i++) {
+      arr.push({ numero: i, pago: false, dataPagamento: "", forma: "", compId: "" });
+    }
+    return arr;
+  }
+
+  function garantirEstruturaCotas(v) {
+    const totalCotas = parseInt(configuracoes.qtdCotas) || 10;
+    if (!Array.isArray(v.cotas)) {
+      v.cotas = gerarCotasIniciais(totalCotas);
+    } else if (v.cotas.length < totalCotas) {
+      for (let i = v.cotas.length + 1; i <= totalCotas; i++) {
+        v.cotas.push({ numero: i, pago: false, dataPagamento: "", forma: "", compId: "" });
+      }
+    }
+    return v.cotas;
+  }
+
+  function contarCotasPagas(v) {
+    return garantirEstruturaCotas(v).filter(c => c.pago).length;
+  }
+
+  // ==========================================
+  // AVALIAÇÃO INTELIGENTE DE PRAZOS (ZERO COBRANÇA SE ESTIVER NO PRAZO)
+  // ==========================================
+  function avaliarStatusPrazo(v) {
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+    const pagas = contarCotasPagas(v);
+    const restantes = Math.max(0, totalCotas - pagas);
+    const valParcela = obterValorParcelaInscricao(v);
+    const valorFalta = restantes * valParcela;
+
+    if (restantes === 0) {
+      return { status: "quitado", alerta: false, mensagem: "🏆 Parabéns! Todas as cotas estão 100% quitadas." };
+    }
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    // 1. Verifica se a previsão estipulada pelo próprio participante (ou líder) venceu
+    if (v.previsaoPagamento) {
+      const dtPrev = new Date(v.previsaoPagamento + "T00:00:00");
+      if (!isNaN(dtPrev.getTime()) && hoje > dtPrev) {
+        return {
+          status: "atraso",
+          alerta: true,
+          tipoAlerta: "overdue",
+          titulo: "⚠️ Pagamento em Atraso",
+          mensagem: `A data estipulada (${formatarDataBR(v.previsaoPagamento)}) já passou e ainda restam ${restantes} ${restantes === 1 ? 'cota' : 'cotas'} (R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})}). Regularize ou atualize sua nova previsão abaixo.`
+        };
+      }
+    }
+
+    // 2. Verifica se o prazo limite estipulado pela liderança venceu
+    if (configuracoes.dataLimitePagamento) {
+      const dtLimite = new Date(configuracoes.dataLimitePagamento + "T00:00:00");
+      if (!isNaN(dtLimite.getTime()) && hoje > dtLimite) {
+        return {
+          status: "atraso",
+          alerta: true,
+          tipoAlerta: "overdue",
+          titulo: "⚠️ Prazo Limite da Liderança Encerrado",
+          mensagem: `O prazo final estipulado pela liderança (${formatarDataBR(configuracoes.dataLimitePagamento)}) foi atingido e falta quitar R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${restantes} cotas).`
+        };
+      }
+    }
+
+    // 3. Verifica proximidade do evento (<= 30 dias) sem quitação
+    if (configuracoes.dataEvento) {
+      const dtEvento = new Date(configuracoes.dataEvento);
+      if (!isNaN(dtEvento.getTime())) {
+        const diffDias = Math.ceil((dtEvento.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDias >= 0 && diffDias <= 30) {
+          return {
+            status: "proximo",
+            alerta: true,
+            tipoAlerta: "near-event",
+            titulo: "⏳ Reta Final — Evento Próximo",
+            mensagem: `Faltam apenas ${diffDias} ${diffDias === 1 ? 'dia' : 'dias'} para o evento e você ainda possui ${restantes} ${restantes === 1 ? 'cota pendente' : 'cotas pendentes'} (R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})}).`
+          };
+        }
+      }
+    }
+
+    // 4. Se chegou aqui, o participante ESTÁ NO PRAZO -> ZERO ALERTA DE COBRANÇA!
+    const textoNoPrazo = v.previsaoPagamento
+      ? `✅ Você está em dia! Próximo pagamento previsto para ${formatarDataBR(v.previsaoPagamento)}.`
+      : (configuracoes.dataLimitePagamento
+          ? `✅ Você está dentro do prazo (Quitação até ${formatarDataBR(configuracoes.dataLimitePagamento)}).`
+          : `✅ Situação regular — dentro do cronograma do evento.`);
+
+    return {
+      status: "no-prazo",
+      alerta: false,
+      mensagem: textoNoPrazo
+    };
+  }
+
+  // ==========================================
+  // MENSAGEM DE INCENTIVO DINÂMICA
+  // ==========================================
+  window.atualizarMensagemIncentivo = function(forcarNova = true) {
+    let idx = Math.floor(Math.random() * mensagensIncentivo.length);
+    if (mensagensIncentivo.length > 1 && idx === ultimoIdxIncentivo) {
+      idx = (idx + 1) % mensagensIncentivo.length;
+    }
+    ultimoIdxIncentivo = idx;
+    const elMsg = document.getElementById("auth-encouragement-msg");
+    if (elMsg) elMsg.innerText = mensagensIncentivo[idx];
+  };
+
+  // ==========================================
+  // VERSÍCULO BÍBLICO ROTATIVO
+  // ==========================================
+  window.sortearVersiculoEncorajamento = function(manual = false) {
+    if (!manual && configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
+      document.getElementById("hero-verse-txt").innerText = `"${configuracoes.versiculoTexto}"`;
+      document.getElementById("hero-verse-ref").innerText = configuracoes.versiculoReferencia || "Palavra de Deus";
+      return;
+    }
+
+    const ultimoIdx = parseInt(sessionStorage.getItem("ultimo_versiculo_idx") || "-1");
+    let novoIdx = Math.floor(Math.random() * versiculosEncorajamento.length);
+    if (versiculosEncorajamento.length > 1 && novoIdx === ultimoIdx) {
+      novoIdx = (novoIdx + 1) % versiculosEncorajamento.length;
+    }
+    sessionStorage.setItem("ultimo_versiculo_idx", novoIdx.toString());
+
+    const escolhido = versiculosEncorajamento[novoIdx];
+    document.getElementById("hero-verse-txt").innerText = `"${escolhido.texto}"`;
+    document.getElementById("hero-verse-ref").innerText = escolhido.ref;
+  };
+
+  window.alternarCampoVersiculoFixo = function() {
+    const modo = document.getElementById("config-modo-versiculo").value;
+    document.getElementById("box-versiculo-fixo").style.display = (modo === "fixo") ? "block" : "none";
+  };
+
+  window.toggleCamposDependente = function(prefixo) {
+    const ativo = document.getElementById(`${prefixo}-tem-dep`).checked;
+    document.getElementById(`${prefixo}-dep-campos`).style.display = ativo ? "block" : "none";
+  };
+
+  // ==========================================
+  // UTILITÁRIOS GERAIS
+  // ==========================================
+  window.toggleMostrarSenha = function(inputId) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    input.type = (input.type === "password") ? "text" : "password";
+  };
+
+  function gerarCodigoAcessoUnico() {
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  }
+
+  function validarPin4Digitos(pin) {
+    return /^\d{4}$/.test((pin || "").trim());
+  }
+
+  function validarTelefone(tel, obrigatorio = true) {
+    const limpo = (tel || "").replace(/\D/g, "");
+    if (!limpo) return !obrigatorio;
+    return limpo.length === 10 || limpo.length === 11;
+  }
+
+  function formatarTelefoneVisual(tel) {
+    const limpo = (tel || '').replace(/\D/g, '');
+    if (limpo.length === 11) return `(${limpo.slice(0,2)}) ${limpo.slice(2,7)}-${limpo.slice(7)}`;
+    if (limpo.length === 10) return `(${limpo.slice(0,2)}) ${limpo.slice(2,6)}-${limpo.slice(6)}`;
+    return limpo;
+  }
+
+  function formatarDataBR(dataStr) {
+    if (!dataStr) return "";
+    const p = dataStr.split('-');
+    return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : dataStr;
+  }
+
+  function formatarDataHoraEvento(isoStr) {
+    if (!isoStr) return "";
+    try {
+      const d = new Date(isoStr);
+      if (isNaN(d.getTime())) return "";
+      return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }) +
+             ' • ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + 'h';
+    } catch(e) { return ""; }
+  }
+
+  function obterPrimeiroEUltimoNome(nomeStr) {
+    if (!nomeStr) return "";
+    const partes = nomeStr.trim().split(/\s+/).filter(Boolean);
+    if (partes.length <= 1) return (partes[0] || "").toUpperCase();
+    return `${partes[0]} ${partes[partes.length - 1]}`.toUpperCase();
+  }
+
+  window.atualizarSugestaoNome = function(prefixo) {
+    const n1 = document.getElementById(`${prefixo}-nome1`).value;
+    const box = document.getElementById(`${prefixo}-box-sugestao`);
+    const txtSugestao = document.getElementById(`${prefixo}-txt-sugestao`);
+    if (n1.trim().length >= 2) {
+      txtSugestao.innerText = obterPrimeiroEUltimoNome(n1);
+      box.style.display = "block";
+    } else {
+      box.style.display = "none";
+    }
+  };
+
+  window.alternarCampoCustomNome = function(prefixo) {
+    const concorda = document.getElementById(`${prefixo}-check-concorda`).checked;
+    document.getElementById(`${prefixo}-custom-container`).style.display = concorda ? "none" : "block";
+  };
+
+  // ==========================================
+  // COMPRESSÃO DE COMPROVANTE & NUVEM
+  // ==========================================
+  function processarComprovanteOtimizado(file) {
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve("");
+      if (file.type === "application/pdf") {
+        if (file.size > 1.8 * 1024 * 1024) {
+          alert("O PDF excede 1.8 MB. Envie um print/imagem do comprovante.");
+          return resolve("");
+        }
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = err => reject(err);
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const MAX_DIM = 1000;
+          let width = img.width, height = img.height;
+          if (width > height && width > MAX_DIM) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else if (height > MAX_DIM) {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+        img.onerror = () => resolve(event.target.result);
+        img.src = event.target.result;
+      };
+      reader.onerror = err => reject(err);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function salvarComprovanteNuvem(base64Data) {
+    if (!base64Data) return "";
+    const compId = "comp_" + Date.now() + "_" + Math.floor(100 + Math.random() * 900);
+    cacheComprovantes[compId] = base64Data;
+    try {
+      await fetch(`${DB_BASE}/comprovantes/${compId}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(base64Data)
+      });
+    } catch (e) {}
+    return compId;
+  }
+
+  async function buscarComprovanteNuvem(compId) {
+    if (!compId) return "";
+    if (compId.startsWith("data:")) return compId;
+    if (cacheComprovantes[compId]) return cacheComprovantes[compId];
+    try {
+      const res = await fetch(`${DB_BASE}/comprovantes/${compId}.json`);
+      const data = await res.json();
+      if (data) {
+        cacheComprovantes[compId] = data;
+        return data;
+      }
+    } catch (e) {}
+    return "";
+  }
+
+  // ==========================================
+  // INICIALIZAÇÃO E SINCRONIZAÇÃO FIREBASE
+  // ==========================================
+  async function inicializarDados() {
+    sortearVersiculoEncorajamento(false);
+
+    try {
+      const res = await fetch(DB_URL);
+      const dados = await res.json();
+
+      if (dados && Array.isArray(dados.varoes) && dados.varoes.length > 0) {
+        varoes = dados.varoes;
+        let precisouAtualizar = false;
+
+        varoes.forEach(v => {
+          if (!v.codigoAcesso) {
+            v.codigoAcesso = gerarCodigoAcessoUnico();
+            precisouAtualizar = true;
+          }
+          garantirEstruturaCotas(v);
+        });
+
+        if (dados.configuracoes) {
+          configuracoes = { ...configuracoes, ...dados.configuracoes };
+        }
+
+        if (dados.lideres && Array.isArray(dados.lideres)) {
+          let lideresNuvem = dados.lideres;
+          lideresNuvem.forEach(ldr => {
+            if (ldr.cargo === "Analista" || ldr.nome === "Joabe" || ldr.nome === "Felipe") {
+              ldr.cargo = "Analista";
+              ldr.alfa = true;
+              ldr.fixo = true;
+            }
+          });
+          if (!lideresNuvem.find(l => l.nome === "Joabe")) {
+            lideresNuvem.unshift({ nome: "Joabe", cargo: "Analista", senha: "joabe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true });
+          }
+          if (!lideresNuvem.find(l => l.nome === "Felipe")) {
+            lideresNuvem.splice(1, 0, { nome: "Felipe", cargo: "Analista", senha: "felipe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true });
+          }
+          lideres = lideresNuvem;
+        }
+
+        if (precisouAtualizar) await salvarNoBanco();
+      } else {
+        varoes = [
+          {
+            id: 1,
+            nome: "BISPO JADER",
+            nomeCompleto: "BISPO JADER SANTOS",
+            temDependente: false,
+            nomeDependente: "",
+            parentescoDependente: "",
+            confirmado: false,
+            tel1: "",
+            tel2: "",
+            formaPagamento: "indefinido",
+            previsaoPagamento: "",
+            codigoAcesso: gerarCodigoAcessoUnico(),
+            cotas: gerarCotasIniciais(10)
+          }
+        ];
+        await salvarNoBanco();
+      }
+    } catch (e) {
+      if (varoes.length === 0) {
+        varoes = [
+          {
+            id: 1,
+            nome: "BISPO JADER",
+            nomeCompleto: "BISPO JADER SANTOS",
+            temDependente: false,
+            nomeDependente: "",
+            parentescoDependente: "",
+            confirmado: false,
+            tel1: "",
+            tel2: "",
+            formaPagamento: "indefinido",
+            previsaoPagamento: "",
+            codigoAcesso: gerarCodigoAcessoUnico(),
+            cotas: gerarCotasIniciais(10)
+          }
+        ];
+      }
+    }
+
+    atualizarUIConfiguracoes(true);
+    if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
+      sortearVersiculoEncorajamento(false);
+    }
+    iniciarContagem();
+    renderizarLista();
+    atualizarAlertaBloqueio();
+    setInterval(sincronizarEmSegundoPlano, 4500);
+  }
+
+  async function salvarNoBanco() {
+    atualizarUIConfiguracoes(false);
+    atualizarDashboard();
+    try {
+      emProcessamentoNuvem = true;
+      await fetch(DB_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ varoes, lideres, configuracoes })
+      });
+    } catch (erro) {
+      console.error("Erro ao salvar no Firebase:", erro);
+    } finally {
+      emProcessamentoNuvem = false;
+    }
+  }
+
+  async function sincronizarEmSegundoPlano() {
+    if (emProcessamentoNuvem) return;
+    const modaisAbertos = document.querySelectorAll('.modal.active');
+    const focoEmCampo = document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+    if (modaisAbertos.length > 0 || focoEmCampo) return;
+
+    try {
+      const res = await fetch(DB_URL);
+      const dados = await res.json();
+      if (!dados || !dados.varoes) return;
+
+      const dadosNuvemStr = JSON.stringify(dados);
+      const dadosLocaisStr = JSON.stringify({ varoes, lideres, configuracoes });
+
+      if (dadosNuvemStr !== dadosLocaisStr) {
+        varoes = dados.varoes;
+        varoes.forEach(v => garantirEstruturaCotas(v));
+        if (dados.lideres) lideres = dados.lideres;
+        configuracoes = dados.configuracoes || configuracoes;
+        atualizarUIConfiguracoes(false);
+        renderizarLista();
+        atualizarAlertaBloqueio();
+        if (isAlfa || isAnalista) renderizarTabelaLideres();
+      }
+    } catch (e) {}
+  }
+
+  function atualizarUIConfiguracoes(forcar = false) {
+    function setSafe(id, val) {
+      const el = document.getElementById(id);
+      if (el && (forcar || document.activeElement !== el)) {
+        el.value = (val !== undefined && val !== null) ? val : "";
+      }
+    }
+
+    setSafe('config-titulo', configuracoes.tituloEvento || "BENDITOS");
+    setSafe('config-ano', configuracoes.anoEvento || "2027");
+    setSafe('config-subtitulo', configuracoes.subtituloEvento || "Encontro dos Varões • IBAC");
+    setSafe('msg-padrao', configuracoes.mensagemPadrao);
+    setSafe('config-valor', configuracoes.valorCota);
+    setSafe('config-cotas', configuracoes.qtdCotas || 10);
+    setSafe('config-data', configuracoes.dataEvento);
+    setSafe('config-data-limite', configuracoes.dataLimitePagamento);
+    setSafe('config-pix', configuracoes.chavePix);
+    setSafe('config-titular-pix', configuracoes.titularPix);
+    setSafe('config-info-bancaria', configuracoes.infoBancaria);
+    setSafe('config-modo-versiculo', configuracoes.modoVersiculo || "aleatorio");
+    setSafe('config-versiculo-texto', configuracoes.versiculoTexto);
+    setSafe('config-versiculo-ref', configuracoes.versiculoReferencia);
+    alternarCampoVersiculoFixo();
+
+    const titulo = (configuracoes.tituloEvento || "BENDITOS").toUpperCase();
+    const ano = configuracoes.anoEvento || "2027";
+    const sub = configuracoes.subtituloEvento || "Encontro dos Varões • IBAC";
+
+    document.title = `${titulo} ${ano} — ${sub}`;
+    document.getElementById('hero-title-display').innerHTML = `${titulo} <span>${ano}</span>`;
+    document.getElementById('hero-sub-display').innerText = sub;
+
+    const totalValor = parseFloat(configuracoes.valorCota || 200);
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+    const valorParcela = totalValor / totalCotas;
+
+    document.getElementById('display-valor-publico').innerText = `Investimento por Pessoa: R$ ${totalValor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    document.getElementById('display-parcela-publico').innerText = `Plano Mensal: ${totalCotas} cotas de R$ ${valorParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})} por pessoa (pode incluir dependente no cadastro)`;
+
+    document.getElementById('hero-data-evento').innerText = formatarDataHoraEvento(configuracoes.dataEvento);
+
+    const pixChave = configuracoes.chavePix || "Chave não cadastrada ainda";
+    const titular = configuracoes.titularPix ? `Titular: ${configuracoes.titularPix}` : "";
+    const infoBanco = configuracoes.infoBancaria ? `Dados Bancários: ${configuracoes.infoBancaria}` : "";
+
+    ['reg', 'auth'].forEach(pref => {
+      const elChave = document.getElementById(`${pref}-pix-chave`);
+      const elTitular = document.getElementById(`${pref}-pix-titular`);
+      const elBanco = document.getElementById(`${pref}-pix-banco`);
+      if (elChave) elChave.innerText = pixChave;
+      if (elTitular) elTitular.innerText = titular;
+      if (elBanco) {
+        elBanco.innerText = infoBanco;
+        elBanco.style.display = configuracoes.infoBancaria ? 'block' : 'none';
+      }
+    });
+  }
+
+  window.salvarConfiguracoes = async function() {
+    if (!isLider && !isAnalista) return;
+    configuracoes.tituloEvento = document.getElementById('config-titulo').value.trim() || "BENDITOS";
+    configuracoes.anoEvento = document.getElementById('config-ano').value.trim() || "2027";
+    configuracoes.subtituloEvento = document.getElementById('config-subtitulo').value.trim() || "Encontro dos Varões • IBAC";
+    configuracoes.mensagemPadrao = document.getElementById('msg-padrao').value;
+    configuracoes.valorCota = parseFloat(document.getElementById('config-valor').value) || 200;
+    configuracoes.qtdCotas = parseInt(document.getElementById('config-cotas').value) || 10;
+    configuracoes.dataEvento = document.getElementById('config-data').value;
+    configuracoes.dataLimitePagamento = document.getElementById('config-data-limite').value;
+    configuracoes.chavePix = document.getElementById('config-pix').value.trim();
+    configuracoes.titularPix = document.getElementById('config-titular-pix').value.trim();
+    configuracoes.infoBancaria = document.getElementById('config-info-bancaria').value.trim();
+    configuracoes.modoVersiculo = document.getElementById('config-modo-versiculo').value;
+    configuracoes.versiculoTexto = document.getElementById('config-versiculo-texto').value.trim();
+    configuracoes.versiculoReferencia = document.getElementById('config-versiculo-ref').value.trim();
+
+    varoes.forEach(v => garantirEstruturaCotas(v));
+    await salvarNoBanco();
+    sortearVersiculoEncorajamento(false);
+    iniciarContagem();
+    renderizarLista();
+    alert("Configurações e prazos da edição salvos com sucesso!");
+  };
+
+  window.iniciarNovaEdicaoAnual = async function() {
+    if (!isAlfa && !isAnalista) return;
+    const novoAno = document.getElementById('config-ano').value.trim() || "2028";
+    const ok1 = confirm(`ATENÇÃO: Você está prestes a iniciar uma nova edição (${novoAno}).\n\nIsso removerá todos os inscritos atuais (mantendo apenas o Bispo Jader zerado) para começar o novo ano do zero.\n\nCertifique-se de ter exportado os relatórios PDF/Excel antes.\n\nDeseja continuar?`);
+    if (!ok1) return;
+
+    varoes = [
+      {
+        id: 1,
+        nome: "BISPO JADER",
+        nomeCompleto: "BISPO JADER SANTOS",
+        temDependente: false,
+        nomeDependente: "",
+        parentescoDependente: "",
+        confirmado: false,
+        tel1: "",
+        tel2: "",
+        formaPagamento: "indefinido",
+        previsaoPagamento: "",
+        codigoAcesso: gerarCodigoAcessoUnico(),
+        cotas: gerarCotasIniciais()
+      }
+    ];
+    await salvarNoBanco();
+    paginaAtual = 1;
+    renderizarLista();
+    alert(`Base reiniciada com sucesso para a edição ${novoAno}!`);
+  };
+
+  window.trocarAbaAdmin = function(tabId, btnEl) {
+    document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
+    btnEl.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  };
+
+  window.alternarBoxPix = function(prefixo) {
+    const valor = document.getElementById(`${prefixo}-forma-pagamento`).value;
+    const box = document.getElementById(`${prefixo}-box-pix`);
+    if (box) box.style.display = (valor === 'pix') ? 'block' : 'none';
+  };
+
+  window.copiarPix = function() {
+    if (!configuracoes.chavePix) return alert("Nenhuma chave Pix configurada pela liderança.");
+    navigator.clipboard.writeText(configuracoes.chavePix).then(() => {
+      alert("Chave Pix copiada com sucesso!");
+    }).catch(() => {
+      prompt("Copie a chave Pix abaixo:", configuracoes.chavePix);
+    });
+  };
+
+  // ==========================================
+  // LISTA PRINCIPAL COM PAGINAÇÃO E PRIVACIDADE
+  // ==========================================
+  window.irParaPagina = function(num) {
+    paginaAtual = num;
+    renderizarLista();
+  };
+
+  window.mudarPagina = function(delta) {
+    paginaAtual += delta;
+    renderizarLista();
+  };
+
+  function renderizarLista() {
+    const container = document.getElementById("lista-varoes");
+    const termo = document.getElementById("busca-input-geral").value.toLowerCase();
+    const porPagina = parseInt(document.getElementById("itens-por-pagina").value) || 20;
+
+    const filtroPresenca = document.getElementById("filtro-presenca") ? document.getElementById("filtro-presenca").value : 'todos';
+    const filtroPagamento = document.getElementById("filtro-pagamento") ? document.getElementById("filtro-pagamento").value : 'todos';
+    const filtroPrazo = document.getElementById("filtro-prazo") ? document.getElementById("filtro-prazo").value : 'todos';
+    const filtroDep = document.getElementById("filtro-dependente") ? document.getElementById("filtro-dependente").value : 'todos';
+    
+    container.innerHTML = "";
+    varoesFiltrados = [];
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+
+    let lista = [...varoes].sort((a, b) => {
+      const ehBispoA = a.nome.includes("BISPO") || a.nome.includes("JADER");
+      const ehBispoB = b.nome.includes("BISPO") || b.nome.includes("JADER");
+      if (ehBispoA) return -1;
+      if (ehBispoB) return 1;
+      return a.nome.localeCompare(b.nome);
+    });
+
+    lista.forEach((v) => {
+      const pagas = contarCotasPagas(v);
+      const avalPrazo = avaliarStatusPrazo(v);
+      const textoBusca = `${v.nome} ${v.nomeDependente || ''}`.toLowerCase();
+      if (!textoBusca.includes(termo)) return;
+
+      if (isLider || isAnalista) {
+        if (filtroPresenca === 'confirmados' && !v.confirmado) return;
+        if (filtroPresenca === 'pendentes' && v.confirmado) return;
+        if (filtroPagamento === 'quitados' && pagas < totalCotas) return;
+        if (filtroPagamento === 'andamento' && (pagas === 0 || pagas >= totalCotas)) return;
+        if (filtroPagamento === 'nao-iniciados' && pagas > 0) return;
+        if (filtroPrazo === 'atraso' && !avalPrazo.alerta) return;
+        if (filtroPrazo === 'no-prazo' && avalPrazo.alerta) return;
+        if (filtroDep === 'com-dep' && !v.temDependente) return;
+        if (filtroDep === 'sem-dep' && v.temDependente) return;
+      }
+
+      varoesFiltrados.push(v);
+    });
+
+    const totalRegistros = varoesFiltrados.length;
+    const totalPaginas = Math.max(1, Math.ceil(totalRegistros / porPagina));
+    if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
+    if (paginaAtual < 1) paginaAtual = 1;
+
+    const inicio = (paginaAtual - 1) * porPagina;
+    const fim = inicio + porPagina;
+    const paginaSlice = varoesFiltrados.slice(inicio, fim);
+
+    document.getElementById("pagination-info").innerText = totalRegistros === 0
+      ? "Nenhum participante encontrado"
+      : `Exibindo ${inicio + 1}–${Math.min(fim, totalRegistros)} de ${totalRegistros} cadastros`;
+    document.getElementById("page-indicator").innerText = `Página ${paginaAtual} de ${totalPaginas}`;
+    document.getElementById("btn-prev-page").disabled = (paginaAtual <= 1);
+    document.getElementById("btn-next-page").disabled = (paginaAtual >= totalPaginas);
+
+    paginaSlice.forEach((v) => {
+      const pagas = contarCotasPagas(v);
+      const qtdPessoas = obterQtdPessoas(v);
+      const valParcelaInscricao = obterValorParcelaInscricao(v);
+      const valTotalInscricao = obterValorTotalInscricao(v);
+      const ehBispo = v.nome.includes("BISPO") || v.nome.includes("JADER");
+      const avalPrazo = avaliarStatusPrazo(v);
+
+      const temTelefone = (v.tel1 && v.tel1.replace(/\D/g, '').length >= 10) || (v.tel2 && v.tel2.replace(/\D/g, '').length >= 10);
+      const classZap = temTelefone ? "btn-icon btn-zap ativo" : "btn-icon btn-zap inativo";
+      const div = document.createElement("div");
+      div.className = `item ${ehBispo ? 'bispo-destaque' : ''}`;
+      
+      let badgeDepHtml = "";
+      if (v.temDependente && v.nomeDependente) {
+        badgeDepHtml = `<span class="badge-dependente-pub">+ ${v.parentescoDependente || 'Dependente'}: ${obterPrimeiroEUltimoNome(v.nomeDependente)}</span>`;
+      }
+
+      let html = `<div class="casal-info">
+                    <span class="casal-nome">${v.nome} ${badgeDepHtml}</span>`;
+      
+      // DETALHES FINANCEIROS E PRAZOS: APENAS LIDERANÇA
+      if (isLider || isAnalista) {
+        const tel1Visual = v.tel1 ? formatarTelefoneVisual(v.tel1) : 'Sem WhatsApp';
+        const tel2Visual = v.tel2 ? formatarTelefoneVisual(v.tel2) : '';
+        html += `<span class="casal-tel">📱 ${tel1Visual} ${tel2Visual ? '| ' + tel2Visual : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas (físico)' : 'pessoa'}</strong></span>`;
+        
+        const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
+        const valorPago = pagas * valParcelaInscricao;
+        const valorFalta = Math.max(0, valTotalInscricao - valorPago);
+        html += `<div class="progress-track">
+                   <div class="progress-fill" style="width:${perc}%;"></div>
+                 </div>
+                 <span style="font-size:11px; font-weight:700; color:${pagas >= totalCotas ? 'var(--green)' : 'var(--text-muted)'};">
+                   Pago: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} • Falta: R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas} cotas)
+                 </span>`;
+
+        let badgePrazoHtml = avalPrazo.alerta
+          ? `<span class="badge-atraso">${avalPrazo.titulo}</span>`
+          : `<span class="badge-em-dia">${avalPrazo.status === 'quitado' ? '🏆 Quitado' : '✅ No Prazo'}</span>`;
+
+        let badgePrev = v.previsaoPagamento ? `<span class="badge-previsao">📅 Prev: ${formatarDataBR(v.previsaoPagamento)}</span>` : '';
+        let btnCodigoOculto = `<button class="btn-recibo" onclick="revelarCodigoAcesso(${v.id}, this)">🔑 Ver Senha</button>`;
+
+        html += `<div class="casal-meta">${badgePrazoHtml} ${badgePrev} ${btnCodigoOculto}</div>`;
+      }
+
+      html += `</div><div class="actions">`;
+
+      if (v.confirmado) {
+        html += `<button class="btn-check confirmed" ${ (isLider || isAnalista) ? `onclick="toggleConfirmacaoLider(${v.id})"` : "disabled"}><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
+      } else {
+        html += `<button class="btn-check" onclick="${ (isLider || isAnalista) ? `toggleConfirmacaoLider(${v.id})` : `abrirValidadorMembro(${v.id}, '${v.nome.replace(/'/g, "\\'")}')`}"><div class="check-box"></div>Confirmar</button>`;
+      }
+
+      if (isLider || isAnalista) {
+        let classeCota = 'pago-nao';
+        if (pagas >= totalCotas) classeCota = 'pago-quitado';
+        else if (pagas > 0) classeCota = 'pago-parcial';
+
+        html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagas}/${totalCotas})</button>`;
+        html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
+        html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
+        if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
+      }
+
+      html += `</div>`;
+      div.innerHTML = html;
+      container.appendChild(div);
+    });
+
+    if (paginaSlice.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">Nenhum participante encontrado.</div>`;
+    }
+
+    if (isLider || isAnalista) setTimeout(atualizarDashboard, 50);
+  }
+
+  window.revelarCodigoAcesso = function(id, btnElement) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    btnElement.outerHTML = `<span class="badge-codigo" style="font-size:11px; font-weight:bold; background:var(--bronze-soft); color:var(--bronze-dark); padding:4px 8px;">🔑 Senha: ${v.codigoAcesso || 'Sem senha'}</span>`;
+  };
+
+  window.abrirModalComprovante = async function(compId, tituloExtra = "") {
+    if (!compId) return alert("Comprovante não localizado.");
+    document.getElementById("comprovante-casal-nome").innerText = tituloExtra;
+    const container = document.getElementById("comprovante-container");
+    container.innerHTML = `<span style="color:var(--text-muted); font-size:13px;">⏳ Carregando comprovante...</span>`;
+    document.getElementById("modal-ver-comprovante").classList.add("active");
+
+    const base64Data = await buscarComprovanteNuvem(compId);
+    if (!base64Data) {
+      container.innerHTML = `<span style="color:var(--crimson); font-size:13px;">Comprovante indisponível.</span>`;
+      return;
+    }
+
+    if (base64Data.startsWith("data:application/pdf")) {
+      container.innerHTML = `<embed src="${base64Data}" type="application/pdf" width="100%" height="380px" />`;
+    } else {
+      container.innerHTML = `<img src="${base64Data}" style="max-width:100%; max-height:380px; border-radius:6px; object-fit:contain;" />`;
+    }
+  };
+
+  window.enviarWhatsApp = function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+
+    const tel1Valido = v.tel1 && v.tel1.replace(/\D/g, '').length >= 10;
+    const tel2Valido = v.tel2 && v.tel2.replace(/\D/g, '').length >= 10;
+    if (!tel1Valido && !tel2Valido) return alert("Nenhum número de WhatsApp válido cadastrado!");
+
+    if (tel1Valido && tel2Valido) {
+      document.getElementById("escolha-zap-casal").innerText = v.nome;
+      document.getElementById("txt-zap-tel1").innerText = formatarTelefoneVisual(v.tel1);
+      document.getElementById("txt-zap-tel2").innerText = formatarTelefoneVisual(v.tel2);
+      document.getElementById("btn-zap-tel1").onclick = () => { dispararZapNumero(v.tel1, v); fecharModal('modal-escolha-zap'); };
+      document.getElementById("btn-zap-tel2").onclick = () => { dispararZapNumero(v.tel2, v); fecharModal('modal-escolha-zap'); };
+      document.getElementById("modal-escolha-zap").classList.add("active");
+      return;
+    }
+    dispararZapNumero(tel1Valido ? v.tel1 : v.tel2, v);
+  };
+
+  function dispararZapNumero(telRaw, v) {
+    let tel = (telRaw || "").replace(/\D/g, '');
+    if (!tel.startsWith("55")) tel = "55" + tel;
+
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+    const valParcela = obterValorParcelaInscricao(v);
+    const pagas = contarCotasPagas(v);
+    const valorPago = (pagas * valParcela).toFixed(2).replace('.', ',');
+    const valorRestante = (Math.max(0, totalCotas - pagas) * valParcela).toFixed(2).replace('.', ',');
+
+    let mensagemFinal = (configuracoes.mensagemPadrao || "")
+      .replace(/\{nome\}/gi, v.nome)
+      .replace(/\{evento\}/gi, configuracoes.tituloEvento || "BENDITOS")
+      .replace(/\{ano\}/gi, configuracoes.anoEvento || "2027")
+      .replace(/\{pagas\}/gi, pagas)
+      .replace(/\{total_cotas\}/gi, totalCotas)
+      .replace(/\{pago_valor\}/gi, valorPago)
+      .replace(/\{restante\}/gi, valorRestante)
+      .replace(/\{codigo\}/gi, v.codigoAcesso || "");
+
+    const cargoAssinatura = isAnalista ? "Analista do Evento - IBAC" : `Liderança ${configuracoes.tituloEvento || 'Benditos'} - IBAC`;
+    const txt = encodeURIComponent(`${mensagemFinal}\n\nAtt, ${liderAtual} (${cargoAssinatura})`);
+    window.open(`https://wa.me/${tel}?text=${txt}`, '_blank');
+  }
+
+  // ==========================================
+  // DASHBOARD FÍSICO E CONTÁBIL
+  // ==========================================
+  window.alterarTipoVisual = function(categoria, tipo, btn) {
+    if (categoria === 'presenca') {
+      tipoGraficoPresenca = tipo;
+      document.querySelectorAll('#group-presenca .chart-pill-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      tipoGraficoFinancas = tipo;
+      document.querySelectorAll('#group-financas .chart-pill-btn').forEach(b => b.classList.remove('active'));
+    }
+    btn.classList.add('active');
+    atualizarDashboard();
+  };
+
+  function atualizarDashboard() {
+    if ((!isLider && !isAnalista) || typeof Chart === 'undefined') return;
+    
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+    const valIndividual = parseFloat(configuracoes.valorCota) || 200;
+
+    let totalTitulares = varoes.length;
+    let totalDependentes = 0;
+    let totalPessoasFisicas = 0;
+    let pessoasConfirmadas = 0;
+
+    let quitados = 0;
+    let emAndamento = 0;
+    let naoIniciados = 0;
+    let totalArrecadado = 0;
+    let metaTotal = 0;
+
+    const contagemPorCota = new Array(totalCotas).fill(0);
+
+    varoes.forEach(v => {
+      const qtdP = obterQtdPessoas(v);
+      totalPessoasFisicas += qtdP;
+      if (qtdP > 1) totalDependentes += (qtdP - 1);
+      if (v.confirmado) pessoasConfirmadas += qtdP;
+
+      const cotas = garantirEstruturaCotas(v);
+      const pagas = cotas.filter(c => c.pago).length;
+      const valParcelaInscricao = obterValorParcelaInscricao(v);
+
+      totalArrecadado += pagas * valParcelaInscricao;
+      metaTotal += valIndividual * qtdP;
+
+      if (pagas >= totalCotas) quitados++;
+      else if (pagas > 0) emAndamento++;
+      else naoIniciados++;
+
+      cotas.forEach((c, idx) => {
+        if (c.pago && idx < totalCotas) contagemPorCota[idx] += qtdP;
+      });
+    });
+
+    const pendentesConf = totalPessoasFisicas - pessoasConfirmadas;
+    const faltaArrecadar = Math.max(0, metaTotal - totalArrecadado);
+    
+    document.getElementById("dash-pessoas-fisicas").innerText = totalPessoasFisicas;
+    document.getElementById("dash-titulares-sub").innerText = `${totalTitulares} titulares + ${totalDependentes} dep.`;
+    document.getElementById("dash-ok").innerText = pessoasConfirmadas;
+    document.getElementById("dash-pagos").innerText = quitados;
+    document.getElementById("dash-valor").innerText = `R$ ${totalArrecadado.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-meta-sub").innerText = `Meta: R$ ${metaTotal.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-falta").innerText = `R$ ${faltaArrecadar.toLocaleString('pt-BR')}`;
+
+    const ctxP = document.getElementById('graficoPresenca').getContext('2d');
+    if (graficoPresencaObj) graficoPresencaObj.destroy();
+    graficoPresencaObj = new Chart(ctxP, {
+      type: tipoGraficoPresenca,
+      data: {
+        labels: ['Confirmados (Físico)', 'Pendentes (Físico)'],
+        datasets: [{
+          label: 'Pessoas',
+          data: [pessoasConfirmadas, pendentesConf],
+          backgroundColor: ['#1b7a43', '#cbd5e1'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
+        scales: tipoGraficoPresenca === 'bar' ? { y: { beginAtZero: true, ticks: { precision: 0 } } } : {}
+      }
+    });
+
+    const ctxF = document.getElementById('graficoFinanceiro').getContext('2d');
+    if (graficoFinanceiroObj) graficoFinanceiroObj.destroy();
+
+    if (tipoGraficoFinancas === 'bar') {
+      graficoFinanceiroObj = new Chart(ctxF, {
+        type: 'bar',
+        data: {
+          labels: contagemPorCota.map((_, i) => `Cota ${i + 1}`),
+          datasets: [{
+            label: 'Pessoas Pagas por Cota',
+            data: contagemPorCota,
+            backgroundColor: '#b87d4b',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+        }
+      });
+    } else {
+      graficoFinanceiroObj = new Chart(ctxF, {
+        type: tipoGraficoFinancas,
+        data: {
+          labels: ['Quitados (100%)', 'Em Andamento', 'Não Iniciados'],
+          datasets: [{
+            label: 'Carnês',
+            data: [quitados, emAndamento, naoIniciados],
+            backgroundColor: ['#1b7a43', '#b87d4b', '#e2e8f0'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
+        }
+      });
+    }
+  }
+
+  // ==========================================
+  // AUTO CADASTRO PÚBLICO + TELA PÓS-CADASTRO
+  // ==========================================
+  window.abrirAutoCadastro = function() {
+    document.getElementById("modal-cadastro-titulo").innerText = `Nova Inscrição — ${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
+    document.getElementById("reg-nome1").value = "";
+    document.getElementById("reg-tel1").value = "";
+    document.getElementById("reg-tel2").value = "";
+    document.getElementById("reg-senha-pin").value = "";
+    document.getElementById("reg-tem-dep").checked = false;
+    document.getElementById("reg-dep-campos").style.display = "none";
+    document.getElementById("reg-dep-nome").value = "";
+    document.getElementById("reg-data-previsao").value = "";
+    document.getElementById("reg-qtd-cotas-iniciais").value = "0";
+    document.getElementById("reg-forma-pagamento").value = "indefinido";
+    document.getElementById("reg-box-sugestao").style.display = "none";
+    document.getElementById("reg-box-pix").style.display = "none";
+    document.getElementById("reg-comprovante-file").value = "";
+    atualizarResumoCadastro();
+    document.getElementById("modal-auto-cadastro").classList.add("active");
+  };
+
+  window.atualizarResumoCadastro = function() {
+    const qtd = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
+    const temDep = document.getElementById("reg-tem-dep").checked;
+    const multiplicador = temDep ? 2 : 1;
+    const valParcela = obterValorParcelaIndividual() * multiplicador;
+    const total = qtd * valParcela;
+    const uploadWrap = document.getElementById("reg-upload-wrapper");
+    const valorLabel = document.getElementById("reg-valor-pix-pagar");
+
+    if (qtd > 0) {
+      uploadWrap.style.display = "block";
+      valorLabel.innerText = `Total a transferir (${qtd} ${qtd === 1 ? 'cota' : 'cotas'} • ${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+      if (document.getElementById("reg-forma-pagamento").value === "indefinido") {
+        document.getElementById("reg-forma-pagamento").value = "pix";
+        alternarBoxPix('reg');
+      }
+    } else {
+      uploadWrap.style.display = "none";
+      valorLabel.innerText = `Valor de cada cota mensal (${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${valParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    }
+  };
+
+  window.salvarAutoCadastro = async function() {
+    const n1 = document.getElementById("reg-nome1").value.trim();
+    const t1 = document.getElementById("reg-tel1").value;
+    const t2 = document.getElementById("reg-tel2").value;
+    const pinPreferido = document.getElementById("reg-senha-pin").value.trim();
+    const temDep = document.getElementById("reg-tem-dep").checked;
+    const depNome = document.getElementById("reg-dep-nome").value.trim().toUpperCase();
+    const depParentesco = document.getElementById("reg-dep-parentesco").value;
+    const dataPrev = document.getElementById("reg-data-previsao").value;
+    const qtdIniciais = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
+    const forma = document.getElementById("reg-forma-pagamento").value || "indefinido";
+    const fileInput = document.getElementById("reg-comprovante-file");
+
+    if (!n1) return alert("Por favor, preencha o seu nome completo.");
+    if (!validarTelefone(t1, true)) return alert("O WhatsApp principal informado é inválido! Digite com DDD (10 ou 11 dígitos).");
+    if (t2 && !validarTelefone(t2, false)) return alert("O segundo telefone informado é inválido!");
+    if (pinPreferido && !validarPin4Digitos(pinPreferido)) return alert("A senha pessoal deve conter exatamente 4 números (Ex: 1234).");
+    if (temDep && !depNome) return alert("Você marcou a opção de dependente. Informe o nome completo do seu filho, irmão ou acompanhante.");
+
+    if (qtdIniciais > 0 && forma === "pix" && fileInput.files.length === 0) {
+      return alert("Para dar baixa automática via Pix, anexe o comprovante de pagamento (ou selecione 'Não agora').");
+    }
+
+    let nomeFinal = obterPrimeiroEUltimoNome(n1);
+    const concorda = document.getElementById("reg-check-concorda").checked;
+    const custom = document.getElementById("reg-nome-custom").value.trim();
+    if (!concorda && custom) nomeFinal = custom.toUpperCase();
+
+    const btnSalvar = document.getElementById("btn-salvar-cadastro");
+    btnSalvar.disabled = true;
+    btnSalvar.innerText = "⏳ Salvando inscrição...";
+
+    try {
+      let compId = "";
+      if (fileInput.files.length > 0) {
+        const base64 = await processarComprovanteOtimizado(fileInput.files[0]);
+        if (base64) compId = await salvarComprovanteNuvem(base64);
+      }
+
+      const cotas = gerarCotasIniciais();
+      const hojeISO = new Date().toISOString().split('T')[0];
+
+      if (qtdIniciais > 0 && (compId || forma !== "pix")) {
+        for (let i = 0; i < Math.min(qtdIniciais, cotas.length); i++) {
+          cotas[i].pago = true;
+          cotas[i].dataPagamento = hojeISO;
+          cotas[i].forma = forma;
+          cotas[i].compId = compId;
+        }
+      }
+
+      const codigoAcesso = pinPreferido || gerarCodigoAcessoUnico();
+      const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
+
+      const novoRegistro = {
+        id: novoId,
+        nome: nomeFinal,
+        nomeCompleto: n1.toUpperCase(),
+        temDependente: temDep,
+        nomeDependente: temDep ? depNome : "",
+        parentescoDependente: temDep ? depParentesco : "",
+        confirmado: false,
+        biometriaAtiva: false,
+        tel1: t1.replace(/\D/g, ''),
+        tel2: t2 ? t2.replace(/\D/g, '') : "",
+        formaPagamento: forma,
+        previsaoPagamento: dataPrev,
+        codigoAcesso: codigoAcesso,
+        cotas: cotas
+      };
+
+      varoes.push(novoRegistro);
+      await salvarNoBanco();
+      renderizarLista();
+      fecharModal("modal-auto-cadastro");
+
+      // Abre modal pós-cadastro para personalização imediata de senha de 4 dígitos e biometria
+      document.getElementById("pos-cad-id").value = novoId;
+      document.getElementById("pos-cad-nome").innerText = nomeFinal;
+      document.getElementById("pos-cad-codigo").innerText = codigoAcesso;
+      document.getElementById("pos-cad-nova-senha").value = "";
+      const btnBioPos = document.getElementById("btn-ativar-bio-pos");
+      btnBioPos.classList.remove("active-bio");
+      btnBioPos.innerText = "👆 Ativar Impressão Digital neste Aparelho";
+      document.getElementById("modal-pos-cadastro").classList.add("active");
+    } finally {
+      btnSalvar.disabled = false;
+      btnSalvar.innerText = "Concluir Inscrição";
+    }
+  };
+
+  window.alterarPinPosCadastro = async function() {
+    const id = parseInt(document.getElementById("pos-cad-id").value);
+    const nova = document.getElementById("pos-cad-nova-senha").value.trim();
+    if (!validarPin4Digitos(nova)) return alert("Digite exatamente 4 números para sua nova senha (Ex: 2580).");
+
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    v.codigoAcesso = nova;
+    await salvarNoBanco();
+
+    document.getElementById("pos-cad-codigo").innerText = nova;
+    document.getElementById("pos-cad-nova-senha").value = "";
+    alert(`✅ Senha atualizada para ${nova} com sucesso!`);
+  };
+
+  window.irParaCarneAposCadastro = function() {
+    const id = parseInt(document.getElementById("pos-cad-id").value);
+    const v = varoes.find(x => x.id === id);
+    fecharModal("modal-pos-cadastro");
+    if (v) {
+      document.getElementById("modal-auto-atualizacao").classList.add("active");
+      abrirPainelPrivadoCarne(v);
+    }
+  };
+
+  // ==========================================
+  // VALIDADOR / CONFIRMAÇÃO DE PRESENÇA PÚBLICA
+  // ==========================================
+  window.abrirValidadorMembro = function(id, nome) {
+    document.getElementById("casal-id-confirmar").value = id;
+    document.getElementById("texto-confirmar").innerText = `Confirmando presença para: ${nome}`;
+    document.getElementById("valida-nome1").value = "";
+    document.getElementById("valida-tel1").value = "";
+    document.getElementById("valida-tel2").value = "";
+    document.getElementById("valida-box-sugestao").style.display = "none";
+    document.getElementById("modal-confirmar").classList.add("active");
+  };
+
+  window.salvarConfirmacaoMembro = async function() {
+    const id = parseInt(document.getElementById("casal-id-confirmar").value);
+    const n1 = document.getElementById("valida-nome1").value.trim().toUpperCase();
+    const t1 = document.getElementById("valida-tel1").value;
+    const t2 = document.getElementById("valida-tel2").value;
+
+    if (!n1) return alert("Por favor, informe o seu nome completo.");
+    if (!validarTelefone(t1, true)) return alert("O WhatsApp principal é inválido!");
+    if (t2 && !validarTelefone(t2, false)) return alert("O segundo telefone é inválido!");
+
+    const v = varoes.find(x => x.id === id);
+    const primeiroNome = n1.split(' ')[0];
+    if (!v.nome.includes(primeiroNome)) {
+      return alert("O nome informado não confere com o participante selecionado na lista.");
+    }
+
+    let nomeFinal = obterPrimeiroEUltimoNome(n1);
+    const concorda = document.getElementById("valida-check-concorda").checked;
+    const custom = document.getElementById("valida-nome-custom").value.trim();
+    if (!concorda && custom) nomeFinal = custom.toUpperCase();
+
+    v.nome = nomeFinal;
+    v.nomeCompleto = n1;
+    v.tel1 = t1.replace(/\D/g, '');
+    v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
+    v.confirmado = true;
+    if (!v.codigoAcesso) v.codigoAcesso = gerarCodigoAcessoUnico();
+
+    await salvarNoBanco();
+    renderizarLista();
+    fecharModal('modal-confirmar');
+    alert(`Presença confirmada com sucesso!\n\n🔑 Sua SENHA DE ACESSO é: ${v.codigoAcesso}`);
+  };
+
+  // ==========================================
+  // CARNÊ DIGITAL PRIVADO DO PARTICIPANTE
+  // ==========================================
+  window.abrirModalAutoAtualizacao = function() {
+    document.getElementById("auth-membro-tel").value = "";
+    document.getElementById("auth-membro-codigo").value = "";
+    document.getElementById("step-auth-membro").style.display = "block";
+    document.getElementById("step-update-membro").style.display = "none";
+    cotasSelecionadasMembro = [];
+    document.getElementById("modal-auto-atualizacao").classList.add("active");
+  };
+
+  window.autenticarMembroAuto = function() {
+    const tel = document.getElementById("auth-membro-tel").value.replace(/\D/g, '');
+    const codigo = document.getElementById("auth-membro-codigo").value.trim();
+
+    if (!tel || !codigo) return alert("Preencha seu WhatsApp e sua senha de 4 dígitos.");
+
+    const v = varoes.find(x => (x.tel1 === tel || x.tel2 === tel) && x.codigoAcesso === codigo);
+    if (!v) return alert("Nenhum cadastro encontrado com este telefone e senha de 4 dígitos.");
+
+    abrirPainelPrivadoCarne(v);
+  };
+
+  function abrirPainelPrivadoCarne(v) {
+    cotasSelecionadasMembro = [];
+    document.getElementById("auth-casal-id").value = v.id;
+    document.getElementById("auth-data-previsao").value = v.previsaoPagamento || "";
+    document.getElementById("auth-nova-senha-pin").value = "";
+    document.getElementById("auth-forma-pagamento").value = (v.formaPagamento && v.formaPagamento !== 'indefinido') ? v.formaPagamento : "pix";
+    alternarBoxPix('auth');
+    atualizarIndicadorBiometriaCarne(v);
+    atualizarMensagemIncentivo(true);
+
+    renderizarCarnePrivado(v);
+
+    document.getElementById("step-auth-membro").style.display = "none";
+    document.getElementById("step-update-membro").style.display = "block";
+  }
+
+  function renderizarCarnePrivado(v) {
+    const cotas = garantirEstruturaCotas(v);
+    const totalCotas = cotas.length;
+    const valParcela = obterValorParcelaInscricao(v);
+    const pagas = cotas.filter(c => c.pago).length;
+    const restantes = Math.max(0, totalCotas - pagas);
+    const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
+    const valorPago = pagas * valParcela;
+    const valorTotal = totalCotas * valParcela;
+    const valorFalta = Math.max(0, valorTotal - valorPago);
+
+    document.getElementById("auth-casal-nome").innerText = v.nome;
+    document.getElementById("auth-dep-info").innerText = (v.temDependente && v.nomeDependente)
+      ? `👥 Responsável por 2 pessoas: Você + ${v.nomeDependente} (${v.parentescoDependente || 'Dependente'})`
+      : "👤 Inscrição Individual (1 pessoa)";
+
+    // Visão clara e objetiva: Total / Já Pago / Falta Pagar
+    document.getElementById("auth-val-total").innerText = `R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-total-txt").innerText = `${totalCotas} cotas de R$ ${valParcela.toFixed(2).replace('.', ',')}`;
+
+    document.getElementById("auth-val-pago").innerText = `R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-pagas-txt").innerText = `${pagas} ${pagas === 1 ? 'cota paga' : 'cotas pagas'}`;
+
+    document.getElementById("auth-val-falta").innerText = `R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-falta-txt").innerText = restantes === 0 ? "Tudo quitado!" : `${restantes} ${restantes === 1 ? 'cota restante' : 'cotas restantes'}`;
+
+    // Barra de progresso + título contextual
+    document.getElementById("auth-progress-fill").style.width = `${perc}%`;
+    document.getElementById("auth-progress-label").innerText = `${perc}% Concluído (${pagas} de ${totalCotas} cotas)`;
+
+    let tituloIncentivo = "⚔️ Jornada Iniciada";
+    if (perc >= 100) tituloIncentivo = "🏆 Missão Cumprida — 100% Quitado!";
+    else if (perc >= 70) tituloIncentivo = "🔥 Reta Final — Falta Muito Pouco!";
+    else if (perc >= 40) tituloIncentivo = "🛡️ Firme no Propósito — Excelente Ritmo!";
+    else if (perc > 0) tituloIncentivo = "⚔️ Ótimo Começo — Continue Avançando!";
+    document.getElementById("auth-encouragement-title").innerText = tituloIncentivo;
+
+    // Avaliação Inteligente de Prazos (Sem cobrança se estiver no prazo!)
+    const aval = avaliarStatusPrazo(v);
+    const deadlineContainer = document.getElementById("auth-deadline-container");
+    if (aval.alerta) {
+      deadlineContainer.innerHTML = `
+        <div class="deadline-alert-box ${aval.tipoAlerta}">
+          <div>
+            <strong style="display:block; margin-bottom:2px;">${aval.titulo}</strong>
+            <span>${aval.mensagem}</span>
+          </div>
+        </div>
+      `;
+    } else {
+      deadlineContainer.innerHTML = `<div class="deadline-ok-pill">${aval.mensagem}</div>`;
+    }
+
+    const grid = document.getElementById("auth-carne-grid");
+    grid.innerHTML = "";
+
+    cotas.forEach(c => {
+      const selecionada = cotasSelecionadasMembro.includes(c.numero);
+      const card = document.createElement("div");
+      card.className = `cota-card ${c.pago ? 'pago' : ''} ${selecionada ? 'selecionada' : ''}`;
+
+      let statusHtml = `<span class="cota-status st-pend">Pendente</span>`;
+      if (c.pago) statusHtml = `<span class="cota-status st-pago">✅ Pago</span>`;
+      else if (selecionada) statusHtml = `<span class="cota-status st-sel">Selecionada</span>`;
+
+      let inner = `
+        <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
+        <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
+        ${statusHtml}
+      `;
+
+      if (c.pago && c.compId) {
+        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${c.compId}', '${v.nome} — Cota ${c.numero}')">📎 Recibo</button>`;
+      }
+
+      card.innerHTML = inner;
+      if (!c.pago) card.onclick = () => toggleSelecaoCotaMembro(v.id, c.numero);
+      grid.appendChild(card);
+    });
+
+    const painelPag = document.getElementById("auth-painel-pagamento");
+    if (cotasSelecionadasMembro.length > 0) {
+      painelPag.style.display = "block";
+      const qtdSel = cotasSelecionadasMembro.length;
+      const totalSel = qtdSel * valParcela;
+      document.getElementById("auth-selecao-titulo").innerText = `${qtdSel} ${qtdSel === 1 ? 'cota selecionada' : 'cotas selecionadas'} (${cotasSelecionadasMembro.sort((a,b)=>a-b).join(', ')})`;
+      document.getElementById("auth-selecao-valor").innerText = `Total: R$ ${totalSel.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    } else {
+      painelPag.style.display = "none";
+    }
+  }
+
+  window.toggleSelecaoCotaMembro = function(varaoId, numeroCota) {
+    const idx = cotasSelecionadasMembro.indexOf(numeroCota);
+    if (idx > -1) cotasSelecionadasMembro.splice(idx, 1);
+    else cotasSelecionadasMembro.push(numeroCota);
+    const v = varoes.find(x => x.id === varaoId);
+    if (v) renderizarCarnePrivado(v);
+  };
+
+  window.salvarPagamentoCotasMembro = async function() {
+    const id = parseInt(document.getElementById("auth-casal-id").value);
+    const v = varoes.find(x => x.id === id);
+    if (!v || cotasSelecionadasMembro.length === 0) return;
+
+    const forma = document.getElementById("auth-forma-pagamento").value;
+    const fileInput = document.getElementById("auth-comprovante-file");
+
+    if (forma === "pix" && fileInput.files.length === 0) {
+      return alert("Anexe o comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
+    }
+
+    const btn = document.getElementById("btn-confirmar-cotas-membro");
+    btn.disabled = true;
+    btn.innerText = "⏳ Enviando comprovante...";
+
+    try {
+      let compId = "";
+      if (fileInput.files.length > 0) {
+        const base64 = await processarComprovanteOtimizado(fileInput.files[0]);
+        if (!base64) return;
+        compId = await salvarComprovanteNuvem(base64);
+      }
+
+      const hojeISO = new Date().toISOString().split('T')[0];
+      const cotas = garantirEstruturaCotas(v);
+
+      cotasSelecionadasMembro.forEach(num => {
+        const cotaObj = cotas.find(c => c.numero === num);
+        if (cotaObj) {
+          cotaObj.pago = true;
+          cotaObj.dataPagamento = hojeISO;
+          cotaObj.forma = forma;
+          if (compId) cotaObj.compId = compId;
+        }
+      });
+
+      v.formaPagamento = forma;
+      const prevInput = document.getElementById("auth-data-previsao").value;
+      if (prevInput) v.previsaoPagamento = prevInput;
+
+      cotasSelecionadasMembro = [];
+      fileInput.value = "";
+
+      await salvarNoBanco();
+      renderizarLista();
+      atualizarMensagemIncentivo(true);
+      renderizarCarnePrivado(v);
+      alert("✅ Pagamento registrado com sucesso! Veja seu progresso atualizado.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "✅ Confirmar Pagamento";
+    }
+  };
+
+  window.salvarPrevisaoMembroAuto = async function() {
+    const id = parseInt(document.getElementById("auth-casal-id").value);
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    v.previsaoPagamento = document.getElementById("auth-data-previsao").value;
+    await salvarNoBanco();
+    renderizarLista();
+    renderizarCarnePrivado(v);
+    alert("Prazo estipulado atualizado com sucesso!");
+  };
+
+  window.alterarSenhaMembroLogado = async function() {
+    const id = parseInt(document.getElementById("auth-casal-id").value);
+    const nova = document.getElementById("auth-nova-senha-pin").value.trim();
+    if (!validarPin4Digitos(nova)) {
+      return alert("A nova senha deve ter exatamente 4 números (Ex: 4321).");
+    }
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+
+    v.codigoAcesso = nova;
+    await salvarNoBanco();
+    document.getElementById("auth-nova-senha-pin").value = "";
+    alert(`✅ Sua senha de 4 dígitos foi alterada para ${nova} com sucesso!`);
+  };
+
+  // ==========================================
+  // GERENCIADOR ADMINISTRATIVO DE COTAS
+  // ==========================================
+  window.abrirGerenciadorCotasAdmin = function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    document.getElementById("admin-cotas-varao-id").value = v.id;
+    renderizarGridCotasAdmin(v);
+    document.getElementById("modal-admin-cotas").classList.add("active");
+  };
+
+  function renderizarGridCotasAdmin(v) {
+    const cotas = garantirEstruturaCotas(v);
+    const totalCotas = cotas.length;
+    const valParcela = obterValorParcelaInscricao(v);
+    const pagas = cotas.filter(c => c.pago).length;
+    const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
+    const valorPago = pagas * valParcela;
+    const valorTotal = totalCotas * valParcela;
+
+    const depTxt = (v.temDependente && v.nomeDependente) ? ` + ${v.nomeDependente} (${v.parentescoDependente})` : "";
+    document.getElementById("admin-cotas-nome").innerText = `${v.nome}${depTxt}`;
+    document.getElementById("admin-cotas-resumo").innerText = `Quitadas: ${pagas}/${totalCotas} cotas • Arrecadado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} / R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("admin-progress-fill").style.width = `${perc}%`;
+    document.getElementById("admin-progress-label").innerText = `${perc}% Concluído`;
+
+    const grid = document.getElementById("admin-carne-grid");
+    grid.innerHTML = "";
+
+    cotas.forEach(c => {
+      const card = document.createElement("div");
+      card.className = `cota-card ${c.pago ? 'pago' : ''}`;
+
+      let inner = `
+        <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
+        <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
+        <span class="cota-status ${c.pago ? 'st-pago' : 'st-pend'}">${c.pago ? '✅ Pago' : 'Pendente'}</span>
+      `;
+
+      if (c.pago && c.compId) {
+        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${c.compId}', '${v.nome} — Cota ${c.numero}')">📎 Recibo</button>`;
+      }
+
+      card.innerHTML = inner;
+      card.onclick = () => alternarCotaManualAdmin(v.id, c.numero);
+      grid.appendChild(card);
+    });
+  }
+
+  window.alternarCotaManualAdmin = async function(varaoId, numeroCota) {
+    const v = varoes.find(x => x.id === varaoId);
+    if (!v) return;
+    const cotas = garantirEstruturaCotas(v);
+    const cota = cotas.find(c => c.numero === numeroCota);
+    if (!cota) return;
+
+    if (cota.pago) {
+      if (!confirm(`Estornar a Cota ${numeroCota} de ${v.nome} para Pendente?`)) return;
+      cota.pago = false;
+      cota.dataPagamento = "";
+      cota.compId = "";
+    } else {
+      cota.pago = true;
+      cota.dataPagamento = new Date().toISOString().split('T')[0];
+      if (!cota.forma) cota.forma = v.formaPagamento !== 'indefinido' ? v.formaPagamento : 'dinheiro';
+    }
+
+    await salvarNoBanco();
+    renderizarGridCotasAdmin(v);
+    renderizarLista();
+  };
+
+  // ==========================================
+  // CRUD ADMINISTRATIVO DE PARTICIPANTES
+  // ==========================================
+  window.adicionarVaraoAdmin = async function() {
+    const n = document.getElementById("add-nome").value.trim().toUpperCase();
+    const t1 = document.getElementById("add-tel1").value;
+    const t2 = document.getElementById("add-tel2").value;
+    const prev = document.getElementById("add-previsao").value;
+    const temDep = document.getElementById("add-tem-dep").checked;
+    const depNome = document.getElementById("add-dep-nome").value.trim().toUpperCase();
+    const depParentesco = document.getElementById("add-dep-parentesco").value;
+
+    if (!n) return alert("Digite o nome completo do titular!");
+    if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
+    if (t2 && !validarTelefone(t2, false)) return alert("Telefone 2 inválido!");
+    if (temDep && !depNome) return alert("Informe o nome do dependente!");
+
+    const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
+    varoes.push({
+      id: novoId,
+      nome: n,
+      nomeCompleto: n,
+      temDependente: temDep,
+      nomeDependente: temDep ? depNome : "",
+      parentescoDependente: temDep ? depParentesco : "",
+      confirmado: false,
+      biometriaAtiva: false,
+      tel1: t1 ? t1.replace(/\D/g, '') : "",
+      tel2: t2 ? t2.replace(/\D/g, '') : "",
+      formaPagamento: "indefinido",
+      previsaoPagamento: prev,
+      codigoAcesso: gerarCodigoAcessoUnico(),
+      cotas: gerarCotasIniciais()
+    });
+    await salvarNoBanco();
+    renderizarLista();
+    document.getElementById("add-nome").value = "";
+    document.getElementById("add-tel1").value = "";
+    document.getElementById("add-tel2").value = "";
+    document.getElementById("add-previsao").value = "";
+    document.getElementById("add-tem-dep").checked = false;
+    document.getElementById("add-dep-campos").style.display = "none";
+    document.getElementById("add-dep-nome").value = "";
+    alert("Participante adicionado com sucesso!");
+  };
+
+  window.abrirEdicaoLider = function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    document.getElementById("edit-id-casal").value = id;
+    const inputNome = document.getElementById("edit-nomes-casal");
+    inputNome.value = v.nome;
+    inputNome.disabled = !(isAlfa || isAnalista);
+    document.getElementById("edit-tel1").value = v.tel1 || "";
+    document.getElementById("edit-tel2").value = v.tel2 || "";
+    document.getElementById("edit-tem-dep").checked = !!v.temDependente;
+    document.getElementById("edit-dep-campos").style.display = v.temDependente ? "block" : "none";
+    document.getElementById("edit-dep-nome").value = v.nomeDependente || "";
+    document.getElementById("edit-dep-parentesco").value = v.parentescoDependente || "Filho";
+    document.getElementById("edit-data-previsao").value = v.previsaoPagamento || "";
+    document.getElementById("edit-forma-pagamento").value = v.formaPagamento || "indefinido";
+    document.getElementById("edit-codigo-acesso").value = v.codigoAcesso || "";
+    document.getElementById("modal-editar-lider").classList.add("active");
+  };
+
+  window.salvarEdicaoLider = async function() {
+    const id = parseInt(document.getElementById("edit-id-casal").value);
+    const t1 = document.getElementById("edit-tel1").value;
+    const t2 = document.getElementById("edit-tel2").value;
+    const temDep = document.getElementById("edit-tem-dep").checked;
+    const depNome = document.getElementById("edit-dep-nome").value.trim().toUpperCase();
+    const depParentesco = document.getElementById("edit-dep-parentesco").value;
+    const novoPin = document.getElementById("edit-codigo-acesso").value.trim();
+
+    if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
+    if (t2 && !validarTelefone(t2, false)) return alert("Telefone 2 inválido!");
+    if (temDep && !depNome) return alert("Informe o nome do dependente!");
+    if (novoPin && !validarPin4Digitos(novoPin)) return alert("A senha de acesso deve ter 4 dígitos numéricos.");
+
+    const v = varoes.find(x => x.id === id);
+    if (isAlfa || isAnalista) v.nome = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
+    v.tel1 = t1 ? t1.replace(/\D/g, '') : "";
+    v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
+    v.temDependente = temDep;
+    v.nomeDependente = temDep ? depNome : "";
+    v.parentescoDependente = temDep ? depParentesco : "";
+    v.previsaoPagamento = document.getElementById("edit-data-previsao").value;
+    v.formaPagamento = document.getElementById("edit-forma-pagamento").value;
+    if (novoPin) v.codigoAcesso = novoPin;
+
+    await salvarNoBanco();
+    renderizarLista();
+    fecharModal('modal-editar-lider');
+  };
+
+  window.excluirVarao = async function(id) {
+    if (!isAlfa && !isAnalista) return alert("Apenas Analista ou Líder Alfa podem excluir!");
+    if (confirm("Remover este cadastro da base de dados?")) {
+      varoes = varoes.filter(v => v.id !== id);
+      await salvarNoBanco();
+      renderizarLista();
+    }
+  };
+
+  window.toggleConfirmacaoLider = async function(id) {
+    const v = varoes.find(x => x.id === id);
+    v.confirmado = !v.confirmado;
+    await salvarNoBanco();
+    renderizarLista();
+  };
+
+  // ==========================================
+  // AUTENTICAÇÃO E LIDERANÇA
+  // ==========================================
+  window.abrirLogin = function() {
+    if (isLider || isAnalista) {
+      isLider = false; isAlfa = false; isAnalista = false;
+      document.getElementById("dashboard-panel").classList.remove("active");
+      document.getElementById("filtros-lideranca").style.display = "none";
+      document.getElementById("info-evento-area").style.display = "block";
+      document.querySelector('.btn-lider').innerHTML = "🔒 Liderança";
+      renderizarLista();
+      return;
+    }
+    const sel = document.getElementById("select-lider");
+    sel.innerHTML = '<option value="">Selecione seu perfil...</option>';
+    lideres.forEach(l => {
+      const cargoDesc = l.cargo ? ` (${l.cargo})` : '';
+      const statusTag = l.bloqueado ? ' [🚫 BLOQUEADO]' : '';
+      sel.innerHTML += `<option value="${l.nome}">${l.nome}${cargoDesc}${statusTag}</option>`;
+    });
+    document.getElementById("senha-input").value = "";
+    document.getElementById("senha-input").type = "password";
+    document.getElementById("modal-login").classList.add("active");
+  };
+
+  window.fazerLogin = function() {
+    const s = document.getElementById("senha-input").value;
+    const nomeSel = document.getElementById("select-lider").value;
+    const l = lideres.find(x => x.nome === nomeSel);
+
+    if (!l) return alert("Selecione um perfil.");
+    if (l.bloqueado) return alert(`⚠️ ACESSO BLOQUEADO!\n\nO perfil de ${l.nome} está bloqueado. Peça a outro líder para desbloquear ou a um Analista para redefinir a senha.`);
+
+    if (l.senha === s) {
+      if (l.primeiroAcesso === true || l.primeiroAcesso === undefined) {
+        liderPendentePrimeiroAcesso = l;
+        fecharModal('modal-login');
+        document.getElementById("primeiro-acesso-nome").innerText = l.nome;
+        document.getElementById("primeiro-acesso-nova-senha").value = "";
+        document.getElementById("primeiro-acesso-confirma-senha").value = "";
+        document.getElementById("modal-primeiro-acesso").classList.add("active");
+        return;
+      }
+      fecharModal('modal-login');
+      concluirLoginSucesso(l);
+    } else {
+      alert("Senha incorreta!");
+    }
+  };
+
+  window.cancelarPrimeiroAcesso = function() {
+    liderPendentePrimeiroAcesso = null;
+    fecharModal('modal-primeiro-acesso');
+  };
+
+  window.salvarSenhaPrimeiroAcesso = async function() {
+    if (!liderPendentePrimeiroAcesso) return;
+    const nova = document.getElementById("primeiro-acesso-nova-senha").value.trim();
+    const conf = document.getElementById("primeiro-acesso-confirma-senha").value.trim();
+    if (nova.length < 4) return alert("Mínimo 4 caracteres.");
+    if (nova !== conf) return alert("As senhas não coincidem.");
+
+    liderPendentePrimeiroAcesso.senha = nova;
+    liderPendentePrimeiroAcesso.primeiroAcesso = false;
+    await salvarNoBanco();
+    fecharModal("modal-primeiro-acesso");
+    concluirLoginSucesso(liderPendentePrimeiroAcesso);
+  };
+
+  function concluirLoginSucesso(l) {
+    fecharModal('modal-login');
+    fecharModal('modal-primeiro-acesso');
+
+    isAnalista = (l.cargo === "Analista" || l.nome === "Joabe" || l.nome === "Felipe");
+    isAlfa = (l.alfa === true || isAnalista);
+    isLider = true;
+    liderAtual = l.nome;
+
+    const dash = document.getElementById("dashboard-panel");
+    dash.classList.add("active");
+    document.getElementById("filtros-lideranca").style.display = "flex";
+    document.getElementById("info-evento-area").style.display = "none";
+    
+    const badgeCargo = document.getElementById("badge-cargo-painel");
+    badgeCargo.style.display = "inline-block";
+    badgeCargo.innerText = isAnalista ? "ANALISTA" : (isAlfa ? "LÍDER ALFA" : "LÍDER");
+    badgeCargo.style.background = isAnalista ? "#e0e7ff" : "var(--bronze)";
+    badgeCargo.style.color = isAnalista ? "#3730a3" : "var(--iron)";
+    document.querySelector('.btn-lider').innerHTML = "Sair (" + liderAtual.split(' ')[0] + ")";
+
+    document.getElementById("btn-tab-alfa").style.display = (isAlfa || isAnalista) ? "block" : "none";
+    document.getElementById("zona-nova-edicao").style.display = (isAlfa || isAnalista) ? "block" : "none";
+    if (isAlfa || isAnalista) renderizarTabelaLideres();
+    atualizarAlertaBloqueio();
+    renderizarLista();
+  }
+
+  window.solicitarRecuperacaoSenha = async function() {
+    const nomeSel = document.getElementById("select-lider").value;
+    if (!nomeSel) return alert("Selecione seu nome antes de solicitar recuperação.");
+    const l = lideres.find(x => x.nome === nomeSel);
+    if (!l || l.bloqueado) return alert("Perfil já bloqueado.");
+    if (!confirm(`Bloquear perfil de ${l.nome} para recuperação de senha?`)) return;
+    l.bloqueado = true;
+    await salvarNoBanco();
+    alert("Perfil bloqueado. Avise um Analista ou Líder.");
+    abrirLogin();
+  };
+
+  function atualizarAlertaBloqueio() {
+    const bloqueados = lideres.filter(l => l.bloqueado);
+    const box = document.getElementById("alerta-bloqueio-container");
+    if (bloqueados.length > 0) {
+      document.getElementById("alerta-bloqueio-texto").innerText = ` Usuário(s) bloqueado(s): ${bloqueados.map(l => l.nome).join(', ')}.`;
+      box.style.display = "flex";
+    } else {
+      box.style.display = "none";
+    }
+  }
+
+  function renderizarTabelaLideres() {
+    const corpo = document.getElementById("tabela-lideres-corpo");
+    if (!corpo) return;
+    corpo.innerHTML = "";
+    lideres.forEach(l => {
+      const tr = document.createElement("tr");
+      let acaoHtml = "";
+      if (l.bloqueado) acaoHtml += `<button onclick="desbloquearLider('${l.nome}')" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔓 Desbloquear</button>`;
+      if (isAnalista) acaoHtml += `<button onclick="abrirRedefinirSenha('${l.nome}')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔑 Senha</button>`;
+      if (!l.fixo) acaoHtml += `<button onclick="removerLider('${l.nome}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;">🗑️</button>`;
+      else acaoHtml += `<span style="color:var(--text-muted); font-size:11px;">Vitalício</span>`;
+
+      let badgeClass = l.cargo === "Analista" ? 'badge-analista-tag' : (l.alfa ? 'badge-alfa-tag' : 'badge-op-tag');
+      const statusBadge = l.bloqueado ? `<span class="badge-cargo badge-bloqueado-tag">🚫 Bloqueado</span>` : `<span class="badge-cargo" style="background:#dcfce7; color:#16a34a;">✅ Ativo</span>`;
+
+      tr.innerHTML = `<td><strong>${l.nome}</strong></td><td><span class="badge-cargo ${badgeClass}">${l.cargo}</span></td><td>${statusBadge}</td><td style="text-align:right;">${acaoHtml}</td>`;
+      corpo.appendChild(tr);
+    });
+  }
+
+  window.desbloquearLider = async function(nome) {
+    const l = lideres.find(x => x.nome === nome);
+    if (l && confirm(`Desbloquear ${l.nome}?`)) {
+      l.bloqueado = false;
+      await salvarNoBanco();
+      renderizarTabelaLideres();
+      atualizarAlertaBloqueio();
+    }
+  };
+
+  window.abrirRedefinirSenha = function(nome) {
+    if (!isAnalista) return;
+    document.getElementById("redefinir-lider-nome").value = nome;
+    document.getElementById("txt-redefinir-lider").innerText = `Usuário: ${nome}`;
+    document.getElementById("nova-senha-input").value = "";
+    document.getElementById("modal-redefinir-senha").classList.add("active");
+  };
+
+  window.confirmarRedefinicaoSenha = async function() {
+    const nome = document.getElementById("redefinir-lider-nome").value;
+    const nova = document.getElementById("nova-senha-input").value.trim();
+    if (nova.length < 4) return alert("Mínimo 4 caracteres.");
+    const l = lideres.find(x => x.nome === nome);
+    if (l) {
+      l.senha = nova;
+      l.bloqueado = false;
+      l.primeiroAcesso = false;
+      await salvarNoBanco();
+    }
+    fecharModal("modal-redefinir-senha");
+    renderizarTabelaLideres();
+    atualizarAlertaBloqueio();
+    alert("Senha redefinida com sucesso!");
+  };
+
+  window.cadastrarLider = async function() {
+    const n = document.getElementById("novo-lider-nome").value.trim();
+    const s = document.getElementById("novo-lider-senha").value.trim();
+    const cargo = document.getElementById("novo-lider-cargo").value;
+    if (!n || !s) return alert("Preencha nome e senha!");
+    lideres.push({ nome: n, cargo, senha: s, alfa: (cargo !== "Líder Operacional"), fixo: false, bloqueado: false, primeiroAcesso: true });
+    await salvarNoBanco();
+    renderizarTabelaLideres();
+    document.getElementById("novo-lider-nome").value = "";
+    document.getElementById("novo-lider-senha").value = "";
+  };
+
+  window.removerLider = async function(n) {
+    if (confirm(`Remover ${n}?`)) {
+      lideres = lideres.filter(l => l.nome !== n || l.fixo);
+      await salvarNoBanco();
+      renderizarTabelaLideres();
+    }
+  };
+
+  // ==========================================
+  // EXPORTAÇÃO EXCEL (CSV) E PDF EXECUTIVO
+  // ==========================================
+  window.exportarCSVModulo = function(tipo) {
+    let linhas = [];
+    const ano = configuracoes.anoEvento || "2027";
+    let nomeArquivo = `Relatorio_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
+    let csvContent = "\uFEFFsep=;\r\n";
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+
+    if (tipo === 'presenca') {
+      nomeArquivo = `Participantes_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
+      linhas.push(["ID", "Titular", "Dependente", "Vinculo", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
+      varoesFiltrados.forEach(v => {
+        linhas.push([
+          v.id,
+          `"${v.nome}"`,
+          `"${v.nomeDependente || '-'}"`,
+          `"${v.parentescoDependente || '-'}"`,
+          obterQtdPessoas(v),
+          v.confirmado ? "Confirmado" : "Pendente",
+          `"${v.tel1 ? formatarTelefoneVisual(v.tel1) : ''}"`
+        ]);
+      });
+    } else {
+      nomeArquivo = `Financeiro_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
+      linhas.push(["ID", "Titular", "Dependente", "Pessoas", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)", "Status Prazo"]);
+      varoesFiltrados.forEach(v => {
+        const pagas = contarCotasPagas(v);
+        const valParc = obterValorParcelaInscricao(v);
+        const pagoVal = pagas * valParc;
+        const faltaVal = Math.max(0, (totalCotas - pagas) * valParc);
+        const aval = avaliarStatusPrazo(v);
+        linhas.push([
+          v.id,
+          `"${v.nome}"`,
+          `"${v.nomeDependente || '-'}"`,
+          obterQtdPessoas(v),
+          pagas,
+          totalCotas,
+          pagoVal.toFixed(2).replace('.', ','),
+          faltaVal.toFixed(2).replace('.', ','),
+          aval.alerta ? "Em Atraso / Alerta" : "No Prazo"
+        ]);
+      });
+    }
+
+    csvContent += linhas.map(e => e.join(";")).join("\r\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = nomeArquivo;
+    link.click();
+  };
+
+  window.exportarRelatorioPDF = function(tipo) {
+    const tituloEv = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
+    let titulo = tipo === 'presenca' ? "Relatório de Participantes (Físico)" : "Relatório Financeiro & Cotas";
+    let nomeArquivo = `Relatorio_${tituloEv.replace(/\s+/g, '_')}_${tipo}.pdf`;
+    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+
+    let totalPessoas = 0, confirmadosPessoas = 0, arrecadado = 0;
+    varoesFiltrados.forEach(v => {
+      const qp = obterQtdPessoas(v);
+      totalPessoas += qp;
+      if (v.confirmado) confirmadosPessoas += qp;
+      arrecadado += contarCotasPagas(v) * obterValorParcelaInscricao(v);
+    });
+
+    const colunas = tipo === 'presenca'
+      ? ["Nº", "Titular", "Dependente", "Pessoas", "Presença", "WhatsApp"]
+      : ["Nº", "Titular", "Dependente", "Pessoas", "Cotas", "Arrecadado", "Restante"];
+
+    const dadosLinhas = varoesFiltrados.map(v => {
+      const qp = obterQtdPessoas(v);
+      const depStr = v.temDependente && v.nomeDependente ? `${v.nomeDependente} (${v.parentescoDependente})` : "-";
+      if (tipo === 'presenca') {
+        return [
+          v.id,
+          v.nome,
+          depStr,
+          qp,
+          v.confirmado ? '<span style="color:#1b7a43; font-weight:bold;">Confirmado</span>' : 'Pendente',
+          v.tel1 ? formatarTelefoneVisual(v.tel1) : '-'
+        ];
+      } else {
+        const pagas = contarCotasPagas(v);
+        const valParc = obterValorParcelaInscricao(v);
+        return [
+          v.id,
+          v.nome,
+          depStr,
+          qp,
+          `${pagas}/${totalCotas}`,
+          `R$ ${(pagas * valParc).toFixed(2).replace('.', ',')}`,
+          `R$ ${(Math.max(0, totalCotas - pagas) * valParc).toFixed(2).replace('.', ',')}`
+        ];
+      }
+    });
+
+    const containerPDF = document.createElement("div");
+    containerPDF.style.padding = "20px";
+    containerPDF.style.fontFamily = "Arial, sans-serif";
+    containerPDF.innerHTML = `
+      <div style="border-bottom: 3px solid #b87d4b; padding-bottom: 10px; margin-bottom: 16px; display:flex; justify-content:space-between;">
+        <div>
+          <h2 style="margin:0; color:#16191d;">${tituloEv}</h2>
+          <small style="color:#5c6370;">${configuracoes.subtituloEvento || 'Encontro dos Varões • IBAC'}</small>
+        </div>
+        <div style="text-align:right;">
+          <strong style="color:#b87d4b;">${titulo}</strong><br>
+          <small style="color:#5c6370;">Emissão: ${new Date().toLocaleDateString('pt-BR')}</small>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; background:#f4f3ef; padding:10px; border-radius:4px; margin-bottom:16px; font-size:12px;">
+        <div><strong>Cadastros:</strong> ${varoesFiltrados.length}</div>
+        <div><strong>Pessoas Físicas:</strong> ${totalPessoas}</div>
+        <div><strong>Confirmados:</strong> ${confirmadosPessoas}</div>
+        <div><strong>Arrecadado:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:11px;">
+        <thead>
+          <tr style="background:#16191d; color:#fff;">
+            ${colunas.map(c => `<th style="padding:7px; text-align:left;">${c}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${dadosLinhas.map((l, i) => `<tr style="background:${i%2===0?'#fff':'#faf9f6'};">${l.map(val => `<td style="padding:6px; border:1px solid #dcd9d0;">${val}</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+    `;
+
+    document.body.appendChild(containerPDF);
+    html2pdf().set({
+      margin: 8,
+      filename: nomeArquivo,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).from(containerPDF).save().then(() => document.body.removeChild(containerPDF));
+  };
+
+  window.processarImportacaoCSV = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      const lines = e.target.result.split('\n');
+      let adicionados = 0;
+      lines.forEach((line, index) => {
+        if (index === 0 && (line.toLowerCase().includes('nome') || line.toLowerCase().includes('titular') || line.toLowerCase().includes('sep='))) return;
+        const sep = line.includes(';') ? ';' : ',';
+        const cols = line.split(sep);
+        if (cols.length > 0 && cols[0].trim() !== '') {
+          let nomeRaw = cols.length > 1 && !isNaN(cols[0].trim()) ? cols[1] : cols[0];
+          let nome = nomeRaw.replace(/['"]/g, '').trim().toUpperCase();
+          if (nome && !varoes.find(v => v.nome === nome)) {
+            const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
+            varoes.push({
+              id: novoId,
+              nome,
+              nomeCompleto: nome,
+              temDependente: false,
+              nomeDependente: "",
+              parentescoDependente: "",
+              confirmado: false,
+              biometriaAtiva: false,
+              tel1: cols.length > 3 ? cols[3].replace(/['"\D]/g, '') : "",
+              tel2: "",
+              formaPagamento: "indefinido",
+              previsaoPagamento: "",
+              codigoAcesso: gerarCodigoAcessoUnico(),
+              cotas: gerarCotasIniciais()
+            });
+            adicionados++;
+          }
+        }
+      });
+      await salvarNoBanco();
+      renderizarLista();
+      alert(`${adicionados} participantes importados!`);
+      event.target.value = '';
+    };
+    reader.readAsText(file);
+  };
+
+  function iniciarContagem() {
+    if (timerInterval) clearInterval(timerInterval);
+    const alvo = new Date(configuracoes.dataEvento).getTime();
+    if (!configuracoes.dataEvento || isNaN(alvo)) return;
+    timerInterval = setInterval(() => {
+      const dist = alvo - new Date().getTime();
+      if (dist < 0) {
+        clearInterval(timerInterval);
+        document.getElementById("countdown-timer").innerHTML = "<div style='color:var(--bronze); font-size:18px; font-weight:bold;'>O Grande Dia Chegou! ⚔️</div>";
+        return;
+      }
+      document.getElementById("cd-dias").innerText = Math.floor(dist / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      document.getElementById("cd-horas").innerText = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      document.getElementById("cd-min").innerText = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+    }, 1000);
+  }
+
+  window.fecharModal = function(id) {
+    document.getElementById(id).classList.remove("active");
+  };
+
+  window.onload = inicializarDados;
+</script>
+</body>
+</html>
