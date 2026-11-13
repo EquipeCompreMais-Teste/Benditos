@@ -179,18 +179,6 @@
       letter-spacing: 2px;
     }
 
-    .btn-refresh-verse {
-      background: transparent;
-      border: 1px solid rgba(184, 125, 75, 0.45);
-      color: #cbd5e1;
-      font-size: 11px;
-      padding: 3px 9px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn-refresh-verse:hover { background: var(--bronze); color: var(--iron); }
-
     /* ================= BARRA PÚBLICA & CONTAGEM ================= */
     .info-evento-publico {
       background: var(--surface);
@@ -570,6 +558,80 @@
     .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
     .casal-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
 
+    /* ================= SELETOR DE CARNÊ POR PESSOA (TITULAR / DEPENDENTE) ================= */
+    .carne-owner-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 10px 0 8px 0;
+      background: var(--stone);
+      padding: 5px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+    }
+    .carne-owner-tab {
+      flex: 1;
+      min-width: 125px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+    }
+    .carne-owner-tab:hover {
+      background: rgba(255,255,255,0.7);
+      color: var(--iron);
+    }
+    .carne-owner-tab.active {
+      background: var(--iron);
+      color: var(--bronze);
+      border-color: var(--iron);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .carne-person-section {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #fdfbf7;
+    }
+    .carne-person-section.titular-sec {
+      border-left: 4px solid var(--iron);
+    }
+    .carne-person-section.dep-sec {
+      border-left: 4px solid var(--bronze);
+      background: #faf7f2;
+    }
+    .carne-person-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .carne-person-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--iron);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .carne-person-sub {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--bronze-dark);
+    }
+
     /* ================= VISÃO OBJETIVA DE PAGAMENTO & BARRA MOTIVACIONAL ================= */
     .finance-summary-grid {
       display: grid;
@@ -622,20 +684,17 @@
     .progress-fill { height: 100%; background: linear-gradient(90deg, var(--bronze), var(--green)); transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
     .progress-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--iron); text-shadow: 0 0 5px rgba(255,255,255,0.95); }
 
-    /* Banner de Incentivo Dinâmico */
+    /* Banner de Incentivo Automático */
     .encouragement-banner {
       background: var(--iron);
       color: #f8fafc;
       border-left: 4px solid var(--bronze);
       border-radius: 6px;
-      padding: 10px 14px;
+      padding: 11px 14px;
       margin-bottom: 12px;
       font-size: 12.5px;
       line-height: 1.45;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      text-align: left;
     }
     .encouragement-banner strong { color: var(--bronze); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
 
@@ -743,29 +802,35 @@
     .btn-biometric-outline:hover { background: var(--bronze-soft); }
 
     /* Grid das 10 Cotas */
-    .carne-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0; }
-    .cota-card { border: 2px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; background: #fff; cursor: pointer; transition: 0.2s; user-select: none; position: relative; }
+    .carne-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 8px 0 4px 0; }
+    .cota-card { border: 2px solid var(--border); border-radius: 6px; padding: 9px 5px; text-align: center; background: #fff; cursor: pointer; transition: 0.2s; user-select: none; position: relative; }
     .cota-card:hover:not(.pago):not(.analise) { border-color: var(--bronze); }
     .cota-card.selecionada { border-color: var(--blue); background: #eff6ff; }
     .cota-card.pago { border-color: #86efac; background: var(--green-bg); cursor: default; }
     .cota-card.analise { border-color: #fde68a; background: var(--amber-bg); cursor: default; }
-    .cota-mult-tag {
-      position: absolute;
-      top: 4px;
-      right: 4px;
+    .cota-owner-tag {
+      display: block;
       font-size: 9px;
       font-weight: 800;
-      background: var(--bronze-soft);
       color: var(--bronze-dark);
-      padding: 1px 4px;
+      background: var(--bronze-soft);
       border-radius: 3px;
+      padding: 1px 4px;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .cota-num { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; }
+    .cota-owner-tag.titular {
+      background: #e2e8f0;
+      color: var(--iron);
+    }
+    .cota-num { font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; }
     .cota-card.pago .cota-num { color: var(--green); }
     .cota-card.analise .cota-num { color: var(--amber); }
     .cota-card.selecionada .cota-num { color: var(--blue); }
-    .cota-val { font-size: 13.5px; font-weight: 700; color: var(--iron); display: block; margin: 4px 0; }
-    .cota-status { font-size: 9.5px; font-weight: 700; padding: 2px 5px; border-radius: 4px; display: inline-block; }
+    .cota-val { font-size: 13px; font-weight: 700; color: var(--iron); display: block; margin: 3px 0; }
+    .cota-status { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 4px; display: inline-block; }
     .cota-status.st-pago { background: #dcfce7; color: var(--green); }
     .cota-status.st-analise { background: #fef3c7; color: var(--amber); border: 1px solid #f59e0b; }
     .cota-status.st-sel { background: #dbeafe; color: var(--blue); }
@@ -786,6 +851,7 @@
       justify-content: space-between;
       padding: 3px 0;
       color: var(--text-muted);
+      gap: 8px;
     }
     .checkout-breakdown-total {
       display: flex;
@@ -1355,7 +1421,7 @@
       <div class="btn-row">
         <input type="text" id="novo-lider-nome" placeholder="Nome">
         <div class="password-wrapper">
-          <input type="password" id="novo-lider-senha" placeholder="Senha Padrão">
+          <input type="password" id="novo-lider-senha" placeholder="Senha Padrão" onkeydown="if(event.key==='Enter'){ event.preventDefault(); cadastrarLider(); }">
           <button type="button" class="btn-eye" onclick="toggleMostrarSenha('novo-lider-senha')">👁️</button>
         </div>
         <select id="novo-lider-cargo">
@@ -1446,7 +1512,7 @@
     <h3>Acesso da Liderança</h3>
     <select id="select-lider" onchange="atualizarEstadoModalLoginBio()"></select>
     <div class="password-wrapper">
-      <input type="password" id="senha-input" placeholder="Digite sua Senha">
+      <input type="password" id="senha-input" placeholder="Digite sua Senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); fazerLogin(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('senha-input')">👁️</button>
     </div>
     <div style="text-align: right; margin-bottom: 14px;">
@@ -1472,11 +1538,11 @@
       Defina sua senha pessoal definitiva para continuar.
     </p>
     <div class="password-wrapper">
-      <input type="password" id="primeiro-acesso-nova-senha" placeholder="Nova Senha (mínimo 4 dígitos)">
+      <input type="password" id="primeiro-acesso-nova-senha" placeholder="Nova Senha (mínimo 4 dígitos)" onkeydown="if(event.key==='Enter'){ event.preventDefault(); document.getElementById('primeiro-acesso-confirma-senha').focus(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('primeiro-acesso-nova-senha')">👁️</button>
     </div>
     <div class="password-wrapper">
-      <input type="password" id="primeiro-acesso-confirma-senha" placeholder="Confirme a Nova Senha">
+      <input type="password" id="primeiro-acesso-confirma-senha" placeholder="Confirme a Nova Senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); salvarSenhaPrimeiroAcesso(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('primeiro-acesso-confirma-senha')">👁️</button>
     </div>
     <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--iron); font-weight:600; text-align:left; margin: 6px 0 12px 0; cursor:pointer;">
@@ -1495,7 +1561,7 @@
     <p id="txt-redefinir-lider" style="font-weight: 700; color: var(--iron);"></p>
     <input type="hidden" id="redefinir-lider-nome">
     <div class="password-wrapper">
-      <input type="password" id="nova-senha-input" placeholder="Nova senha">
+      <input type="password" id="nova-senha-input" placeholder="Nova senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); confirmarRedefinicaoSenha(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('nova-senha-input')">👁️</button>
     </div>
     <button class="primary-btn bronze-btn" onclick="confirmarRedefinicaoSenha()">Salvar & Desbloquear</button>
@@ -1551,7 +1617,7 @@
       </div>
       <div id="reg-lista-dependentes" style="margin-top:8px;"></div>
       <small id="reg-dep-aviso" style="font-size:11px; color:var(--bronze-dark); display:none; margin-top:4px;">
-        * Cada pessoa adicionada soma 1 cota no seu carnê mensal e garante vaga reservada no evento.
+        * Cada pessoa adicionada gera um carnê individual separado dentro da sua conta para você acompanhar facilmente de quem é cada cota.
       </small>
     </div>
     
@@ -1563,10 +1629,10 @@
     <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin: 4px 0;">Deseja pagar alguma cota agora?</label>
     <select id="reg-qtd-cotas-iniciais" onchange="atualizarResumoCadastro()">
       <option value="0">Não agora (Gerar carnê e pagar depois)</option>
-      <option value="1">Sim — Pagar 1ª Cota Mensal</option>
-      <option value="2">Sim — Pagar 2 Cotas Mensais</option>
-      <option value="3">Sim — Pagar 3 Cotas Mensais</option>
-      <option value="5">Sim — Pagar 5 Cotas Mensais</option>
+      <option value="1">Sim — Pagar 1ª Cota Mensal (Todos)</option>
+      <option value="2">Sim — Pagar 2 Cotas Mensais (Todos)</option>
+      <option value="3">Sim — Pagar 3 Cotas Mensais (Todos)</option>
+      <option value="5">Sim — Pagar 5 Cotas Mensais (Todos)</option>
       <option value="10">Sim — Quitar Evento Completo (100%)</option>
     </select>
 
@@ -1637,7 +1703,7 @@
     <div style="text-align:left; background:var(--stone); padding:12px; border-radius:6px; border:1px solid var(--border); margin:10px 0;">
       <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:6px;">🔑 Quer personalizar sua senha de 4 dígitos agora?</label>
       <div class="btn-row" style="margin-bottom:0;">
-        <input type="text" id="pos-cad-nova-senha" maxlength="4" inputmode="numeric" placeholder="Nova senha (4 dígitos)" style="font-family:monospace; letter-spacing:3px; font-weight:700;">
+        <input type="text" id="pos-cad-nova-senha" maxlength="4" inputmode="numeric" placeholder="Nova senha (4 dígitos)" style="font-family:monospace; letter-spacing:3px; font-weight:700;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); alterarPinPosCadastro(); }">
         <button type="button" class="primary-btn" style="width:auto; padding:10px 14px; font-size:12px;" onclick="alterarPinPosCadastro()">Salvar Senha</button>
       </div>
     </div>
@@ -1683,7 +1749,7 @@
 
 <!-- Modal: Carnê Digital Privado do Participante -->
 <div class="modal" id="modal-auto-atualizacao">
-  <div class="modal-content" style="max-width: 620px;">
+  <div class="modal-content" style="max-width: 630px;">
     <h3>💳 Meu Carnê Digital</h3>
     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Acesso privado para controle das suas cotas mensais e comprovantes.</p>
     
@@ -1693,8 +1759,8 @@
         <strong>📲 Comprovante Recebido do Banco!</strong>
         <span>Entre com seu WhatsApp e senha de 4 dígitos (ou impressão digital) abaixo para vincular automaticamente o recibo à sua próxima cota.</span>
       </div>
-      <input type="text" id="auth-membro-tel" placeholder="Seu WhatsApp cadastrado (Com DDD)">
-      <input type="password" id="auth-membro-codigo" maxlength="4" inputmode="numeric" placeholder="Sua Senha de 4 dígitos" style="letter-spacing:3px; font-weight:700;">
+      <input type="text" id="auth-membro-tel" placeholder="Seu WhatsApp cadastrado (Com DDD)" onkeydown="if(event.key==='Enter'){ event.preventDefault(); document.getElementById('auth-membro-codigo').focus(); }">
+      <input type="password" id="auth-membro-codigo" maxlength="4" inputmode="numeric" placeholder="Sua Senha de 4 dígitos" style="letter-spacing:3px; font-weight:700;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); autenticarMembroAuto(); }">
       <div style="text-align: right; margin-bottom: 10px;">
         <button type="button" class="btn-link-esqueci" onclick="esqueciSenhaMembro()">Esqueci minha senha de 4 dígitos</button>
       </div>
@@ -1718,6 +1784,9 @@
       </div>
       <input type="hidden" id="auth-casal-id">
 
+      <!-- Seletor de Carnê por Pessoa (Aparece automaticamente quando há dependentes) -->
+      <div id="auth-owner-tabs-container" class="carne-owner-tabs" style="display:none;"></div>
+
       <!-- Banner de Sugestão quando um comprovante é compartilhado pelo app do banco -->
       <div id="auth-share-suggestion-banner" class="share-suggestion-banner" style="display:none; margin-top:10px;">
         <strong>📲 Comprovante Recebido! Sugestão de Vínculo Automático:</strong>
@@ -1734,7 +1803,7 @@
       <!-- VISÃO CLARA E OBJETIVA: TOTAL / JÁ PAGO / FALTA PAGAR -->
       <div class="finance-summary-grid">
         <div class="fin-box">
-          <span>Investimento Total</span>
+          <span id="auth-lbl-total">Investimento Total</span>
           <strong id="auth-val-total">R$ 200,00</strong>
           <small id="auth-cotas-total-txt">10 cotas</small>
         </div>
@@ -1750,28 +1819,26 @@
         </div>
       </div>
 
-      <!-- BARRA DE PROGRESSO + MENSAGEM DE INCENTIVO DINÂMICA -->
+      <!-- BARRA DE PROGRESSO + MENSAGEM DE INCENTIVO AUTOMÁTICA DO SISTEMA -->
       <div class="progress-track large">
         <div class="progress-fill" id="auth-progress-fill" style="width: 0%;"></div>
         <div class="progress-label" id="auth-progress-label">0% Concluído</div>
       </div>
 
       <div class="encouragement-banner" id="auth-encouragement-box">
-        <div>
-          <strong id="auth-encouragement-title">⚔️ Força e Perseverança</strong>
-          <span id="auth-encouragement-msg">Cada passo firme te aproxima do propósito. Vamos juntos!</span>
-        </div>
-        <button type="button" class="btn-refresh-verse" onclick="atualizarMensagemIncentivo(true)" title="Nova mensagem">🔄</button>
+        <strong id="auth-encouragement-title">⚔️ Jornada Iniciada</strong>
+        <span id="auth-encouragement-msg">Cada cota quitada é uma semente plantada no que Deus vai fazer na sua vida neste encontro!</span>
       </div>
 
       <!-- ALERTA DE PRAZO -->
       <div id="auth-deadline-container"></div>
 
       <p style="font-size:12px; color:var(--text-muted); margin: 0 0 8px 0;">
-        Toque nas cotas pendentes abaixo para selecionar uma ou mais parcelas que deseja pagar:
+        Toque nas cotas pendentes abaixo para selecionar de quem e quais parcelas deseja pagar:
       </p>
 
-      <div class="carne-grid" id="auth-carne-grid"></div>
+      <!-- Container com os Carnês Separados por Pessoa -->
+      <div id="auth-carne-sections-container"></div>
 
       <!-- Painel de Pagamento das Cotas Selecionadas -->
       <div id="auth-painel-pagamento" style="display:none; background:var(--stone); border:1px solid var(--border); border-radius:6px; padding:14px; margin-top:14px;">
@@ -1780,7 +1847,7 @@
           <strong style="color:var(--green); font-size:16px;" id="auth-selecao-valor">Total: R$ 20,00</strong>
         </div>
 
-        <!-- Mini-Recibo Transparente (Quando há dependentes) -->
+        <!-- Mini-Recibo Discriminado por Pessoa -->
         <div id="auth-checkout-breakdown" class="checkout-breakdown-box" style="display:none;"></div>
 
         <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">Forma de Pagamento:</label>
@@ -1844,7 +1911,7 @@
       <div style="margin-top:14px; padding:12px; background:var(--stone); border:1px solid var(--border); border-radius:6px;">
         <strong style="font-size:12px; color:var(--iron); display:block; margin-bottom:8px;">🔐 Segurança do Meu Carnê (Senha & Impressão Digital)</strong>
         <div class="btn-row" style="margin-bottom:8px;">
-          <input type="text" id="auth-nova-senha-pin" maxlength="4" inputmode="numeric" placeholder="Nova senha de 4 dígitos" style="margin-bottom:0; padding:9px; font-family:monospace; letter-spacing:3px; font-weight:700;">
+          <input type="text" id="auth-nova-senha-pin" maxlength="4" inputmode="numeric" placeholder="Nova senha de 4 dígitos" style="margin-bottom:0; padding:9px; font-family:monospace; letter-spacing:3px; font-weight:700;" onkeydown="if(event.key==='Enter'){ event.preventDefault(); alterarSenhaMembroLogado(); }">
           <button type="button" class="primary-btn" style="width:auto; padding:9px 14px; font-size:12px;" onclick="alterarSenhaMembroLogado()">Alterar Senha</button>
         </div>
         <button type="button" class="btn-biometric" id="btn-bio-carne" style="margin-top:0; padding:9px 12px; font-size:12px;" onclick="registrarBiometriaDispositivo(document.getElementById('auth-casal-id').value)">
@@ -1899,7 +1966,7 @@
 
 <!-- Modal: Gerenciador Administrativo de Cotas -->
 <div class="modal" id="modal-admin-cotas">
-  <div class="modal-content" style="max-width: 600px;">
+  <div class="modal-content" style="max-width: 620px;">
     <h3 style="margin-bottom:4px;">📋 Controle de Cotas</h3>
     <p id="admin-cotas-nome" style="font-weight:700; color:var(--iron); font-size:16px; margin:0 0 4px 0;"></p>
     <p id="admin-cotas-resumo" style="font-size:13px; color:var(--text-muted); margin:0 0 10px 0;"></p>
@@ -1911,10 +1978,10 @@
     </div>
 
     <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
-      Toque em uma cota pendente/em análise para aprovar baixa manual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
+      Toque em uma cota pendente/em análise para aprovar baixa manual individual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
     </p>
 
-    <div class="carne-grid" id="admin-carne-grid"></div>
+    <div id="admin-carne-sections-container" style="text-align:left;"></div>
 
     <button class="btn-close" onclick="fecharModal('modal-admin-cotas')">Fechar</button>
   </div>
@@ -1993,7 +2060,7 @@
     <input type="hidden" id="edit-lider-original">
     <input type="text" id="edit-lider-nome" placeholder="Novo Nome">
     <div class="password-wrapper">
-      <input type="password" id="edit-lider-senha" placeholder="Nova Senha">
+      <input type="password" id="edit-lider-senha" placeholder="Nova Senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); salvarEdicaoCredencial(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('edit-lider-senha')">👁️</button>
     </div>
     <button class="primary-btn bronze-btn" onclick="salvarEdicaoCredencial()">Salvar</button>
@@ -2023,17 +2090,6 @@
     { texto: "Sede fortes e destemidos, não vos assusteis, porque o Senhor vosso Deus vai adiante de vós e jamais vos desamparará.", ref: "Deuteronômio 31:6" }
   ];
 
-  const mensagensIncentivo = [
-    "Cada cota quitada é uma semente plantada no que Deus vai fazer na sua vida neste encontro!",
-    "Constância vence qualquer obstáculo: continue firme passo a passo, sua conquista já está em andamento.",
-    "Não desanime! O homem disciplinado colhe frutos duradouros. Você está construindo sua presença!",
-    "Fidelidade no pouco abre portas para o extraordinário. Continue avançando no seu ritmo!",
-    "Você não caminha sozinho: cada parcela concluída fortalece sua jornada rumo a esse tempo de renovo.",
-    "Falta menos do que ontem! Mantenha o foco e a constância, Deus honra o esforço de quem persevera.",
-    "Grande vitória! Quem persevera até o fim experimenta o melhor de Deus preparado para os Seus filhos.",
-    "Disciplina de guerreiro: passo a passo você está vencendo cada etapa sem pesar no orçamento."
-  ];
-
   let isLider = false, isAlfa = false, isAnalista = false, liderAtual = "";
   let liderPendentePrimeiroAcesso = null;
   let graficoPresencaObj = null, graficoFinanceiroObj = null;
@@ -2045,11 +2101,11 @@
   let tipoGraficoFinancas = 'doughnut';
 
   let paginaAtual = 1;
+  // Cada item selecionado guarda { ownerType: 'titular' | 'dep', depIdx: number, numero: number, ownerName: string, ownerRole: string }
   let cotasSelecionadasMembro = [];
+  let filtroDonoCarneAtual = "todos"; // 'todos', 'titular', 'dep_0', 'dep_1', ...
   let cacheComprovantes = {};
-  let ultimoIdxIncentivo = -1;
 
-  // Armazena o comprovante pronto (via Compartilhamento Nativo, Galeria, PDF ou Colar Print)
   let anexoTemporario = { reg: null, auth: null };
   let comprovanteRecebidoViaShare = false;
 
@@ -2078,10 +2134,10 @@
   };
 
   let lideres = [
-    { nome: "Joabe", cargo: "Analista", senha: "joabe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
-    { nome: "Felipe", cargo: "Analista", senha: "felipe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
-    { nome: "Bispo Jader", cargo: "Líder Alfa", senha: "jader2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
-    { nome: "Mayqui", cargo: "Líder Alfa", senha: "mayqui2027", alfa: true, fixo: false, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false }
+    { nome: "Joabe", cargo: "Analista", senha: "joabe2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
+    { nome: "Felipe", cargo: "Analista", senha: "felipe2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
+    { nome: "Bispo Jader", cargo: "Líder Alfa", senha: "jader2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false },
+    { nome: "Mayqui", cargo: "Líder Alfa", senha: "mayqui2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false }
   ];
 
   let varoes = [];
@@ -2089,7 +2145,7 @@
   let varoesFiltrados = [];
 
   // ==========================================
-  // SANITIZAÇÃO DE SEGURANÇA (ANTI-XSS)
+  // SANITIZAÇÃO DE SEGURANÇA & REGRAS DE LÍDERES
   // ==========================================
   function esc(str) {
     if (str === null || str === undefined) return "";
@@ -2099,6 +2155,12 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function ehBispoJader(liderObj) {
+    if (!liderObj || !liderObj.nome) return false;
+    const n = liderObj.nome.trim().toLowerCase();
+    return n === "bispo jader" || n.includes("bispo jader");
   }
 
   // ==========================================
@@ -2179,7 +2241,6 @@ self.addEventListener('fetch', (event) => {
   function inicializarPWAEServiceWorker() {
     if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
       navigator.serviceWorker.register('./sw.js').catch(() => {
-        // Caso sw.js ainda não tenha sido colocado na raiz, usa manifest dinâmico como fallback
         try {
           const blob = new Blob([gerarConteudoManifestJSON()], { type: 'application/manifest+json' });
           const link = document.getElementById("pwa-manifest-link");
@@ -2263,7 +2324,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // PERSISTÊNCIA DE SESSÃO DO PARTICIPANTE (AO IR PARA O BANCO)
+  // PERSISTÊNCIA DE SESSÃO DO PARTICIPANTE
   // ==========================================
   function salvarSessaoMembroLocal(varaoId, cotasSel = []) {
     try {
@@ -2289,7 +2350,6 @@ self.addEventListener('fetch', (event) => {
       const raw = sessionStorage.getItem("benditos_membro_sessao") || localStorage.getItem("benditos_membro_sessao_recente");
       if (!raw) return null;
       const sessao = JSON.parse(raw);
-      // Mantém sessão ativa por até 45 minutos para facilitar ir no app do banco e voltar
       if (!sessao || !sessao.varaoId || (Date.now() - sessao.timestamp > 45 * 60 * 1000)) {
         limparSessaoMembroLocal();
         return null;
@@ -2423,8 +2483,8 @@ self.addEventListener('fetch', (event) => {
       const id = parseInt(document.getElementById("auth-casal-id").value);
       const v = varoes.find(x => x.id === id);
       if (v && cotasSelecionadasMembro.length > 0) {
-        valor = cotasSelecionadasMembro.length * obterValorParcelaInscricao(v);
-        txid = `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`;
+        valor = cotasSelecionadasMembro.length * obterValorParcelaIndividual();
+        txid = `BENDID${v.id}Q${cotasSelecionadasMembro.length}`;
         salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
       }
     } else if (prefixo === "reg") {
@@ -2854,7 +2914,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // ==========================================
-  // CÁLCULO FÍSICO, DEPENDENTES MÚLTIPLOS E CONTÁBIL
+  // CÁLCULO FÍSICO, COTAS INDIVIDUAIS POR PESSOA (TITULAR E DEPENDENTES)
   // ==========================================
   function obterDependentes(v) {
     if (!v) return [];
@@ -2862,7 +2922,8 @@ self.addEventListener('fetch', (event) => {
       return v.dependentes.filter(d => d && d.nome && d.nome.trim() !== "");
     }
     if (v.temDependente && v.nomeDependente) {
-      return [{ nome: v.nomeDependente, parentesco: v.parentescoDependente || "Dependente" }];
+      v.dependentes = [{ nome: v.nomeDependente, parentesco: v.parentescoDependente || "Dependente" }];
+      return v.dependentes;
     }
     return [];
   }
@@ -2895,47 +2956,88 @@ self.addEventListener('fetch', (event) => {
     return arr;
   }
 
+  function normalizarArrayCotas(arrCotas, totalCotas) {
+    if (!Array.isArray(arrCotas)) {
+      return gerarCotasIniciais(totalCotas);
+    }
+    arrCotas.forEach(c => {
+      if (!c.status) c.status = c.pago ? "pago" : "pendente";
+      if (c.status === "pago") c.pago = true;
+    });
+    if (arrCotas.length < totalCotas) {
+      for (let i = arrCotas.length + 1; i <= totalCotas; i++) {
+        arrCotas.push({ numero: i, status: "pendente", pago: false, valorPago: 0, dataPagamento: "", forma: "", compId: "" });
+      }
+    } else if (arrCotas.length > totalCotas) {
+      arrCotas = arrCotas.filter((c, idx) => idx < totalCotas || c.status === "pago" || c.status === "em_analise");
+    }
+    return arrCotas;
+  }
+
   function garantirEstruturaCotas(v) {
     const totalCotas = parseInt(configuracoes.qtdCotas) || 10;
-    if (!Array.isArray(v.cotas)) {
-      v.cotas = gerarCotasIniciais(totalCotas);
-    } else {
-      v.cotas.forEach(c => {
-        if (!c.status) {
-          c.status = c.pago ? "pago" : "pendente";
-        }
-        if (c.status === "pago") c.pago = true;
-      });
-      if (v.cotas.length < totalCotas) {
-        for (let i = v.cotas.length + 1; i <= totalCotas; i++) {
-          v.cotas.push({ numero: i, status: "pendente", pago: false, valorPago: 0, dataPagamento: "", forma: "", compId: "" });
-        }
-      } else if (v.cotas.length > totalCotas) {
-        v.cotas = v.cotas.filter((c, idx) => idx < totalCotas || c.status === "pago" || c.status === "em_analise");
+    const valIndiv = obterValorParcelaIndividual();
+    v.cotas = normalizarArrayCotas(v.cotas, totalCotas);
+
+    const deps = obterDependentes(v);
+    deps.forEach(d => {
+      if (!Array.isArray(d.cotas)) {
+        // Migração retrocompatível: se o titular tinha cotas antigas pagas antes da separação, espelha o status inicial
+        d.cotas = v.cotas.map(c => ({
+          numero: c.numero,
+          status: c.status || (c.pago ? "pago" : "pendente"),
+          pago: !!(c.status === "pago" || c.pago),
+          valorPago: (c.status === "pago" || c.pago) ? valIndiv : 0,
+          dataPagamento: c.dataPagamento || "",
+          forma: c.forma || "",
+          compId: c.compId || ""
+        }));
+      } else {
+        d.cotas = normalizarArrayCotas(d.cotas, totalCotas);
       }
-    }
+    });
     return v.cotas;
   }
 
+  // Retorna todas as cotas individuais (titular + cada dependente)
+  function obterTodasCotasIndividuais(v) {
+    garantirEstruturaCotas(v);
+    const todas = [];
+    v.cotas.forEach(c => todas.push({ ownerType: "titular", depIdx: -1, ownerName: v.nome, ownerRole: "Titular", cota: c }));
+    const deps = obterDependentes(v);
+    deps.forEach((d, idx) => {
+      d.cotas.forEach(c => todas.push({ ownerType: "dep", depIdx: idx, ownerName: d.nome, ownerRole: d.parentesco || "Dependente", cota: c }));
+    });
+    return todas;
+  }
+
   function contarCotasPagas(v) {
-    return garantirEstruturaCotas(v).filter(c => c.status === "pago" || c.pago === true).length;
+    garantirEstruturaCotas(v);
+    return v.cotas.filter(c => c.status === "pago" || c.pago === true).length;
+  }
+
+  function contarCotasIndividuaisPagas(v) {
+    return obterTodasCotasIndividuais(v).filter(item => item.cota.status === "pago" || item.cota.pago === true).length;
   }
 
   function contarCotasEmAnalise(v) {
-    return garantirEstruturaCotas(v).filter(c => c.status === "em_analise").length;
+    return obterTodasCotasIndividuais(v).filter(item => item.cota.status === "em_analise").length;
   }
 
   function calcularValorArrecadadoInscricao(v) {
-    const cotas = garantirEstruturaCotas(v);
-    const valAtual = obterValorParcelaInscricao(v);
-    return cotas.reduce((acc, c) => {
+    const valIndiv = obterValorParcelaIndividual();
+    return obterTodasCotasIndividuais(v).reduce((acc, item) => {
+      const c = item.cota;
       if (c.status === "pago" || c.pago === true) {
-        return acc + (typeof c.valorPago === "number" && c.valorPago > 0 ? c.valorPago : valAtual);
+        // Se for registro legado que guardou valor dobrado numa única cota, normaliza para o valor individual
+        const vp = (typeof c.valorPago === "number" && c.valorPago > 0 && c.valorPago <= valIndiv * 1.1) ? c.valorPago : valIndiv;
+        return acc + vp;
       }
       return acc;
     }, 0);
   }
 
+  // UI Dinâmica para Múltiplos Dependentes
   window.adicionarCampoDependenteUI = function(prefixo, nomeVal = "", parentescoVal = "Filho") {
     const container = document.getElementById(`${prefixo}-lista-dependentes`);
     if (!container) return;
@@ -2988,13 +3090,13 @@ self.addEventListener('fetch', (event) => {
   // AVALIAÇÃO INTELIGENTE DE PRAZOS
   // ==========================================
   function avaliarStatusPrazo(v) {
-    const cotas = garantirEstruturaCotas(v);
-    const totalCotas = cotas.length;
-    const pagas = contarCotasPagas(v);
+    const todas = obterTodasCotasIndividuais(v);
+    const totalCotas = todas.length;
+    const pagas = contarCotasIndividuaisPagas(v);
     const emAnalise = contarCotasEmAnalise(v);
     const restantes = Math.max(0, totalCotas - pagas - emAnalise);
-    const valParcela = obterValorParcelaInscricao(v);
-    const valorFalta = restantes * valParcela;
+    const valIndiv = obterValorParcelaIndividual();
+    const valorFalta = restantes * valIndiv;
 
     if (pagas >= totalCotas) {
       return { status: "quitado", alerta: false, mensagem: "🏆 Parabéns! Todas as cotas estão 100% quitadas." };
@@ -3058,17 +3160,30 @@ self.addEventListener('fetch', (event) => {
   }
 
   // ==========================================
-  // MENSAGEM DE INCENTIVO & VERSÍCULO
+  // MENSAGEM AUTOMÁTICA DE INCENTIVO & VERSÍCULO
   // ==========================================
-  window.atualizarMensagemIncentivo = function() {
-    let idx = Math.floor(Math.random() * mensagensIncentivo.length);
-    if (mensagensIncentivo.length > 1 && idx === ultimoIdxIncentivo) {
-      idx = (idx + 1) % mensagensIncentivo.length;
-    }
-    ultimoIdxIncentivo = idx;
+  function atualizarMensagemIncentivoAutomatica(perc, pagas, restantes) {
+    const elTitulo = document.getElementById("auth-encouragement-title");
     const elMsg = document.getElementById("auth-encouragement-msg");
-    if (elMsg) elMsg.innerText = mensagensIncentivo[idx];
-  };
+    if (!elTitulo || !elMsg) return;
+
+    if (perc >= 100) {
+      elTitulo.innerText = "🏆 Missão Cumprida — 100% Quitado!";
+      elMsg.innerText = "Sua vaga está 100% garantida! Que Deus derrame renovo, força e direção sobre a sua vida neste encontro.";
+    } else if (perc >= 70) {
+      elTitulo.innerText = "🔥 Reta Final — Falta Muito Pouco!";
+      elMsg.innerText = `Você já concluiu ${perc}% do carnê! Restam apenas ${restantes} ${restantes === 1 ? 'cota' : 'cotas'} para finalizar sua jornada.`;
+    } else if (perc >= 40) {
+      elTitulo.innerText = "🛡️ Firme no Propósito — Excelente Ritmo!";
+      elMsg.innerText = "Constância vence qualquer obstáculo: continue firme passo a passo, sua conquista já está bem encaminhada.";
+    } else if (pagas > 0) {
+      elTitulo.innerText = "⚔️ Ótimo Começo — Continue Avançando!";
+      elMsg.innerText = "Fidelidade no pouco abre portas para o extraordinário. Cada parcela concluída fortalece sua caminhada.";
+    } else {
+      elTitulo.innerText = "⚔️ Jornada Iniciada";
+      elMsg.innerText = "Cada cota quitada é uma semente plantada no que Deus vai fazer na sua vida neste encontro!";
+    }
+  }
 
   function sortearVersiculoEncorajamento() {
     if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
@@ -3291,22 +3406,12 @@ self.addEventListener('fetch', (event) => {
           configuracoes = { ...configuracoes, ...dados.configuracoes };
         }
 
-        if (dados.lideres && Array.isArray(dados.lideres)) {
-          let lideresNuvem = dados.lideres;
-          lideresNuvem.forEach(ldr => {
-            if (ldr.cargo === "Analista" || ldr.nome === "Joabe" || ldr.nome === "Felipe") {
-              ldr.cargo = "Analista";
-              ldr.alfa = true;
-              ldr.fixo = true;
-            }
-          });
-          if (!lideresNuvem.find(l => l.nome === "Joabe")) {
-            lideresNuvem.unshift({ nome: "Joabe", cargo: "Analista", senha: "joabe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false });
+        if (dados.lideres && Array.isArray(dados.lideres) && dados.lideres.length > 0) {
+          lideres = dados.lideres;
+          // Garante apenas que Bispo Jader exista como Líder Alfa
+          if (!lideres.find(l => ehBispoJader(l))) {
+            lideres.unshift({ nome: "Bispo Jader", cargo: "Líder Alfa", senha: "jader2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false });
           }
-          if (!lideresNuvem.find(l => l.nome === "Felipe")) {
-            lideresNuvem.splice(1, 0, { nome: "Felipe", cargo: "Analista", senha: "felipe2027", alfa: true, fixo: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false });
-          }
-          lideres = lideresNuvem;
         }
 
         if (precisouAtualizar) await salvarNoBanco();
@@ -3350,7 +3455,8 @@ self.addEventListener('fetch', (event) => {
       }
     }
 
-    atualizarUIConfiguracoes(true);
+    preencherInputsConfiguracoes();
+    atualizarElementosVisuaisConfig();
     if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
       sortearVersiculoEncorajamento();
     }
@@ -3358,11 +3464,11 @@ self.addEventListener('fetch', (event) => {
     renderizarLista();
     atualizarAlertaBloqueio();
     verificarRetornoSessaoMembro(recebeuShare);
-    setInterval(sincronizarEmSegundoPlano, 5000);
+    setInterval(sincronizarEmSegundoPlano, 6000);
   }
 
   async function salvarNoBanco() {
-    atualizarUIConfiguracoes(false);
+    atualizarElementosVisuaisConfig();
     atualizarDashboard();
     try {
       emProcessamentoNuvem = true;
@@ -3380,9 +3486,11 @@ self.addEventListener('fetch', (event) => {
 
   async function sincronizarEmSegundoPlano() {
     if (emProcessamentoNuvem) return;
+    // Se algum modal estiver aberto ou se um líder estiver trabalhando no painel administrativo,
+    // NÃO sobrescreve dados/campos em edição!
     const modaisAbertos = document.querySelectorAll('.modal.active');
     const focoEmCampo = document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
-    if (modaisAbertos.length > 0 || focoEmCampo) return;
+    if (modaisAbertos.length > 0 || focoEmCampo || isLider || isAnalista) return;
 
     try {
       const res = await fetch(DB_URL);
@@ -3403,45 +3511,45 @@ self.addEventListener('fetch', (event) => {
         if (dados.lideres) lideres = dados.lideres;
         if (Array.isArray(dados.despesas)) despesas = dados.despesas;
         configuracoes = dados.configuracoes || configuracoes;
-        atualizarUIConfiguracoes(false);
+        atualizarElementosVisuaisConfig();
         renderizarLista();
         atualizarAlertaBloqueio();
-        if (isAlfa || isAnalista) renderizarTabelaLideres();
       }
     } catch (e) {}
   }
 
-  function atualizarUIConfiguracoes(forcar = false) {
-    function setSafe(id, val) {
+  // Preenche os inputs da aba Configurações APENAS quando explicitamente solicitado
+  function preencherInputsConfiguracoes() {
+    function setVal(id, val) {
       const el = document.getElementById(id);
-      if (el && (forcar || document.activeElement !== el)) {
-        el.value = (val !== undefined && val !== null) ? val : "";
-      }
+      if (el) el.value = (val !== undefined && val !== null) ? val : "";
     }
-
-    setSafe('config-titulo', configuracoes.tituloEvento || "BENDITOS");
-    setSafe('config-ano', configuracoes.anoEvento || "2027");
-    setSafe('config-subtitulo', configuracoes.subtituloEvento || "Encontro dos Varões • IBAC");
-    setSafe('msg-padrao', configuracoes.mensagemPadrao);
-    setSafe('config-valor', configuracoes.valorCota);
-    setSafe('config-cotas', configuracoes.qtdCotas || 10);
-    setSafe('config-vagas-max', configuracoes.vagasMaximas || 0);
-    setSafe('config-auditoria-pix', configuracoes.exigirAuditoriaPix || "sim");
-    setSafe('config-local-nome', configuracoes.localNome);
-    setSafe('config-local-maps', configuracoes.localMaps);
-    setSafe('config-local-desc', configuracoes.localDesc);
-    setSafe('config-data', configuracoes.dataEvento);
-    setSafe('config-data-limite', configuracoes.dataLimitePagamento);
-    setSafe('config-pix', configuracoes.chavePix);
-    setSafe('config-titular-pix', configuracoes.titularPix);
-    setSafe('config-cidade-pix', configuracoes.cidadePix || "NOVA IGUACU");
-    setSafe('config-info-bancaria', configuracoes.infoBancaria);
-    setSafe('config-zap-tesouraria', configuracoes.whatsappTesouraria);
-    setSafe('config-modo-versiculo', configuracoes.modoVersiculo || "aleatorio");
-    setSafe('config-versiculo-texto', configuracoes.versiculoTexto);
-    setSafe('config-versiculo-ref', configuracoes.versiculoReferencia);
+    setVal('config-titulo', configuracoes.tituloEvento || "BENDITOS");
+    setVal('config-ano', configuracoes.anoEvento || "2027");
+    setVal('config-subtitulo', configuracoes.subtituloEvento || "Encontro dos Varões • IBAC");
+    setVal('msg-padrao', configuracoes.mensagemPadrao);
+    setVal('config-valor', configuracoes.valorCota);
+    setVal('config-cotas', configuracoes.qtdCotas || 10);
+    setVal('config-vagas-max', configuracoes.vagasMaximas || 0);
+    setVal('config-auditoria-pix', configuracoes.exigirAuditoriaPix || "sim");
+    setVal('config-local-nome', configuracoes.localNome);
+    setVal('config-local-maps', configuracoes.localMaps);
+    setVal('config-local-desc', configuracoes.localDesc);
+    setVal('config-data', configuracoes.dataEvento);
+    setVal('config-data-limite', configuracoes.dataLimitePagamento);
+    setVal('config-pix', configuracoes.chavePix);
+    setVal('config-titular-pix', configuracoes.titularPix);
+    setVal('config-cidade-pix', configuracoes.cidadePix || "NOVA IGUACU");
+    setVal('config-info-bancaria', configuracoes.infoBancaria);
+    setVal('config-zap-tesouraria', configuracoes.whatsappTesouraria);
+    setVal('config-modo-versiculo', configuracoes.modoVersiculo || "aleatorio");
+    setVal('config-versiculo-texto', configuracoes.versiculoTexto);
+    setVal('config-versiculo-ref', configuracoes.versiculoReferencia);
     alternarCampoVersiculoFixo();
+  }
 
+  // Atualiza apenas os textos públicos da tela (nunca apaga campos de formulário)
+  function atualizarElementosVisuaisConfig() {
     const titulo = (configuracoes.tituloEvento || "BENDITOS").toUpperCase();
     const ano = configuracoes.anoEvento || "2027";
     const sub = configuracoes.subtituloEvento || "Encontro dos Varões • IBAC";
@@ -3458,7 +3566,6 @@ self.addEventListener('fetch', (event) => {
     document.getElementById('display-parcela-publico').innerText = `Plano Mensal: ${totalCotas} cotas de R$ ${valorParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})} por pessoa (pode incluir dependentes no cadastro)`;
     document.getElementById('hero-data-evento').innerText = formatarDataHoraEvento(configuracoes.dataEvento);
 
-    // Termômetro de Vagas na Tela Pública
     const vagasMax = parseInt(configuracoes.vagasMaximas) || 0;
     const boxVagas = document.getElementById("box-termometro-vagas");
     if (vagasMax > 0) {
@@ -3472,7 +3579,6 @@ self.addEventListener('fetch', (event) => {
       boxVagas.style.display = "none";
     }
 
-    // Bloco Sobre o Encontro
     const boxSobre = document.getElementById("box-sobre-encontro");
     const btnConvidarBarra = document.getElementById("btn-convidar-barra");
     if (configuracoes.localNome || configuracoes.localDesc) {
@@ -3535,6 +3641,7 @@ self.addEventListener('fetch', (event) => {
 
     varoes.forEach(v => garantirEstruturaCotas(v));
     await salvarNoBanco();
+    preencherInputsConfiguracoes();
     sortearVersiculoEncorajamento();
     iniciarContagem();
     renderizarLista();
@@ -3577,6 +3684,7 @@ self.addEventListener('fetch', (event) => {
     document.getElementById(tabId).classList.add('active');
     if (tabId === 'tab-auditoria') renderizarPainelAuditoriaEDespesas();
     if (tabId === 'tab-portaria') renderizarPortaria();
+    if (tabId === 'tab-config') preencherInputsConfiguracoes();
   };
 
   window.alternarBoxPix = function(prefixo) {
@@ -3589,8 +3697,8 @@ self.addEventListener('fetch', (event) => {
         const id = parseInt(document.getElementById("auth-casal-id").value);
         const v = varoes.find(x => x.id === id);
         if (v && cotasSelecionadasMembro.length > 0) {
-          const totalSel = cotasSelecionadasMembro.length * obterValorParcelaInscricao(v);
-          renderizarQRCodePix('auth', totalSel, `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`);
+          const totalSel = cotasSelecionadasMembro.length * obterValorParcelaIndividual();
+          renderizarQRCodePix('auth', totalSel, `BENDID${v.id}Q${cotasSelecionadasMembro.length}`);
         }
       }
     }
@@ -3640,7 +3748,6 @@ self.addEventListener('fetch', (event) => {
     
     container.innerHTML = "";
     varoesFiltrados = [];
-    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
 
     let lista = [...varoes].sort((a, b) => {
       const ehBispoA = a.nome.includes("BISPO") || a.nome.includes("JADER");
@@ -3651,7 +3758,9 @@ self.addEventListener('fetch', (event) => {
     });
 
     lista.forEach((v) => {
-      const pagas = contarCotasPagas(v);
+      const todasIndiv = obterTodasCotasIndividuais(v);
+      const totalCotasIndiv = todasIndiv.length;
+      const pagasIndiv = contarCotasIndividuaisPagas(v);
       const emAnalise = contarCotasEmAnalise(v);
       const deps = obterDependentes(v);
       const avalPrazo = avaliarStatusPrazo(v);
@@ -3662,9 +3771,9 @@ self.addEventListener('fetch', (event) => {
       if (isLider || isAnalista) {
         if (filtroPresenca === 'confirmados' && !v.confirmado) return;
         if (filtroPresenca === 'pendentes' && v.confirmado) return;
-        if (filtroPagamento === 'quitados' && pagas < totalCotas) return;
-        if (filtroPagamento === 'andamento' && (pagas === 0 || pagas >= totalCotas)) return;
-        if (filtroPagamento === 'nao-iniciados' && (pagas > 0 || emAnalise > 0)) return;
+        if (filtroPagamento === 'quitados' && pagasIndiv < totalCotasIndiv) return;
+        if (filtroPagamento === 'andamento' && (pagasIndiv === 0 || pagasIndiv >= totalCotasIndiv)) return;
+        if (filtroPagamento === 'nao-iniciados' && (pagasIndiv > 0 || emAnalise > 0)) return;
         if (filtroPagamento === 'em-analise' && emAnalise === 0) return;
         if (filtroPrazo === 'atraso' && !avalPrazo.alerta) return;
         if (filtroPrazo === 'no-prazo' && avalPrazo.alerta) return;
@@ -3693,7 +3802,9 @@ self.addEventListener('fetch', (event) => {
     document.getElementById("btn-next-page").disabled = (paginaAtual >= totalPaginas);
 
     paginaSlice.forEach((v) => {
-      const pagas = contarCotasPagas(v);
+      const todasIndiv = obterTodasCotasIndividuais(v);
+      const totalCotasIndiv = todasIndiv.length;
+      const pagasIndiv = contarCotasIndividuaisPagas(v);
       const emAnalise = contarCotasEmAnalise(v);
       const deps = obterDependentes(v);
       const qtdPessoas = obterQtdPessoas(v);
@@ -3722,14 +3833,14 @@ self.addEventListener('fetch', (event) => {
         const tel2Visual = v.tel2 ? formatarTelefoneVisual(v.tel2) : '';
         html += `<span class="casal-tel">📱 ${esc(tel1Visual)} ${tel2Visual ? '| ' + esc(tel2Visual) : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas' : 'pessoa'}</strong> • <span class="badge-transporte">${labelTransporte(v.transporte)}</span></span>`;
         
-        const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
+        const perc = Math.min(100, Math.round((pagasIndiv / totalCotasIndiv) * 100));
         const valorPago = calcularValorArrecadadoInscricao(v);
         const valorFalta = Math.max(0, valTotalInscricao - valorPago);
         html += `<div class="progress-track">
                    <div class="progress-fill" style="width:${perc}%;"></div>
                  </div>
-                 <span style="font-size:11px; font-weight:700; color:${pagas >= totalCotas ? 'var(--green)' : 'var(--text-muted)'};">
-                   Validado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} • Falta: R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas} cotas)
+                 <span style="font-size:11px; font-weight:700; color:${pagasIndiv >= totalCotasIndiv ? 'var(--green)' : 'var(--text-muted)'};">
+                   Validado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} • Falta: R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagasIndiv}/${totalCotasIndiv} cotas indiv.)
                  </span>`;
 
         let badgePrazoHtml = avalPrazo.alerta
@@ -3753,10 +3864,10 @@ self.addEventListener('fetch', (event) => {
 
       if (isLider || isAnalista) {
         let classeCota = 'pago-nao';
-        if (pagas >= totalCotas) classeCota = 'pago-quitado';
-        else if (pagas > 0 || emAnalise > 0) classeCota = 'pago-parcial';
+        if (pagasIndiv >= totalCotasIndiv) classeCota = 'pago-quitado';
+        else if (pagasIndiv > 0 || emAnalise > 0) classeCota = 'pago-parcial';
 
-        html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagas}/${totalCotas})</button>`;
+        html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagasIndiv}/${totalCotasIndiv})</button>`;
         html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
         html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
         if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
@@ -3824,8 +3935,9 @@ self.addEventListener('fetch', (event) => {
     let tel = (telRaw || "").replace(/\D/g, '');
     if (!tel.startsWith("55")) tel = "55" + tel;
 
-    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
-    const pagas = contarCotasPagas(v);
+    const todasIndiv = obterTodasCotasIndividuais(v);
+    const totalCotas = todasIndiv.length;
+    const pagas = contarCotasIndividuaisPagas(v);
     const valorPagoNum = calcularValorArrecadadoInscricao(v);
     const valorTotal = obterValorTotalInscricao(v);
     const valorPago = valorPagoNum.toFixed(2).replace('.', ',');
@@ -3866,6 +3978,7 @@ self.addEventListener('fetch', (event) => {
     
     const totalCotas = parseInt(configuracoes.qtdCotas || 10);
     const valIndividual = parseFloat(configuracoes.valorCota) || 200;
+    const valParcelaIndiv = obterValorParcelaIndividual();
 
     let totalTitulares = varoes.length;
     let totalDependentes = 0;
@@ -3888,22 +4001,24 @@ self.addEventListener('fetch', (event) => {
       if (qtdP > 1) totalDependentes += (qtdP - 1);
       if (v.confirmado) pessoasConfirmadas += qtdP;
 
-      const cotas = garantirEstruturaCotas(v);
-      const pagas = contarCotasPagas(v);
+      const todasIndiv = obterTodasCotasIndividuais(v);
+      const totalCotasIndiv = todasIndiv.length;
+      const pagasIndiv = contarCotasIndividuaisPagas(v);
       const analise = contarCotasEmAnalise(v);
       qtdRecibosEmAnalise += analise;
 
-      const valParcelaInscricao = obterValorParcelaInscricao(v);
       totalArrecadado += calcularValorArrecadadoInscricao(v);
-      totalEmAnalise += analise * valParcelaInscricao;
+      totalEmAnalise += analise * valParcelaIndiv;
       metaTotal += valIndividual * qtdP;
 
-      if (pagas >= totalCotas) quitados++;
-      else if (pagas > 0 || analise > 0) emAndamento++;
+      if (pagasIndiv >= totalCotasIndiv) quitados++;
+      else if (pagasIndiv > 0 || analise > 0) emAndamento++;
       else naoIniciados++;
 
-      cotas.forEach((c, idx) => {
-        if ((c.status === "pago" || c.pago) && idx < totalCotas) contagemPorCota[idx] += qtdP;
+      todasIndiv.forEach(item => {
+        if ((item.cota.status === "pago" || item.cota.pago) && item.cota.numero <= totalCotas) {
+          contagemPorCota[item.cota.numero - 1] += 1;
+        }
       });
     });
 
@@ -3999,13 +4114,21 @@ self.addEventListener('fetch', (event) => {
     if (listaAudit) {
       listaAudit.innerHTML = "";
       let pendentes = [];
+      const valIndiv = obterValorParcelaIndividual();
 
       varoes.forEach(v => {
-        const cotas = garantirEstruturaCotas(v);
-        const valParc = obterValorParcelaInscricao(v);
-        cotas.forEach(c => {
-          if (c.status === "em_analise") {
-            pendentes.push({ varao: v, cota: c, valor: valParc });
+        const todas = obterTodasCotasIndividuais(v);
+        todas.forEach(item => {
+          if (item.cota.status === "em_analise") {
+            pendentes.push({
+              varao: v,
+              ownerType: item.ownerType,
+              depIdx: item.depIdx,
+              ownerName: item.ownerName,
+              ownerRole: item.ownerRole,
+              cota: item.cota,
+              valor: valIndiv
+            });
           }
         });
       });
@@ -4016,17 +4139,20 @@ self.addEventListener('fetch', (event) => {
         pendentes.forEach(item => {
           const div = document.createElement("div");
           div.className = "audit-item";
+          const tagDono = item.ownerType === "titular"
+            ? `Titular: ${esc(item.ownerName)}`
+            : `${esc(item.ownerRole)}: ${esc(item.ownerName)} (Resp: ${esc(item.varao.nome)})`;
           div.innerHTML = `
             <div>
-              <strong style="color:var(--iron); font-size:13.5px;">${esc(item.varao.nome)}</strong>
+              <strong style="color:var(--iron); font-size:13.5px;">${tagDono}</strong>
               <div style="font-size:12px; color:var(--text-muted);">
                 Cota ${String(item.cota.numero).padStart(2, '0')} • <strong>R$ ${item.valor.toFixed(2).replace('.', ',')}</strong> • Enviado em ${formatarDataBR(item.cota.dataPagamento)}
               </div>
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              ${item.cota.compId ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(item.cota.compId)}', '${esc(item.varao.nome)} — Cota ${item.cota.numero}')">👁️ Ver Recibo</button>` : ''}
-              <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, ${item.cota.numero}, true)">✅ Aprovar</button>
-              <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, ${item.cota.numero}, false)">❌ Recusar</button>
+              ${item.cota.compId ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(item.cota.compId)}', '${esc(item.ownerName)} — Cota ${item.cota.numero}')">👁️ Ver Recibo</button>` : ''}
+              <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, true)">✅ Aprovar</button>
+              <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, false)">❌ Recusar</button>
             </div>
           `;
           listaAudit.appendChild(div);
@@ -4059,20 +4185,31 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  window.julgarComprovante = async function(varaoId, numeroCota, aprovar) {
+  function localizarObjetoCota(v, ownerType, depIdx, numeroCota) {
+    garantirEstruturaCotas(v);
+    if (ownerType === "titular") {
+      return v.cotas.find(c => c.numero === numeroCota);
+    }
+    const deps = obterDependentes(v);
+    if (deps[depIdx] && Array.isArray(deps[depIdx].cotas)) {
+      return deps[depIdx].cotas.find(c => c.numero === numeroCota);
+    }
+    return null;
+  }
+
+  window.julgarComprovante = async function(varaoId, ownerType, depIdx, numeroCota, aprovar) {
     const v = varoes.find(x => x.id === varaoId);
     if (!v) return;
-    const cotas = garantirEstruturaCotas(v);
-    const cota = cotas.find(c => c.numero === numeroCota);
+    const cota = localizarObjetoCota(v, ownerType, depIdx, numeroCota);
     if (!cota) return;
 
     if (aprovar) {
       cota.status = "pago";
       cota.pago = true;
-      cota.valorPago = obterValorParcelaInscricao(v);
+      cota.valorPago = obterValorParcelaIndividual();
       cota.aprovadoPor = liderAtual;
     } else {
-      if (!confirm(`Recusar o comprovante da Cota ${numeroCota} de ${v.nome} e devolver para Pendente?`)) return;
+      if (!confirm(`Recusar o comprovante da Cota ${numeroCota} e devolver para Pendente?`)) return;
       cota.status = "pendente";
       cota.pago = false;
       cota.valorPago = 0;
@@ -4132,8 +4269,8 @@ self.addEventListener('fetch', (event) => {
 
     container.innerHTML = "";
     filtrados.forEach(v => {
-      const totalCotas = parseInt(configuracoes.qtdCotas || 10);
-      const pagas = contarCotasPagas(v);
+      const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
+      const pagasIndiv = contarCotasIndividuaisPagas(v);
       const valTotal = obterValorTotalInscricao(v);
       const valPago = calcularValorArrecadadoInscricao(v);
       const falta = Math.max(0, valTotal - valPago);
@@ -4149,7 +4286,7 @@ self.addEventListener('fetch', (event) => {
           <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
             ${falta <= 0
               ? `<span class="checkin-status-pill checkin-ok">✅ 100% Quitado</span>`
-              : `<span class="checkin-status-pill checkin-debt">⚠️ Saldo Pendente: R$ ${falta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas})</span>`
+              : `<span class="checkin-status-pill checkin-debt">⚠️ Saldo Pendente: R$ ${falta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagasIndiv}/${totalCotasIndiv})</span>`
             }
             <span class="badge-transporte">${labelTransporte(v.transporte)}</span>
           </div>
@@ -4261,22 +4398,32 @@ self.addEventListener('fetch', (event) => {
         compId = await salvarComprovanteNuvem(anexoTemporario.reg.base64);
       }
 
-      const cotas = gerarCotasIniciais();
       const hojeISO = new Date().toISOString().split('T')[0];
       const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
-      const valParcelaInscricao = obterValorParcelaIndividual() * (1 + dependentes.length);
+      const valIndiv = obterValorParcelaIndividual();
+      const statusInicial = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
 
-      if (qtdIniciais > 0 && (compId || forma !== "pix")) {
-        const statusInicial = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
-        for (let i = 0; i < Math.min(qtdIniciais, cotas.length); i++) {
-          cotas[i].status = statusInicial;
-          cotas[i].pago = (statusInicial === "pago");
-          cotas[i].valorPago = (statusInicial === "pago") ? valParcelaInscricao : 0;
-          cotas[i].dataPagamento = hojeISO;
-          cotas[i].forma = forma;
-          cotas[i].compId = compId;
+      const preencherCotasPessoa = () => {
+        const arr = gerarCotasIniciais();
+        if (qtdIniciais > 0 && (compId || forma !== "pix")) {
+          for (let i = 0; i < Math.min(qtdIniciais, arr.length); i++) {
+            arr[i].status = statusInicial;
+            arr[i].pago = (statusInicial === "pago");
+            arr[i].valorPago = (statusInicial === "pago") ? valIndiv : 0;
+            arr[i].dataPagamento = hojeISO;
+            arr[i].forma = forma;
+            arr[i].compId = compId;
+          }
         }
-      }
+        return arr;
+      };
+
+      const cotasTitular = preencherCotasPessoa();
+      const depsComCotas = dependentes.map(d => ({
+        nome: d.nome,
+        parentesco: d.parentesco,
+        cotas: preencherCotasPessoa()
+      }));
 
       const codigoAcesso = pinPreferido || gerarCodigoAcessoUnico();
       const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
@@ -4285,7 +4432,7 @@ self.addEventListener('fetch', (event) => {
         id: novoId,
         nome: nomeFinal,
         nomeCompleto: n1.toUpperCase(),
-        dependentes: dependentes,
+        dependentes: depsComCotas,
         transporte: transporte,
         confirmado: false,
         biometriaAtiva: false,
@@ -4294,7 +4441,7 @@ self.addEventListener('fetch', (event) => {
         formaPagamento: forma,
         previsaoPagamento: dataPrev,
         codigoAcesso: codigoAcesso,
-        cotas: cotas
+        cotas: cotasTitular
       };
 
       varoes.push(novoRegistro);
@@ -4413,7 +4560,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // CARNÊ DIGITAL PRIVADO DO PARTICIPANTE
+  // CARNÊ DIGITAL PRIVADO DO PARTICIPANTE (COM SEPARAÇÃO POR PESSOA)
   // ==========================================
   window.abrirModalAutoAtualizacao = function() {
     document.getElementById("auth-membro-tel").value = "";
@@ -4423,6 +4570,7 @@ self.addEventListener('fetch', (event) => {
     const alertLogin = document.getElementById("auth-login-share-alert");
     if (alertLogin) alertLogin.style.display = comprovanteRecebidoViaShare ? "block" : "none";
     cotasSelecionadasMembro = [];
+    filtroDonoCarneAtual = "todos";
     document.getElementById("modal-auto-atualizacao").classList.add("active");
     verificarRetornoSessaoMembro(false);
   };
@@ -4450,21 +4598,37 @@ self.addEventListener('fetch', (event) => {
     abrirPainelPrivadoCarne(v);
   };
 
+  window.selecionarFiltroDonoCarne = function(varaoId, filtroKey) {
+    filtroDonoCarneAtual = filtroKey;
+    const v = varoes.find(x => x.id === varaoId);
+    if (v) renderizarCarnePrivado(v);
+  };
+
   function abrirPainelPrivadoCarne(v, cotasPreSelecionadas = []) {
-    const cotas = garantirEstruturaCotas(v);
+    garantirEstruturaCotas(v);
+    filtroDonoCarneAtual = "todos";
+
     let selecaoInicial = Array.isArray(cotasPreSelecionadas)
-      ? cotasPreSelecionadas.filter(num => {
-          const c = cotas.find(item => item.numero === num);
-          return c && c.status !== "pago" && !c.pago && c.status !== "em_analise";
+      ? cotasPreSelecionadas.filter(sel => {
+          if (!sel || typeof sel !== "object") return false;
+          const cObj = localizarObjetoCota(v, sel.ownerType, sel.depIdx, sel.numero);
+          return cObj && cObj.status !== "pago" && !cObj.pago && cObj.status !== "em_analise";
         })
       : [];
 
     // Se recebeu um comprovante compartilhado do app do banco e nenhuma cota estava selecionada,
-    // seleciona automaticamente a próxima cota pendente para sugerir o vínculo imediato!
+    // seleciona automaticamente a próxima cota pendente para sugerir o vínculo imediato
     if ((comprovanteRecebidoViaShare || anexoTemporario.auth) && selecaoInicial.length === 0) {
-      const proximaPendente = cotas.find(c => c.status !== "pago" && !c.pago && c.status !== "em_analise");
+      const todas = obterTodasCotasIndividuais(v);
+      const proximaPendente = todas.find(item => item.cota.status !== "pago" && !item.cota.pago && item.cota.status !== "em_analise");
       if (proximaPendente) {
-        selecaoInicial = [proximaPendente.numero];
+        selecaoInicial = [{
+          ownerType: proximaPendente.ownerType,
+          depIdx: proximaPendente.depIdx,
+          numero: proximaPendente.cota.numero,
+          ownerName: proximaPendente.ownerName,
+          ownerRole: proximaPendente.ownerRole
+        }];
       }
     }
 
@@ -4481,20 +4645,18 @@ self.addEventListener('fetch', (event) => {
     alternarBoxPix('auth');
     atualizarPreviewAnexo('auth');
     atualizarIndicadorBiometriaCarne(v);
-    atualizarMensagemIncentivo();
 
     renderizarCarnePrivado(v);
 
-    // Exibe banner de sugestão quando há comprovante compartilhado pronto
     const bannerShare = document.getElementById("auth-share-suggestion-banner");
     const txtShare = document.getElementById("auth-share-suggestion-txt");
     if (bannerShare && txtShare) {
       if (comprovanteRecebidoViaShare && anexoTemporario.auth) {
-        const valParcela = obterValorParcelaInscricao(v);
+        const valIndiv = obterValorParcelaIndividual();
         if (cotasSelecionadasMembro.length > 0) {
-          const totalSug = (cotasSelecionadasMembro.length * valParcela).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-          const cotasStr = cotasSelecionadasMembro.map(n => `Cota ${String(n).padStart(2, '0')}`).join(', ');
-          txtShare.innerText = `Anexamos o comprovante recebido do banco e sugerimos vinculá-lo à ${cotasStr} (R$ ${totalSug}). Confira abaixo e toque em "Confirmar Pagamento".`;
+          const totalSug = (cotasSelecionadasMembro.length * valIndiv).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          const alvo = cotasSelecionadasMembro[0];
+          txtShare.innerText = `Anexamos o comprovante recebido do banco e sugerimos vinculá-lo à Cota ${String(alvo.numero).padStart(2, '0')} de ${alvo.ownerName} (${alvo.ownerRole}) — R$ ${totalSug}. Confira abaixo e toque em "Confirmar Pagamento".`;
         } else {
           txtShare.innerText = `Comprovante recebido do banco! Todas as suas cotas já foram quitadas ou enviadas para conferência.`;
         }
@@ -4509,21 +4671,10 @@ self.addEventListener('fetch', (event) => {
   }
 
   function renderizarCarnePrivado(v) {
-    const cotas = garantirEstruturaCotas(v);
-    const totalCotas = cotas.length;
+    garantirEstruturaCotas(v);
     const deps = obterDependentes(v);
     const qtdPessoas = obterQtdPessoas(v);
-    const valIndividual = obterValorParcelaIndividual();
-    const valParcela = obterValorParcelaInscricao(v);
-
-    const pagas = contarCotasPagas(v);
-    const emAnalise = contarCotasEmAnalise(v);
-    const restantes = Math.max(0, totalCotas - pagas - emAnalise);
-    const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
-
-    const valorPago = calcularValorArrecadadoInscricao(v);
-    const valorTotal = obterValorTotalInscricao(v);
-    const valorFalta = Math.max(0, valorTotal - valorPago);
+    const valIndiv = obterValorParcelaIndividual();
 
     document.getElementById("auth-casal-nome").innerText = v.nome;
     if (deps.length > 0) {
@@ -4533,29 +4684,98 @@ self.addEventListener('fetch', (event) => {
       document.getElementById("auth-dep-info").innerText = "👤 Inscrição Individual (1 pessoa)";
     }
 
+    // Abas de filtro por pessoa quando há dependentes
+    const tabsContainer = document.getElementById("auth-owner-tabs-container");
+    if (deps.length > 0) {
+      const pagasTit = v.cotas.filter(c => c.status === "pago" || c.pago).length;
+      const totTit = v.cotas.length;
+
+      let tabsHtml = `<button type="button" class="carne-owner-tab ${filtroDonoCarneAtual === 'todos' ? 'active' : ''}" onclick="selecionarFiltroDonoCarne(${v.id}, 'todos')">📑 Todos Separados (${qtdPessoas})</button>`;
+      tabsHtml += `<button type="button" class="carne-owner-tab ${filtroDonoCarneAtual === 'titular' ? 'active' : ''}" onclick="selecionarFiltroDonoCarne(${v.id}, 'titular')">👤 ${esc(obterPrimeiroEUltimoNome(v.nome))} (${pagasTit}/${totTit})</button>`;
+      deps.forEach((d, idx) => {
+        const pagasDep = d.cotas.filter(c => c.status === "pago" || c.pago).length;
+        const totDep = d.cotas.length;
+        tabsHtml += `<button type="button" class="carne-owner-tab ${filtroDonoCarneAtual === 'dep_' + idx ? 'active' : ''}" onclick="selecionarFiltroDonoCarne(${v.id}, 'dep_${idx}')">👥 ${esc(obterPrimeiroEUltimoNome(d.nome))} (${pagasDep}/${totDep})</button>`;
+      });
+      tabsContainer.innerHTML = tabsHtml;
+      tabsContainer.style.display = "flex";
+    } else {
+      tabsContainer.style.display = "none";
+      filtroDonoCarneAtual = "todos";
+    }
+
+    // Define quais blocos de pessoas exibir conforme a aba selecionada
+    const secoesPessoas = [];
+    if (filtroDonoCarneAtual === "todos" || filtroDonoCarneAtual === "titular") {
+      secoesPessoas.push({
+        ownerType: "titular",
+        depIdx: -1,
+        ownerName: v.nome,
+        ownerRole: "Titular",
+        cotas: v.cotas
+      });
+    }
+    deps.forEach((d, idx) => {
+      if (filtroDonoCarneAtual === "todos" || filtroDonoCarneAtual === `dep_${idx}`) {
+        secoesPessoas.push({
+          ownerType: "dep",
+          depIdx: idx,
+          ownerName: d.nome,
+          ownerRole: d.parentesco || "Dependente",
+          cotas: d.cotas
+        });
+      }
+    });
+
+    // Calcula resumo financeiro conforme a visualização ativa (Individual ou Todos)
+    let totalCotasExibidas = 0;
+    let pagasExibidas = 0;
+    let emAnaliseExibidas = 0;
+    let valorPagoExibido = 0;
+
+    secoesPessoas.forEach(sec => {
+      sec.cotas.forEach(c => {
+        totalCotasExibidas++;
+        if (c.status === "pago" || c.pago === true) {
+          pagasExibidas++;
+          const vp = (typeof c.valorPago === "number" && c.valorPago > 0 && c.valorPago <= valIndiv * 1.1) ? c.valorPago : valIndiv;
+          valorPagoExibido += vp;
+        } else if (c.status === "em_analise") {
+          emAnaliseExibidas++;
+        }
+      });
+    });
+
+    const restantesExibidas = Math.max(0, totalCotasExibidas - pagasExibidas - emAnaliseExibidas);
+    const valorTotalExibido = totalCotasExibidas * valIndiv;
+    const valorFaltaExibido = Math.max(0, valorTotalExibido - valorPagoExibido);
+    const perc = totalCotasExibidas > 0 ? Math.min(100, Math.round((pagasExibidas / totalCotasExibidas) * 100)) : 0;
+
+    // Credencial VIP (baseada na quitação total da inscrição)
+    const todasIndiv = obterTodasCotasIndividuais(v);
+    const pagasGeral = contarCotasIndividuaisPagas(v);
     const boxCred = document.getElementById("auth-box-credencial-vip");
-    if (boxCred) boxCred.style.display = (pagas >= totalCotas) ? "block" : "none";
+    if (boxCred) boxCred.style.display = (pagasGeral >= todasIndiv.length) ? "block" : "none";
 
-    document.getElementById("auth-val-total").innerText = `R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-    document.getElementById("auth-cotas-total-txt").innerText = `${totalCotas} cotas de R$ ${valParcela.toFixed(2).replace('.', ',')}`;
+    document.getElementById("auth-lbl-total").innerText = filtroDonoCarneAtual === "todos" && deps.length > 0
+      ? "Investimento Total (Todos)"
+      : `Total (${secoesPessoas[0]?.ownerRole || 'Individual'})`;
+    document.getElementById("auth-val-total").innerText = `R$ ${valorTotalExibido.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-total-txt").innerText = `${totalCotasExibidas} cotas de R$ ${valIndiv.toFixed(2).replace('.', ',')}`;
 
-    document.getElementById("auth-val-pago").innerText = `R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-    document.getElementById("auth-cotas-pagas-txt").innerText = `${pagas} ${pagas === 1 ? 'cota validada' : 'cotas validadas'}`;
+    document.getElementById("auth-val-pago").innerText = `R$ ${valorPagoExibido.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-pagas-txt").innerText = `${pagasExibidas} ${pagasExibidas === 1 ? 'cota validada' : 'cotas validadas'}`;
 
-    document.getElementById("auth-val-falta").innerText = `R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-    document.getElementById("auth-cotas-falta-txt").innerText = restantes === 0
-      ? (emAnalise > 0 ? `${emAnalise} em conferência` : "Tudo quitado!")
-      : `${restantes} ${restantes === 1 ? 'cota restante' : 'cotas restantes'}`;
+    document.getElementById("auth-val-falta").innerText = `R$ ${valorFaltaExibido.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("auth-cotas-falta-txt").innerText = restantesExibidas === 0
+      ? (emAnaliseExibidas > 0 ? `${emAnaliseExibidas} em conferência` : "Tudo quitado!")
+      : `${restantesExibidas} ${restantesExibidas === 1 ? 'cota restante' : 'cotas restantes'}`;
 
     document.getElementById("auth-progress-fill").style.width = `${perc}%`;
-    document.getElementById("auth-progress-label").innerText = `${perc}% Concluído (${pagas} de ${totalCotas} cotas)`;
+    document.getElementById("auth-progress-label").innerText = `${perc}% Concluído (${pagasExibidas} de ${totalCotasExibidas} cotas)`;
 
-    let tituloIncentivo = "⚔️ Jornada Iniciada";
-    if (perc >= 100) tituloIncentivo = "🏆 Missão Cumprida — 100% Quitado!";
-    else if (perc >= 70) tituloIncentivo = "🔥 Reta Final — Falta Muito Pouco!";
-    else if (perc >= 40) tituloIncentivo = "🛡️ Firme no Propósito — Excelente Ritmo!";
-    else if (perc > 0 || emAnalise > 0) tituloIncentivo = "⚔️ Ótimo Começo — Continue Avançando!";
-    document.getElementById("auth-encouragement-title").innerText = tituloIncentivo;
+    // Mensagem automática do sistema baseada no progresso
+    atualizarMensagemIncentivoAutomatica(perc, pagasExibidas, restantesExibidas);
 
     const aval = avaliarStatusPrazo(v);
     const deadlineContainer = document.getElementById("auth-deadline-container");
@@ -4572,75 +4792,115 @@ self.addEventListener('fetch', (event) => {
       deadlineContainer.innerHTML = `<div class="deadline-ok-pill">${esc(aval.mensagem)}</div>`;
     }
 
-    const grid = document.getElementById("auth-carne-grid");
-    grid.innerHTML = "";
+    // Renderiza os carnês claramente separados por pessoa
+    const sectionsContainer = document.getElementById("auth-carne-sections-container");
+    sectionsContainer.innerHTML = "";
 
-    cotas.forEach(c => {
-      const isPago = (c.status === "pago" || c.pago === true);
-      const isAnalise = (c.status === "em_analise");
-      const selecionada = cotasSelecionadasMembro.includes(c.numero);
+    secoesPessoas.forEach(sec => {
+      const secBox = document.createElement("div");
+      secBox.className = `carne-person-section ${sec.ownerType === 'titular' ? 'titular-sec' : 'dep-sec'}`;
 
-      const card = document.createElement("div");
-      card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''} ${selecionada ? 'selecionada' : ''}`;
+      const pagasSec = sec.cotas.filter(c => c.status === "pago" || c.pago).length;
+      const iconePessoa = sec.ownerType === "titular" ? "👤" : "👥";
 
-      let statusHtml = `<span class="cota-status st-pend">Pendente</span>`;
-      if (isPago) statusHtml = `<span class="cota-status st-pago">✅ Pago</span>`;
-      else if (isAnalise) statusHtml = `<span class="cota-status st-analise">⏳ Em Conferência</span>`;
-      else if (selecionada) statusHtml = `<span class="cota-status st-sel">Selecionada</span>`;
-
-      const multBadge = qtdPessoas > 1 ? `<span class="cota-mult-tag">👥 ${qtdPessoas}x</span>` : ``;
-
-      let inner = `
-        ${multBadge}
-        <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
-        <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
-        ${statusHtml}
+      secBox.innerHTML = `
+        <div class="carne-person-header">
+          <div class="carne-person-title">
+            <span>${iconePessoa} Carnê de ${esc(sec.ownerName)}</span>
+            <span class="badge-dependente-pub">${esc(sec.ownerRole)}</span>
+          </div>
+          <span class="carne-person-sub">${pagasSec}/${sec.cotas.length} pagas • R$ ${valIndiv.toFixed(2).replace('.', ',')} cada</span>
+        </div>
       `;
 
-      if ((isPago || isAnalise) && c.compId) {
-        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(v.nome)} — Cota ${c.numero}')">📎 Recibo</button>`;
-      }
+      const grid = document.createElement("div");
+      grid.className = "carne-grid";
 
-      card.innerHTML = inner;
-      if (!isPago && !isAnalise) card.onclick = () => toggleSelecaoCotaMembro(v.id, c.numero);
-      grid.appendChild(card);
+      sec.cotas.forEach(c => {
+        const isPago = (c.status === "pago" || c.pago === true);
+        const isAnalise = (c.status === "em_analise");
+        const selecionada = cotasSelecionadasMembro.some(
+          s => s.ownerType === sec.ownerType && s.depIdx === sec.depIdx && s.numero === c.numero
+        );
+
+        const card = document.createElement("div");
+        card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''} ${selecionada ? 'selecionada' : ''}`;
+
+        let statusHtml = `<span class="cota-status st-pend">Pendente</span>`;
+        if (isPago) statusHtml = `<span class="cota-status st-pago">✅ Pago</span>`;
+        else if (isAnalise) statusHtml = `<span class="cota-status st-analise">⏳ Conferência</span>`;
+        else if (selecionada) statusHtml = `<span class="cota-status st-sel">Selecionada</span>`;
+
+        const ownerTagClass = sec.ownerType === "titular" ? "cota-owner-tag titular" : "cota-owner-tag";
+        const ownerShort = sec.ownerType === "titular" ? "Titular" : esc(sec.ownerRole);
+
+        let inner = `
+          <span class="${ownerTagClass}">${ownerShort}</span>
+          <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
+          <span class="cota-val">R$ ${valIndiv.toFixed(2).replace('.', ',')}</span>
+          ${statusHtml}
+        `;
+
+        if ((isPago || isAnalise) && c.compId) {
+          inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(sec.ownerName)} — Cota ${c.numero}')">📎 Recibo</button>`;
+        }
+
+        card.innerHTML = inner;
+        if (!isPago && !isAnalise) {
+          card.onclick = () => toggleSelecaoCotaMembro(v.id, sec.ownerType, sec.depIdx, c.numero, sec.ownerName, sec.ownerRole);
+        }
+        grid.appendChild(card);
+      });
+
+      secBox.appendChild(grid);
+      sectionsContainer.appendChild(secBox);
     });
 
+    // Painel de Checkout com discriminação exata de quem é cada cota selecionada
     const painelPag = document.getElementById("auth-painel-pagamento");
     const breakdownBox = document.getElementById("auth-checkout-breakdown");
 
     if (cotasSelecionadasMembro.length > 0) {
       painelPag.style.display = "block";
       const qtdSel = cotasSelecionadasMembro.length;
-      const totalSel = qtdSel * valParcela;
-      document.getElementById("auth-selecao-titulo").innerText = `${qtdSel} ${qtdSel === 1 ? 'cota selecionada' : 'cotas selecionadas'} (${cotasSelecionadasMembro.sort((a,b)=>a-b).join(', ')})`;
+      const totalSel = qtdSel * valIndiv;
+      document.getElementById("auth-selecao-titulo").innerText = `${qtdSel} ${qtdSel === 1 ? 'cota selecionada' : 'cotas selecionadas'}`;
       document.getElementById("auth-selecao-valor").innerText = `Total: R$ ${totalSel.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
 
-      // Mini-Recibo transparente quando há dependentes
-      if (deps.length > 0 && breakdownBox) {
-        let rowsHtml = `<div class="checkout-breakdown-row"><span>👤 ${esc(v.nome)} (Titular • ${qtdSel}x R$ ${valIndividual.toFixed(2).replace('.', ',')})</span><strong>R$ ${(qtdSel * valIndividual).toFixed(2).replace('.', ',')}</strong></div>`;
-        deps.forEach(d => {
-          rowsHtml += `<div class="checkout-breakdown-row"><span>👥 ${esc(d.nome)} (${esc(d.parentesco)} • ${qtdSel}x R$ ${valIndividual.toFixed(2).replace('.', ',')})</span><strong>R$ ${(qtdSel * valIndividual).toFixed(2).replace('.', ',')}</strong></div>`;
+      if (breakdownBox) {
+        const ordenadas = [...cotasSelecionadasMembro].sort((a, b) => {
+          if (a.ownerType !== b.ownerType) return a.ownerType === "titular" ? -1 : 1;
+          if (a.depIdx !== b.depIdx) return a.depIdx - b.depIdx;
+          return a.numero - b.numero;
         });
-        rowsHtml += `<div class="checkout-breakdown-total"><span>Total referente a ${qtdPessoas} pessoas</span><span>R$ ${totalSel.toFixed(2).replace('.', ',')}</span></div>`;
+        let rowsHtml = ordenadas.map(item => `
+          <div class="checkout-breakdown-row">
+            <span>${item.ownerType === 'titular' ? '👤' : '👥'} <strong>Cota ${String(item.numero).padStart(2, '0')}</strong> — ${esc(item.ownerName)} (${esc(item.ownerRole)})</span>
+            <strong>R$ ${valIndiv.toFixed(2).replace('.', ',')}</strong>
+          </div>
+        `).join("");
+        rowsHtml += `<div class="checkout-breakdown-total"><span>Total (${qtdSel} ${qtdSel === 1 ? 'boleto' : 'boletos'})</span><span>R$ ${totalSel.toFixed(2).replace('.', ',')}</span></div>`;
         breakdownBox.innerHTML = rowsHtml;
         breakdownBox.style.display = "block";
-      } else if (breakdownBox) {
-        breakdownBox.style.display = "none";
       }
 
       if (document.getElementById("auth-forma-pagamento").value === "pix") {
-        renderizarQRCodePix('auth', totalSel, `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`);
+        renderizarQRCodePix('auth', totalSel, `BENDID${v.id}Q${qtdSel}`);
       }
     } else {
       painelPag.style.display = "none";
     }
   }
 
-  window.toggleSelecaoCotaMembro = function(varaoId, numeroCota) {
-    const idx = cotasSelecionadasMembro.indexOf(numeroCota);
-    if (idx > -1) cotasSelecionadasMembro.splice(idx, 1);
-    else cotasSelecionadasMembro.push(numeroCota);
+  window.toggleSelecaoCotaMembro = function(varaoId, ownerType, depIdx, numeroCota, ownerName, ownerRole) {
+    const idx = cotasSelecionadasMembro.findIndex(
+      s => s.ownerType === ownerType && s.depIdx === depIdx && s.numero === numeroCota
+    );
+    if (idx > -1) {
+      cotasSelecionadasMembro.splice(idx, 1);
+    } else {
+      cotasSelecionadasMembro.push({ ownerType, depIdx, numero: numeroCota, ownerName, ownerRole });
+    }
     salvarSessaoMembroLocal(varaoId, cotasSelecionadasMembro);
     const v = varoes.find(x => x.id === varaoId);
     if (v) renderizarCarnePrivado(v);
@@ -4668,17 +4928,17 @@ self.addEventListener('fetch', (event) => {
       }
 
       const hojeISO = new Date().toISOString().split('T')[0];
-      const cotas = garantirEstruturaCotas(v);
+      garantirEstruturaCotas(v);
       const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
-      const valParcela = obterValorParcelaInscricao(v);
+      const valIndiv = obterValorParcelaIndividual();
       const novoStatus = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
 
-      cotasSelecionadasMembro.forEach(num => {
-        const cotaObj = cotas.find(c => c.numero === num);
+      cotasSelecionadasMembro.forEach(sel => {
+        const cotaObj = localizarObjetoCota(v, sel.ownerType, sel.depIdx, sel.numero);
         if (cotaObj) {
           cotaObj.status = novoStatus;
           cotaObj.pago = (novoStatus === "pago");
-          cotaObj.valorPago = (novoStatus === "pago") ? valParcela : 0;
+          cotaObj.valorPago = (novoStatus === "pago") ? valIndiv : 0;
           cotaObj.dataPagamento = hojeISO;
           cotaObj.forma = forma;
           if (compId) cotaObj.compId = compId;
@@ -4695,11 +4955,10 @@ self.addEventListener('fetch', (event) => {
 
       await salvarNoBanco();
       renderizarLista();
-      atualizarMensagemIncentivo();
       renderizarCarnePrivado(v);
 
       if (novoStatus === "em_analise") {
-        alert("✅ Comprovante enviado com sucesso!\n\nSuas cotas foram marcadas como 'Em Conferência' e serão validadas pela tesouraria em breve.");
+        alert("✅ Comprovante enviado com sucesso!\n\nAs cotas selecionadas foram marcadas como 'Conferência' e serão validadas pela tesouraria em breve.");
       } else {
         alert("✅ Pagamento registrado com sucesso! Veja seu progresso atualizado.");
       }
@@ -4774,7 +5033,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // GERENCIADOR ADMINISTRATIVO DE COTAS
+  // GERENCIADOR ADMINISTRATIVO DE COTAS (SEPARADO POR PESSOA)
   // ==========================================
   window.abrirGerenciadorCotasAdmin = function(id) {
     const v = varoes.find(x => x.id === id);
@@ -4785,59 +5044,88 @@ self.addEventListener('fetch', (event) => {
   };
 
   function renderizarGridCotasAdmin(v) {
-    const cotas = garantirEstruturaCotas(v);
-    const totalCotas = cotas.length;
-    const valParcela = obterValorParcelaInscricao(v);
-    const pagas = contarCotasPagas(v);
-    const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
+    garantirEstruturaCotas(v);
+    const valIndiv = obterValorParcelaIndividual();
+    const todasIndiv = obterTodasCotasIndividuais(v);
+    const totalCotasIndiv = todasIndiv.length;
+    const pagasIndiv = contarCotasIndividuaisPagas(v);
+    const perc = totalCotasIndiv > 0 ? Math.min(100, Math.round((pagasIndiv / totalCotasIndiv) * 100)) : 0;
     const valorPago = calcularValorArrecadadoInscricao(v);
     const valorTotal = obterValorTotalInscricao(v);
 
     const deps = obterDependentes(v);
     const depTxt = deps.length > 0 ? ` + ${deps.map(d => `${d.nome} (${d.parentesco})`).join(', ')}` : "";
     document.getElementById("admin-cotas-nome").innerText = `${v.nome}${depTxt}`;
-    document.getElementById("admin-cotas-resumo").innerText = `Quitadas: ${pagas}/${totalCotas} cotas • Arrecadado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} / R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    document.getElementById("admin-cotas-resumo").innerText = `Quitadas: ${pagasIndiv}/${totalCotasIndiv} cotas individuais • Arrecadado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} / R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
     document.getElementById("admin-progress-fill").style.width = `${perc}%`;
     document.getElementById("admin-progress-label").innerText = `${perc}% Concluído`;
 
-    const grid = document.getElementById("admin-carne-grid");
-    grid.innerHTML = "";
+    const container = document.getElementById("admin-carne-sections-container");
+    container.innerHTML = "";
 
-    cotas.forEach(c => {
-      const isPago = (c.status === "pago" || c.pago === true);
-      const isAnalise = (c.status === "em_analise");
+    const secoes = [
+      { ownerType: "titular", depIdx: -1, ownerName: v.nome, ownerRole: "Titular", cotas: v.cotas }
+    ];
+    deps.forEach((d, idx) => {
+      secoes.push({ ownerType: "dep", depIdx: idx, ownerName: d.nome, ownerRole: d.parentesco || "Dependente", cotas: d.cotas });
+    });
 
-      const card = document.createElement("div");
-      card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''}`;
+    secoes.forEach(sec => {
+      const secBox = document.createElement("div");
+      secBox.className = `carne-person-section ${sec.ownerType === 'titular' ? 'titular-sec' : 'dep-sec'}`;
+      const pagasSec = sec.cotas.filter(c => c.status === "pago" || c.pago).length;
 
-      let stClass = isPago ? 'st-pago' : (isAnalise ? 'st-analise' : 'st-pend');
-      let stTxt = isPago ? '✅ Pago' : (isAnalise ? '⏳ Conferir' : 'Pendente');
-
-      let inner = `
-        <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
-        <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
-        <span class="cota-status ${stClass}">${stTxt}</span>
+      secBox.innerHTML = `
+        <div class="carne-person-header">
+          <div class="carne-person-title">
+            <span>${sec.ownerType === 'titular' ? '👤' : '👥'} ${esc(sec.ownerName)}</span>
+            <span class="badge-dependente-pub">${esc(sec.ownerRole)}</span>
+          </div>
+          <span class="carne-person-sub">${pagasSec}/${sec.cotas.length} pagas</span>
+        </div>
       `;
 
-      if ((isPago || isAnalise) && c.compId) {
-        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(v.nome)} — Cota ${c.numero}')">📎 Recibo</button>`;
-      }
+      const grid = document.createElement("div");
+      grid.className = "carne-grid";
 
-      card.innerHTML = inner;
-      card.onclick = () => alternarCotaManualAdmin(v.id, c.numero);
-      grid.appendChild(card);
+      sec.cotas.forEach(c => {
+        const isPago = (c.status === "pago" || c.pago === true);
+        const isAnalise = (c.status === "em_analise");
+
+        const card = document.createElement("div");
+        card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''}`;
+
+        let stClass = isPago ? 'st-pago' : (isAnalise ? 'st-analise' : 'st-pend');
+        let stTxt = isPago ? '✅ Pago' : (isAnalise ? '⏳ Conferir' : 'Pendente');
+
+        let inner = `
+          <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
+          <span class="cota-val">R$ ${valIndiv.toFixed(2).replace('.', ',')}</span>
+          <span class="cota-status ${stClass}">${stTxt}</span>
+        `;
+
+        if ((isPago || isAnalise) && c.compId) {
+          inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(sec.ownerName)} — Cota ${c.numero}')">📎 Recibo</button>`;
+        }
+
+        card.innerHTML = inner;
+        card.onclick = () => alternarCotaManualAdmin(v.id, sec.ownerType, sec.depIdx, c.numero, sec.ownerName);
+        grid.appendChild(card);
+      });
+
+      secBox.appendChild(grid);
+      container.appendChild(secBox);
     });
   }
 
-  window.alternarCotaManualAdmin = async function(varaoId, numeroCota) {
+  window.alternarCotaManualAdmin = async function(varaoId, ownerType, depIdx, numeroCota, ownerName) {
     const v = varoes.find(x => x.id === varaoId);
     if (!v) return;
-    const cotas = garantirEstruturaCotas(v);
-    const cota = cotas.find(c => c.numero === numeroCota);
+    const cota = localizarObjetoCota(v, ownerType, depIdx, numeroCota);
     if (!cota) return;
 
     if (cota.status === "pago" || cota.pago) {
-      if (!confirm(`Estornar a Cota ${numeroCota} de ${v.nome} para Pendente?`)) return;
+      if (!confirm(`Estornar a Cota ${numeroCota} de ${ownerName} para Pendente?`)) return;
       cota.status = "pendente";
       cota.pago = false;
       cota.valorPago = 0;
@@ -4846,7 +5134,7 @@ self.addEventListener('fetch', (event) => {
     } else {
       cota.status = "pago";
       cota.pago = true;
-      cota.valorPago = obterValorParcelaInscricao(v);
+      cota.valorPago = obterValorParcelaIndividual();
       cota.dataPagamento = cota.dataPagamento || new Date().toISOString().split('T')[0];
       if (!cota.forma) cota.forma = v.formaPagamento !== 'indefinido' ? v.formaPagamento : 'dinheiro';
     }
@@ -4865,7 +5153,11 @@ self.addEventListener('fetch', (event) => {
     const t2 = document.getElementById("add-tel2").value;
     const transporte = document.getElementById("add-transporte").value;
     const prev = document.getElementById("add-previsao").value;
-    const dependentes = lerDependentesDoForm("add");
+    const dependentes = lerDependentesDoForm("add").map(d => ({
+      nome: d.nome,
+      parentesco: d.parentesco,
+      cotas: gerarCotasIniciais()
+    }));
 
     if (!n) return alert("Digite o nome completo do titular!");
     if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
@@ -4922,7 +5214,7 @@ self.addEventListener('fetch', (event) => {
     const id = parseInt(document.getElementById("edit-id-casal").value);
     const t1 = document.getElementById("edit-tel1").value;
     const t2 = document.getElementById("edit-tel2").value;
-    const dependentes = lerDependentesDoForm("edit");
+    const formDeps = lerDependentesDoForm("edit");
     const novoPin = document.getElementById("edit-codigo-acesso").value.trim();
 
     if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
@@ -4930,11 +5222,23 @@ self.addEventListener('fetch', (event) => {
     if (novoPin && !validarPin4Digitos(novoPin)) return alert("A senha de acesso deve ter 4 dígitos numéricos.");
 
     const v = varoes.find(x => x.id === id);
+    const antigosDeps = obterDependentes(v);
+
+    // Preserva o histórico de cotas dos dependentes já existentes ao editar
+    const depsAtualizados = formDeps.map((fd, idx) => {
+      const existente = antigosDeps.find(ad => ad.nome === fd.nome) || antigosDeps[idx];
+      return {
+        nome: fd.nome,
+        parentesco: fd.parentesco,
+        cotas: (existente && Array.isArray(existente.cotas)) ? existente.cotas : gerarCotasIniciais()
+      };
+    });
+
     if (isAlfa || isAnalista) v.nome = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
     v.tel1 = t1 ? t1.replace(/\D/g, '') : "";
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
     v.transporte = document.getElementById("edit-transporte").value;
-    v.dependentes = dependentes;
+    v.dependentes = depsAtualizados;
     delete v.temDependente;
     delete v.nomeDependente;
     delete v.parentescoDependente;
@@ -4965,7 +5269,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // AUTENTICAÇÃO E LIDERANÇA
+  // AUTENTICAÇÃO E LIDERANÇA (PROMOÇÃO / REBAIXAMENTO / EXCLUSÃO)
   // ==========================================
   window.abrirLogin = function() {
     if (isLider || isAnalista) {
@@ -5045,8 +5349,8 @@ self.addEventListener('fetch', (event) => {
     fecharModal('modal-login');
     fecharModal('modal-primeiro-acesso');
 
-    isAnalista = (l.cargo === "Analista" || l.nome === "Joabe" || l.nome === "Felipe");
-    isAlfa = (l.alfa === true || isAnalista);
+    isAnalista = (l.cargo === "Analista");
+    isAlfa = (l.alfa === true || l.cargo === "Líder Alfa" || isAnalista);
     isLider = true;
     liderAtual = l.nome;
 
@@ -5057,12 +5361,13 @@ self.addEventListener('fetch', (event) => {
     
     const badgeCargo = document.getElementById("badge-cargo-painel");
     badgeCargo.style.display = "inline-block";
-    badgeCargo.innerText = isAnalista ? "ANALISTA" : (isAlfa ? "LÍDER ALFA" : "LÍDER");
+    badgeCargo.innerText = isAnalista ? "ANALISTA" : (isAlfa ? "LÍDER ALFA" : "LÍDER OPERACIONAL");
     badgeCargo.style.background = isAnalista ? "#e0e7ff" : "var(--bronze)";
     badgeCargo.style.color = isAnalista ? "#3730a3" : "var(--iron)";
     document.querySelector('.btn-lider').innerHTML = "Sair (" + esc(liderAtual.split(' ')[0]) + ")";
 
     atualizarIndicadorBiometriaLider(l);
+    preencherInputsConfiguracoes();
 
     document.getElementById("btn-tab-alfa").style.display = (isAlfa || isAnalista) ? "block" : "none";
     document.getElementById("zona-nova-edicao").style.display = (isAlfa || isAnalista) ? "block" : "none";
@@ -5100,13 +5405,33 @@ self.addEventListener('fetch', (event) => {
     corpo.innerHTML = "";
     lideres.forEach(l => {
       const tr = document.createElement("tr");
+      const protegido = ehBispoJader(l);
+      const ehCargoAlfaOuAnalista = (l.alfa === true || l.cargo === "Líder Alfa" || l.cargo === "Analista");
       let acaoHtml = "";
-      if (l.bloqueado) acaoHtml += `<button onclick="desbloquearLider('${esc(l.nome)}')" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔓 Desbloquear</button>`;
-      if (isAnalista) acaoHtml += `<button onclick="abrirRedefinirSenha('${esc(l.nome)}')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔑 Senha</button>`;
-      if (!l.fixo) acaoHtml += `<button onclick="removerLider('${esc(l.nome)}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;">🗑️</button>`;
-      else acaoHtml += `<span style="color:var(--text-muted); font-size:11px;">Vitalício</span>`;
 
-      let badgeClass = l.cargo === "Analista" ? 'badge-analista-tag' : (l.alfa ? 'badge-alfa-tag' : 'badge-op-tag');
+      if (l.bloqueado) {
+        acaoHtml += `<button onclick="desbloquearLider('${esc(l.nome)}')" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔓 Desbloquear</button>`;
+      }
+      if (isAnalista) {
+        acaoHtml += `<button onclick="abrirRedefinirSenha('${esc(l.nome)}')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔑 Senha</button>`;
+      }
+
+      if (protegido) {
+        acaoHtml += `<span style="color:var(--bronze-dark); font-size:11px; font-weight:700;">🛡️ Fundador / Protegido</span>`;
+      } else {
+        // Qualquer Líder Alfa ou Analista pode promover para Alfa ou rebaixar para Operacional
+        if (isAlfa || isAnalista) {
+          if (ehCargoAlfaOuAnalista) {
+            acaoHtml += `<button onclick="alterarCargoLider('${esc(l.nome)}', 'Líder Operacional')" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;" title="Rebaixar para Operacional">⬇️ Operacional</button>`;
+          } else {
+            acaoHtml += `<button onclick="alterarCargoLider('${esc(l.nome)}', 'Líder Alfa')" style="background:var(--bronze-soft); color:var(--bronze-dark); border:1px solid var(--bronze); padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;" title="Promover para Líder Alfa">⬆️ Promover Alfa</button>`;
+          }
+        }
+        // Todos os líderes exceto Bispo Jader podem ser excluídos
+        acaoHtml += `<button onclick="removerLider('${esc(l.nome)}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;" title="Excluir líder">🗑️</button>`;
+      }
+
+      let badgeClass = l.cargo === "Analista" ? 'badge-analista-tag' : (ehCargoAlfaOuAnalista ? 'badge-alfa-tag' : 'badge-op-tag');
       const statusBadge = l.bloqueado
         ? `<span class="badge-cargo badge-bloqueado-tag">🚫 Bloqueado</span>`
         : `<span class="badge-cargo" style="background:#dcfce7; color:#16a34a;">✅ Ativo</span>`;
@@ -5114,10 +5439,24 @@ self.addEventListener('fetch', (event) => {
         ? ` <span class="badge-cargo" style="background:var(--bronze-soft); color:var(--bronze-dark);">👆 Biometria</span>`
         : ``;
 
-      tr.innerHTML = `<td><strong>${esc(l.nome)}</strong></td><td><span class="badge-cargo ${badgeClass}">${esc(l.cargo)}</span></td><td>${statusBadge}${bioBadge}</td><td style="text-align:right;">${acaoHtml}</td>`;
+      tr.innerHTML = `<td><strong>${esc(l.nome)}</strong></td><td><span class="badge-cargo ${badgeClass}">${esc(l.cargo)}</span></td><td>${statusBadge}${bioBadge}</td><td style="text-align:right; white-space:nowrap;">${acaoHtml}</td>`;
       corpo.appendChild(tr);
     });
   }
+
+  window.alterarCargoLider = async function(nome, novoCargo) {
+    if (!isAlfa && !isAnalista) return alert("Apenas Líder Alfa ou Analista podem alterar cargos.");
+    const l = lideres.find(x => x.nome === nome);
+    if (!l || ehBispoJader(l)) return;
+
+    const acaoTxt = novoCargo === "Líder Alfa" ? "promover" : "rebaixar";
+    if (!confirm(`Deseja ${acaoTxt} ${l.nome} para ${novoCargo}?`)) return;
+
+    l.cargo = novoCargo;
+    l.alfa = (novoCargo === "Líder Alfa" || novoCargo === "Analista");
+    await salvarNoBanco();
+    renderizarTabelaLideres();
+  };
 
   window.desbloquearLider = async function(nome) {
     const l = lideres.find(x => x.nome === nome);
@@ -5159,7 +5498,18 @@ self.addEventListener('fetch', (event) => {
     const s = document.getElementById("novo-lider-senha").value.trim();
     const cargo = document.getElementById("novo-lider-cargo").value;
     if (!n || !s) return alert("Preencha nome e senha!");
-    lideres.push({ nome: n, cargo, senha: s, alfa: (cargo !== "Líder Operacional"), fixo: false, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false });
+    if (lideres.find(x => x.nome.toLowerCase() === n.toLowerCase())) {
+      return alert("Já existe um usuário cadastrado com esse nome.");
+    }
+    lideres.push({
+      nome: n,
+      cargo,
+      senha: s,
+      alfa: (cargo !== "Líder Operacional"),
+      bloqueado: false,
+      primeiroAcesso: true,
+      biometriaAtiva: false
+    });
     await salvarNoBanco();
     renderizarTabelaLideres();
     document.getElementById("novo-lider-nome").value = "";
@@ -5167,8 +5517,12 @@ self.addEventListener('fetch', (event) => {
   };
 
   window.removerLider = async function(n) {
-    if (confirm(`Remover ${n}?`)) {
-      lideres = lideres.filter(l => l.nome !== n || l.fixo);
+    const alvo = lideres.find(l => l.nome === n);
+    if (!alvo || ehBispoJader(alvo)) {
+      return alert("O perfil do Bispo Jader é protegido e não pode ser excluído.");
+    }
+    if (confirm(`Remover definitivamente o perfil de ${n}?`)) {
+      lideres = lideres.filter(l => l.nome !== n || ehBispoJader(l));
       await salvarNoBanco();
       renderizarTabelaLideres();
     }
@@ -5180,7 +5534,7 @@ self.addEventListener('fetch', (event) => {
     const novaSenha = document.getElementById("edit-lider-senha").value.trim();
     const l = lideres.find(x => x.nome === orig);
     if (!l) return;
-    if (novoNome) l.nome = novoNome;
+    if (novoNome && !ehBispoJader(l)) l.nome = novoNome;
     if (novaSenha && novaSenha.length >= 4) l.senha = novaSenha;
     await salvarNoBanco();
     fecharModal("modal-editar-credencial");
@@ -5195,7 +5549,6 @@ self.addEventListener('fetch', (event) => {
     const ano = configuracoes.anoEvento || "2027";
     let nomeArquivo = `Relatorio_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
     let csvContent = "\uFEFFsep=;\r\n";
-    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
 
     if (tipo === 'presenca') {
       nomeArquivo = `Participantes_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
@@ -5217,7 +5570,8 @@ self.addEventListener('fetch', (event) => {
       nomeArquivo = `Financeiro_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
       linhas.push(["ID", "Titular", "Dependentes", "Pessoas", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)", "Status Prazo"]);
       varoesFiltrados.forEach(v => {
-        const pagas = contarCotasPagas(v);
+        const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
+        const pagasIndiv = contarCotasIndividuaisPagas(v);
         const deps = obterDependentes(v);
         const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
         const pagoVal = calcularValorArrecadadoInscricao(v);
@@ -5228,8 +5582,8 @@ self.addEventListener('fetch', (event) => {
           `"${v.nome}"`,
           `"${depStr}"`,
           obterQtdPessoas(v),
-          pagas,
-          totalCotas,
+          pagasIndiv,
+          totalCotasIndiv,
           pagoVal.toFixed(2).replace('.', ','),
           faltaVal.toFixed(2).replace('.', ','),
           aval.alerta ? "Em Atraso / Alerta" : "No Prazo"
@@ -5249,7 +5603,6 @@ self.addEventListener('fetch', (event) => {
     const tituloEv = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
     let titulo = tipo === 'presenca' ? "Relatório de Participantes (Físico)" : "Relatório Financeiro & Cotas";
     let nomeArquivo = `Relatorio_${tituloEv.replace(/\s+/g, '_')}_${tipo}.pdf`;
-    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
 
     let totalPessoas = 0, confirmadosPessoas = 0, arrecadado = 0;
     varoesFiltrados.forEach(v => {
@@ -5278,7 +5631,8 @@ self.addEventListener('fetch', (event) => {
           v.tel1 ? formatarTelefoneVisual(v.tel1) : '-'
         ];
       } else {
-        const pagas = contarCotasPagas(v);
+        const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
+        const pagasIndiv = contarCotasIndividuaisPagas(v);
         const pagoVal = calcularValorArrecadadoInscricao(v);
         const faltaVal = Math.max(0, obterValorTotalInscricao(v) - pagoVal);
         return [
@@ -5286,7 +5640,7 @@ self.addEventListener('fetch', (event) => {
           esc(v.nome),
           depStr,
           qp,
-          `${pagas}/${totalCotas}`,
+          `${pagasIndiv}/${totalCotasIndiv}`,
           `R$ ${pagoVal.toFixed(2).replace('.', ',')}`,
           `R$ ${faltaVal.toFixed(2).replace('.', ',')}`
         ];
