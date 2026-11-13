@@ -71,11 +71,11 @@
       z-index: 10;
     }
 
-    .btn-lider, .btn-install-pwa {
+    .btn-lider {
       background: rgba(22, 25, 29, 0.85);
       color: #f8fafc;
       border: 1px solid var(--bronze);
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 700;
@@ -87,9 +87,7 @@
       gap: 6px;
       transition: 0.25s;
     }
-    .btn-lider:hover, .btn-install-pwa:hover { background: var(--bronze); color: var(--iron); }
-    .btn-install-pwa { border-color: #34d399; color: #6ee7b7; }
-    .btn-install-pwa:hover { background: #34d399; color: var(--iron); }
+    .btn-lider:hover { background: var(--bronze); color: var(--iron); }
 
     .hero-emblem {
       display: inline-flex;
@@ -304,20 +302,21 @@
     }
     .admin-tab-btn {
       flex: 1;
-      min-width: 135px;
+      min-width: 130px;
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 14px 12px;
+      padding: 14px 10px;
       font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+      letter-spacing: 0.6px;
       cursor: pointer;
       border-right: 1px solid rgba(255,255,255,0.08);
       transition: 0.2s;
       font-family: 'Plus Jakarta Sans', sans-serif;
       position: relative;
+      white-space: nowrap;
     }
     .admin-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.04); }
     .admin-tab-btn.active { background: var(--bronze); color: var(--iron); }
@@ -424,15 +423,41 @@
     .btn-chart-export.btn-green { background: var(--green); }
     .canvas-wrapper { position: relative; height: 205px; width: 100%; display: flex; justify-content: center; }
 
-    /* ================= CONFERÊNCIA DE COMPROVANTES & DESPESAS ================= */
-    .audit-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+    /* ================= CENTRAL DE COMPROVANTES & DESPESAS ================= */
     .panel-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 16px;
+      margin-bottom: 16px;
     }
-    .panel-card h4 { margin: 0 0 12px 0; color: var(--iron); font-size: 14px; border-bottom: 1px solid #eceae4; padding-bottom: 8px; }
+    .panel-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #eceae4;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .panel-card-header h4 { margin: 0; color: var(--iron); font-size: 15px; }
+    .export-inline-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn-mini-export {
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-mini-export.pdf { background: var(--crimson); }
+    .btn-mini-export.xls { background: var(--green); }
+
     .audit-item {
       border: 1px solid var(--border);
       border-left: 4px solid var(--amber);
@@ -446,13 +471,36 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+    .audit-item.approved {
+      border-left-color: var(--green);
+      background: #f6fcf8;
+    }
     .expense-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 10px;
-      border-bottom: 1px solid #eceae4;
+      padding: 10px 12px;
+      border: 1px solid #eceae4;
+      border-left: 4px solid var(--crimson);
+      border-radius: 6px;
+      background: #fff;
+      margin-bottom: 8px;
       font-size: 13px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .expense-item.pendente-pag {
+      border-left-color: var(--amber);
+      background: #fffbeb;
+    }
+    .badge-cat-desp {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--stone);
+      color: var(--iron);
+      border: 1px solid var(--border);
     }
 
     /* ================= PORTARIA / CHECK-IN ================= */
@@ -540,38 +588,70 @@
     .btn-page:disabled { opacity: 0.45; cursor: not-allowed; }
     .page-indicator { font-weight: 700; color: var(--iron); padding: 0 8px; font-size: 12px; }
 
-    /* ================= LISTA DE PARTICIPANTES ================= */
-    .list { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
-    .list.public-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
+    /* ================= LISTA MODERNA DE PARTICIPANTES ================= */
+    .list { padding: 16px 20px; display: flex; flex-direction: column; gap: 11px; }
 
     .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 16px;
+      padding: 14px 18px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-left: 4px solid var(--iron);
-      border-radius: 6px;
-      transition: 0.2s;
-      flex-wrap: wrap;
-      gap: 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      gap: 16px;
     }
     .item.is-confirmed {
       border-left-color: var(--green);
-      background: #fbfefc;
+      background: linear-gradient(90deg, #f6fcf8 0%, #ffffff 45%);
     }
     .item.bispo-destaque {
       border-left-color: var(--bronze);
-      background: #fdfbf7;
+      background: linear-gradient(90deg, #fdf9f2 0%, #ffffff 45%);
     }
-    .item:hover { border-color: var(--bronze); box-shadow: 0 4px 12px rgba(22, 25, 29, 0.06); }
+    .item:hover {
+      border-color: var(--bronze);
+      box-shadow: 0 6px 16px rgba(22, 25, 29, 0.07);
+      transform: translateY(-1px);
+    }
 
-    .casal-info { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 180px; }
+    /* Bloco Esquerdo: Monograma + Nome + Sub-infos */
+    .item-left-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1.4;
+      min-width: 220px;
+    }
+
+    .avatar-monogram {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--iron);
+      color: var(--bronze);
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(184, 125, 75, 0.45);
+      box-shadow: 0 3px 8px rgba(22, 25, 29, 0.14);
+    }
+    .item.bispo-destaque .avatar-monogram {
+      background: linear-gradient(135deg, var(--bronze-dark), var(--bronze));
+      color: #fff;
+      border-color: var(--bronze-dark);
+    }
+    .item.is-confirmed .avatar-monogram {
+      border-color: #86efac;
+    }
+
+    .casal-info { display: flex; flex-direction: column; gap: 5px; flex: 1; }
     .casal-nome { font-weight: 700; font-size: 15px; color: var(--iron); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .badge-dependente-pub {
       font-size: 11px;
@@ -586,7 +666,7 @@
     .casal-public-meta {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
       font-size: 11.5px;
       color: var(--text-muted);
@@ -602,43 +682,124 @@
       border-radius: 4px;
       font-weight: 700;
     }
-    .pub-transporte-tag {
-      font-size: 11px;
-      color: #0369a1;
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
+    .pub-vagas-tag {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #334155;
       padding: 1px 7px;
       border-radius: 4px;
+      font-size: 11px;
     }
 
-    .public-confirm-group {
+    /* Bloco Central: Preenche o meio com status moderno da jornada */
+    .item-center-status {
+      flex: 1;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 190px;
     }
-    .status-pendente-hint {
-      font-size: 10px;
+    .center-connector-line {
+      flex: 1;
+      height: 1px;
+      border-top: 1px dashed #d6d3c9;
+      min-width: 16px;
+    }
+    .journey-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: var(--stone);
       color: var(--text-muted);
     }
+    .journey-status-chip.pending {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+    .journey-status-chip.confirmed {
+      background: var(--green-bg);
+      border-color: #86efac;
+      color: var(--green);
+    }
+    .status-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Bloco Direito: Ação */
     .status-confirmado-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--green-bg);
-      color: var(--green);
-      border: 1px solid #86efac;
-      padding: 7px 12px;
+      background: var(--green);
+      color: #fff;
+      padding: 8px 15px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 6px rgba(27, 122, 67, 0.25);
     }
 
     .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
     .casal-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+
+    /* ================= CARD DE LOCAL & ROTA GPS NA PÁGINA DO MEMBRO ================= */
+    .member-location-card {
+      background: linear-gradient(135deg, #fdfbf7 0%, #f5efe6 100%);
+      border: 1px solid rgba(184, 125, 75, 0.55);
+      border-left: 4px solid var(--bronze);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 10px 0 12px 0;
+      text-align: left;
+    }
+    .member-location-card h5 {
+      margin: 0 0 4px 0;
+      font-family: 'Cinzel', serif;
+      font-size: 13.5px;
+      color: var(--iron);
+    }
+    .member-location-card p {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .member-route-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-gps-route {
+      background: var(--iron);
+      color: var(--bronze);
+      border: 1px solid var(--iron);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .btn-gps-route:hover {
+      background: var(--bronze);
+      color: var(--iron);
+      border-color: var(--bronze);
+    }
 
     /* ================= SELETOR DE CARNÊ POR PESSOA (TITULAR / DEPENDENTE) ================= */
     .carne-owner-tabs {
@@ -1033,21 +1194,44 @@
     .badge-atraso { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--crimson-bg); color: var(--crimson); }
     .badge-em-dia { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--green-bg); color: var(--green); }
     .badge-analise-tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--amber-bg); color: var(--amber); }
-    .badge-transporte { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #e0f2fe; color: #0369a1; }
     .badge-codigo { font-size: 10px; font-family: monospace; background: var(--stone); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--iron); }
 
     .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .btn-check { display: flex; align-items: center; gap: 7px; background: var(--stone); border: 1px solid var(--border); padding: 8px 13px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--iron); transition: 0.2s; min-width: 115px; justify-content: center; }
-    .btn-check:hover:not([disabled]) { background: var(--bronze-soft); border-color: var(--bronze); }
+    .btn-check { display: flex; align-items: center; gap: 8px; background: var(--iron); border: 1px solid var(--iron); padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--bronze); transition: 0.2s; min-width: 124px; justify-content: center; letter-spacing: 0.3px; }
+    .btn-check:hover:not([disabled]) { background: var(--bronze); color: var(--iron); border-color: var(--bronze); }
     .btn-check.confirmed { background: var(--green-bg); border-color: #86efac; color: var(--green); }
     .btn-check.confirmed[disabled] { cursor: not-allowed; opacity: 0.92; }
     .check-box { width: 15px; height: 15px; border: 2px solid currentcolor; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
     .btn-check.confirmed .check-box { background: var(--green); border-color: var(--green); color: white; }
 
-    .btn-pagamento { font-size: 12px; padding: 7px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 5px; min-width: 118px; justify-content: center; }
+    .btn-pagamento { font-size: 12px; padding: 7px 11px; border-radius: 6px; border: none; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 5px; min-width: 112px; justify-content: center; }
     .pago-quitado { background: var(--green-bg); color: var(--green); border: 1px solid #86efac; }
     .pago-parcial { background: var(--bronze-soft); color: var(--bronze-dark); border: 1px solid rgba(184, 125, 75, 0.5); }
     .pago-nao { background: var(--stone); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .btn-recibos-row {
+      font-size: 12px;
+      padding: 7px 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid var(--border);
+      background: var(--stone);
+      color: var(--iron);
+    }
+    .btn-recibos-row.pendente {
+      background: var(--amber-bg);
+      border-color: #f59e0b;
+      color: var(--amber);
+    }
+    .btn-recibos-row.ok {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: var(--blue);
+    }
 
     .btn-icon { padding: 8px 11px; border-radius: 6px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-weight: 600; }
     .btn-zap.ativo { background: #25D366; color: white; }
@@ -1105,7 +1289,7 @@
     @media (max-width: 768px) {
       .hero-header { padding: 56px 14px 26px 14px; }
       .hero-top-actions { top: 10px; right: 10px; }
-      .btn-lider, .btn-install-pwa { padding: 6px 10px; font-size: 10.5px; }
+      .btn-lider { padding: 6px 11px; font-size: 11px; }
       .container { margin: 12px 10px 30px 10px; }
       input, select, textarea, .search-box-input { font-size: 16px !important; }
       .public-actions-bar { flex-direction: column; }
@@ -1113,17 +1297,17 @@
       .lider-bio-bar { flex-direction: column; align-items: stretch; }
       .lider-bio-bar .btn-biometric { width: 100% !important; }
       .dash-grid { grid-template-columns: repeat(2, 1fr); }
-      .charts-container, .audit-grid { grid-template-columns: 1fr; }
+      .charts-container { grid-template-columns: 1fr; }
       .finance-summary-grid { grid-template-columns: 1fr; gap: 6px; }
       .carne-grid { grid-template-columns: repeat(2, 1fr); }
       .upload-smart-actions { grid-template-columns: 1fr; }
-      .list.public-grid { grid-template-columns: 1fr; }
-      .item { flex-direction: column; align-items: stretch; }
-      .public-confirm-group { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; border-top: 1px dashed var(--border); padding-top: 8px; }
+      .item { flex-direction: column; align-items: stretch; gap: 10px; }
+      .item-center-status { justify-content: flex-start; }
+      .center-connector-line { display: none; }
       .status-confirmado-pill { width: 100%; justify-content: center; }
       .actions { width: 100%; }
       .actions .btn-check { width: 100%; }
-      .actions .btn-pagamento { flex: 2; }
+      .actions .btn-pagamento, .actions .btn-recibos-row { flex: 1; }
       .actions .btn-icon { flex: 1; }
       .table-lideres { display: block; overflow-x: auto; white-space: nowrap; }
     }
@@ -1134,7 +1318,6 @@
 <!-- Cabeçalho Espartano -->
 <div class="hero-header">
   <div class="hero-top-actions">
-    <button class="btn-install-pwa" id="btn-instalar-pwa" onclick="instalarAplicativoPWA()">📲 Instalar App</button>
     <button class="btn-lider" onclick="abrirLogin()">🔒 Liderança</button>
   </div>
 
@@ -1179,10 +1362,12 @@
   <div class="sobre-encontro-card" id="box-sobre-encontro" style="display:none;">
     <div class="sobre-encontro-info" style="flex:1; min-width:220px;">
       <h4 id="pub-local-nome">📍 Local do Encontro</h4>
+      <p id="pub-local-endereco" style="font-weight:600; color:var(--iron); margin-bottom:2px;"></p>
       <p id="pub-local-desc"></p>
     </div>
     <div class="sobre-encontro-btns">
-      <a id="btn-pub-maps" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-bronze" style="display:none;">🗺️ Ver no Maps</a>
+      <button type="button" class="btn-outline-bronze" onclick="tracarRotaEventoGPS()">🧭 Como Chegar (GPS)</button>
+      <a id="btn-pub-maps" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-bronze" style="display:none;">🗺️ Ver Mapa</a>
     </div>
   </div>
   
@@ -1229,15 +1414,24 @@
     <!-- Navegação por Abas do Admin -->
     <div class="admin-tabs-bar">
       <button class="admin-tab-btn active" onclick="trocarAbaAdmin('tab-visao', this)">📊 Visão Geral</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-auditoria', this)">🔍 Comprovantes & Caixa <span class="tab-badge-count" id="badge-pendentes-audit" style="display:none;">0</span></button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-portaria', this)">🚪 Portaria / Check-in</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-comprovantes', this)">📎 Comprovantes <span class="tab-badge-count" id="badge-pendentes-audit" style="display:none;">0</span></button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-despesas', this)">💸 Despesas & Caixa</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-portaria', this)">🚪 Portaria</button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Inscrito</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & App</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & Local</button>
       <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança</button>
     </div>
 
     <!-- ABA 1: VISÃO GERAL -->
     <div class="admin-tab-panel active" id="tab-visao">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+        <strong style="font-size:13px; color:var(--iron);">Resumo Executivo do Encontro</strong>
+        <div class="export-inline-group">
+          <button type="button" class="btn-mini-export pdf" onclick="exportarRelatorioPDF('geral')">📄 Relatório Geral - PDF</button>
+          <button type="button" class="btn-mini-export xls" onclick="exportarCSVModulo('geral')">📊 Relatório Geral - EXCEL</button>
+        </div>
+      </div>
+
       <div class="dash-grid">
         <div class="dash-card">
           <h4 id="dash-pessoas-fisicas">0</h4>
@@ -1306,42 +1500,154 @@
       </div>
     </div>
 
-    <!-- ABA 2: CONFERÊNCIA DE COMPROVANTES & CONTROLE DE DESPESAS -->
-    <div class="admin-tab-panel" id="tab-auditoria">
-      <div class="audit-grid">
-        <div class="panel-card">
-          <h4>📎 Fila de Conferência de Comprovantes Pix</h4>
-          <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Valide os recibos enviados pelos participantes para efetivar a entrada no caixa.</p>
-          <div id="lista-auditoria-comprovantes"></div>
+    <!-- ABA 2: CENTRAL DE COMPROVANTES & PAGAMENTOS -->
+    <div class="admin-tab-panel" id="tab-comprovantes">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h4>📎 Central de Comprovantes & Pagamentos</h4>
+            <small style="color:var(--text-muted);">Confira recibos anexados (Pix) e pagamentos registrados em Cartão de Crédito, Débito ou Dinheiro.</small>
+          </div>
+          <div class="export-inline-group">
+            <button type="button" class="btn-mini-export pdf" onclick="exportarRelatorioPDF('comprovantes')">📄 Comprovantes - PDF</button>
+            <button type="button" class="btn-mini-export xls" onclick="exportarCSVModulo('comprovantes')">📊 Comprovantes - EXCEL</button>
+          </div>
         </div>
 
-        <div class="panel-card">
-          <h4>💸 Controle de Despesas / Saídas</h4>
-          <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Registre custos (adiantamento do sítio, transporte, alimentação) para acompanhar o saldo líquido.</p>
-          <div class="btn-row">
-            <input type="text" id="desp-descricao" placeholder="Descrição (Ex: Sinal do Sítio)" style="flex:2;">
-            <input type="number" id="desp-valor" step="0.01" placeholder="Valor (R$)" style="flex:1;">
-          </div>
-          <button type="button" class="primary-btn bronze-btn" style="padding:9px; font-size:12px; margin-bottom:12px;" onclick="adicionarDespesa()">+ Registrar Saída</button>
-          <div id="lista-despesas-admin" style="max-height:240px; overflow-y:auto;"></div>
+        <div class="btn-row" style="margin-bottom:12px;">
+          <input type="text" id="busca-comprovantes-input" placeholder="🔍 Filtrar por nome do participante ou dependente..." oninput="renderizarCentralComprovantes()" style="flex:2;">
+          <select id="filtro-status-comprovantes" onchange="renderizarCentralComprovantes()" style="flex:1;">
+            <option value="pendentes">⏳ Aguardando Conferência</option>
+            <option value="todos">Todos os Pagamentos</option>
+            <option value="aprovados">✅ Validados / Aprovados</option>
+            <option value="com-anexo">📎 Somente com Recibo Anexado</option>
+            <option value="sem-anexo">💵 Cartão / Dinheiro (Sem Anexo)</option>
+          </select>
         </div>
+
+        <div id="lista-auditoria-comprovantes"></div>
       </div>
     </div>
 
-    <!-- ABA 3: PORTARIA / CHECK-IN NO DIA DO EVENTO -->
+    <!-- ABA 3: CONTROLE DE DESPESAS & FLUXO DE CAIXA -->
+    <div class="admin-tab-panel" id="tab-despesas">
+      <div class="dash-grid" style="margin-bottom:16px;">
+        <div class="dash-card finance">
+          <h4 id="desp-card-entradas">R$ 0,00</h4>
+          <p>Entradas (Arrecadado)</p>
+          <small>Cotas validadas</small>
+        </div>
+        <div class="dash-card alert">
+          <h4 id="desp-card-saidas">R$ 0,00</h4>
+          <p>Saídas (Despesas Pagas)</p>
+          <small id="desp-card-previstas">Previsto a pagar: R$ 0,00</small>
+        </div>
+        <div class="dash-card net">
+          <h4 id="desp-card-saldo">R$ 0,00</h4>
+          <p>Saldo Líquido Real</p>
+          <small>Entradas - Saídas Pagas</small>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h4>💸 Lançar Nova Despesa / Saída</h4>
+            <small style="color:var(--text-muted);">Controle os gastos do encontro (sítio, alimentação, transporte, materiais, etc.).</small>
+          </div>
+          <div class="export-inline-group">
+            <button type="button" class="btn-mini-export pdf" onclick="exportarRelatorioPDF('despesas')">📄 Despesas - PDF</button>
+            <button type="button" class="btn-mini-export xls" onclick="exportarCSVModulo('despesas')">📊 Despesas - EXCEL</button>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <input type="text" id="desp-descricao" placeholder="Descrição da despesa (Ex: Sinal do Sítio)" style="flex:2;">
+          <select id="desp-categoria" style="flex:1;">
+            <option value="Sítio / Hospedagem">🏡 Sítio / Hospedagem</option>
+            <option value="Alimentação / Mercado">🍖 Alimentação / Mercado</option>
+            <option value="Transporte / Ônibus">🚌 Transporte / Ônibus</option>
+            <option value="Estrutura / Som">🔊 Estrutura / Som</option>
+            <option value="Material / Gráfica">🖨️ Material / Gráfica</option>
+            <option value="Outros">📦 Outros</option>
+          </select>
+          <input type="number" id="desp-valor" step="0.01" placeholder="Valor (R$)" style="flex:1;">
+        </div>
+
+        <div class="btn-row">
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted);">Data:</label>
+            <input type="date" id="desp-data">
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted);">Forma de Pagamento:</label>
+            <select id="desp-forma">
+              <option value="Pix">Pix</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de Débito">Cartão de Débito</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+              <option value="Transferência">Transferência</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted);">Situação:</label>
+            <select id="desp-status">
+              <option value="pago">✅ Pago</option>
+              <option value="a_pagar">⏳ A Pagar (Previsto)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <input type="text" id="desp-obs" placeholder="Observação / Fornecedor (Opcional)" style="flex:2;">
+          <div style="flex:1;">
+            <button type="button" class="btn-outline-bronze" style="width:100%; justify-content:center; padding:11px;" onclick="document.getElementById('desp-comp-file').click()">📎 Anexar Nota/Recibo (Opcional)</button>
+            <input type="file" id="desp-comp-file" accept="image/*,.pdf" style="display:none;" onchange="aoSelecionarAnexoDespesa(this)">
+          </div>
+        </div>
+        <div id="desp-anexo-pill" class="comprovante-preview-pill" style="display:none; margin-bottom:10px;">
+          <span id="desp-anexo-nome">📎 Nota anexada</span>
+          <button type="button" style="background:none; border:none; color:var(--crimson); font-weight:700; cursor:pointer;" onclick="limparAnexoDespesa()">✕</button>
+        </div>
+
+        <button type="button" class="primary-btn bronze-btn" onclick="adicionarDespesa()">+ Registrar Saída no Caixa</button>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h4>📋 Histórico de Saídas Lançadas</h4>
+          <select id="filtro-categoria-despesa" onchange="renderizarListaDespesas()" style="width:auto; margin-bottom:0; padding:6px 10px; font-size:12px;">
+            <option value="todas">Todas as Categorias</option>
+            <option value="Sítio / Hospedagem">Sítio / Hospedagem</option>
+            <option value="Alimentação / Mercado">Alimentação / Mercado</option>
+            <option value="Transporte / Ônibus">Transporte / Ônibus</option>
+            <option value="Estrutura / Som">Estrutura / Som</option>
+            <option value="Material / Gráfica">Material / Gráfica</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+        <div id="lista-despesas-admin"></div>
+      </div>
+    </div>
+
+    <!-- ABA 4: PORTARIA / CHECK-IN NO DIA DO EVENTO -->
     <div class="admin-tab-panel" id="tab-portaria">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
         <div>
-          <h4 style="margin:0; color:var(--iron);">🚪 Modo Portaria / Embarque</h4>
+          <h4 style="margin:0; color:var(--iron);">🚪 Modo Portaria / Recepção</h4>
           <small style="color:var(--text-muted);">Busque pelo nome ou código para conferir quitação, dependentes e dar check-in rápido.</small>
         </div>
-        <span id="portaria-resumo-pill" style="background:var(--iron); color:var(--bronze); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700;">0 / 0 Presentes</span>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button type="button" class="btn-mini-export pdf" onclick="exportarRelatorioPDF('portaria')">📄 Portaria - PDF</button>
+          <button type="button" class="btn-mini-export xls" onclick="exportarCSVModulo('portaria')">📊 Portaria - EXCEL</button>
+          <span id="portaria-resumo-pill" style="background:var(--iron); color:var(--bronze); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700;">0 / 0 Presentes</span>
+        </div>
       </div>
       <input type="text" id="portaria-busca-input" class="search-box-input" placeholder="🔍 Digitar nome do varão, dependente ou código..." oninput="renderizarPortaria()" style="margin-bottom:14px;">
       <div id="lista-portaria-checkin"></div>
     </div>
 
-    <!-- ABA 4: ADICIONAR / IMPORTAR -->
+    <!-- ABA 5: ADICIONAR / IMPORTAR -->
     <div class="admin-tab-panel" id="tab-cadastrar">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Varão (com ou sem Dependentes)</h4>
       <input type="text" id="add-nome" placeholder="Nome Completo do Titular (Ex: JOÃO CARLOS DA SILVA)">
@@ -1351,14 +1657,6 @@
       </div>
 
       <div class="btn-row">
-        <div>
-          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Transporte:</label>
-          <select id="add-transporte">
-            <option value="proprio">🚗 Vou de carro próprio</option>
-            <option value="onibus">🚌 Preciso de vaga no ônibus / van</option>
-            <option value="carona">🤝 Tenho vagas no meu carro para carona</option>
-          </select>
-        </div>
         <div>
           <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Prazo / Previsão estipulada (Opcional):</label>
           <input type="date" id="add-previsao">
@@ -1380,7 +1678,7 @@
       </div>
     </div>
 
-    <!-- ABA 5: CONFIGURAÇÕES, LOCAL, PWA & REAPROVEITAMENTO ANUAL -->
+    <!-- ABA 6: CONFIGURAÇÕES, LOCAL & REAPROVEITAMENTO ANUAL -->
     <div class="admin-tab-panel" id="tab-config">
       <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Local, Prazos & Reaproveitamento Anual</h4>
       <div class="btn-row">
@@ -1423,22 +1721,25 @@
           <input type="number" id="config-cotas" min="1" max="24" step="1">
         </div>
         <div>
-          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Conferência de Comprovantes:</label>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Conferência de Pagamentos:</label>
           <select id="config-auditoria-pix">
             <option value="sim">Exigir visto da liderança (Recomendado)</option>
-            <option value="nao">Aprovar automaticamente ao anexar</option>
+            <option value="nao">Aprovar automaticamente</option>
           </select>
         </div>
       </div>
 
-      <!-- Informações Públicas do Local -->
+      <!-- Informações Públicas e GPS do Local -->
       <div style="background: var(--stone); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 10px;">
-        <label style="font-size: 12px; font-weight:700; color: var(--iron); display:block; margin-bottom:6px;">📍 Informações Públicas do Local & Encontro:</label>
+        <label style="font-size: 12px; font-weight:700; color: var(--iron); display:block; margin-bottom:6px;">📍 Endereço & Local do Encontro (Exibido na página de cada membro com Rota GPS):</label>
         <div class="btn-row">
           <input type="text" id="config-local-nome" placeholder="Nome do Local (Ex: Sítio Recanto das Águas)">
-          <input type="url" id="config-local-maps" placeholder="Link do Google Maps (https://maps.google.com/...)">
+          <input type="text" id="config-local-endereco" placeholder="Endereço Completo (Rua, Número, Bairro, Cidade - RJ)">
         </div>
-        <textarea id="config-local-desc" rows="2" placeholder="Endereço, horário de saída da igreja e o que está incluso (alimentação, alojamento, etc.)" style="margin-bottom:0;"></textarea>
+        <div class="btn-row">
+          <input type="url" id="config-local-maps" placeholder="Link direto Google Maps (Opcional)">
+        </div>
+        <textarea id="config-local-desc" rows="2" placeholder="Orientações gerais, horário de saída e o que levar..." style="margin-bottom:0;"></textarea>
       </div>
 
       <div class="btn-row">
@@ -1484,25 +1785,13 @@
 
       <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Configurações da Edição</button>
 
-      <!-- Gerador de Arquivos PWA para Compartilhamento Nativo do Banco -->
-      <div style="margin-top: 18px; padding: 14px; background: #eff6ff; border: 1px solid #93c5fd; border-radius: 6px; text-align: left;">
-        <strong style="font-size: 12.5px; color: var(--blue); display: block; margin-bottom: 4px;">📲 Ativar Compartilhamento Direto do App do Banco (Web Share Target)</strong>
-        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.4;">
-          Para que o celular mostre o <strong>Benditos</strong> na janela de <em>"Compartilhar Comprovante"</em> do Nubank, Itaú ou Caixa após instalar o app, salve os 2 arquivos abaixo na mesma pasta do <code>index.html</code> no seu servidor (GitHub Pages):
-        </p>
-        <div class="btn-row" style="margin-bottom: 0;">
-          <button type="button" class="primary-btn" style="font-size: 11.5px; padding: 9px;" onclick="baixarArquivoManifestJSON()">⬇️ Baixar manifest.json</button>
-          <button type="button" class="primary-btn" style="font-size: 11.5px; padding: 9px;" onclick="baixarArquivoServiceWorkerJS()">⬇️ Baixar sw.js</button>
-        </div>
-      </div>
-
       <div id="zona-nova-edicao" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson);">
         <p style="font-size:12px; color:var(--crimson); margin:0 0 8px 0; font-weight:700;">⚠️ Zona de Transição de Ano (Exclusivo Líder Alfa / Analista):</p>
         <button type="button" class="primary-btn" style="background:var(--crimson); border-color:var(--crimson); color:#fff;" onclick="iniciarNovaEdicaoAnual()">🔄 Iniciar Novo Ano (Limpar Inscritos e Manter Apenas Bispo Jader)</button>
       </div>
     </div>
 
-    <!-- ABA 6: CONTROLE DE ACESSOS -->
+    <!-- ABA 7: CONTROLE DE ACESSOS -->
     <div class="admin-tab-panel" id="tab-alfa">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Perfil de Liderança</h4>
       <div class="btn-row">
@@ -1565,7 +1854,7 @@
         <option value="quitados">Quitados (100%)</option>
         <option value="andamento">Em Andamento</option>
         <option value="nao-iniciados">Não Iniciados (0%)</option>
-        <option value="em-analise">⏳ Com Recibo em Análise</option>
+        <option value="em-analise">⏳ Com Pagamento em Conferência</option>
       </select>
       <select id="filtro-prazo" onchange="irParaPagina(1)">
         <option value="todos">Prazos: Todos</option>
@@ -1577,18 +1866,12 @@
         <option value="com-dep">Com Dependente(s)</option>
         <option value="sem-dep">Individual (1 pessoa)</option>
       </select>
-      <select id="filtro-transporte" onchange="irParaPagina(1)">
-        <option value="todos">Transporte: Todos</option>
-        <option value="onibus">🚌 Precisa de Ônibus/Van</option>
-        <option value="carona">🤝 Oferece Carona</option>
-        <option value="proprio">🚗 Carro Próprio</option>
-      </select>
     </div>
   </div>
 
   <!-- LISTA PAGINADA -->
   <div id="area-exportacao">
-    <div class="list public-grid" id="lista-varoes"></div>
+    <div class="list" id="lista-varoes"></div>
   </div>
 
   <!-- BARRA DE PAGINAÇÃO -->
@@ -1690,15 +1973,6 @@
       <input type="text" id="reg-tel2" placeholder="Telefone Secundário (Opcional)">
     </div>
 
-    <div style="text-align:left; margin-bottom:10px;">
-      <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">🚌 Como você pretende ir ao encontro?</label>
-      <select id="reg-transporte" style="margin-bottom:0;">
-        <option value="proprio">🚗 Vou de carro próprio</option>
-        <option value="onibus">🚌 Preciso de vaga no ônibus / van</option>
-        <option value="carona">🤝 Tenho vagas no meu carro para oferecer carona</option>
-      </select>
-    </div>
-
     <div style="text-align:left; background:var(--stone); padding:10px 12px; border-radius:6px; border:1px solid var(--border); margin-bottom:10px;">
       <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">🔑 Sua Senha Pessoal de Acesso (4 dígitos):</label>
       <input type="text" id="reg-senha-pin" maxlength="4" inputmode="numeric" pattern="\d{4}" placeholder="Digite 4 números de sua preferência (ou deixe vazio para gerar)" style="margin-bottom:4px; font-family:monospace; letter-spacing:3px; font-weight:700;">
@@ -1732,34 +2006,36 @@
       <option value="10">Sim — Quitar Evento Completo (100%)</option>
     </select>
 
-    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin: 4px 0;">Forma de pagamento preferida:</label>
-    <select id="reg-forma-pagamento" onchange="alternarBoxPix('reg')">
-      <option value="indefinido">Ainda não sei (Definir depois)</option>
-      <option value="pix">Pix</option>
-      <option value="cartao">Cartão de Crédito/Débito</option>
-      <option value="dinheiro">Dinheiro</option>
-    </select>
+    <div id="reg-pagamento-detalhes" style="display:none;">
+      <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin: 4px 0;">Forma de Pagamento:</label>
+      <select id="reg-forma-pagamento" onchange="alternarBoxPagamento('reg')">
+        <option value="pix">Pix</option>
+        <option value="credito">Cartão de Crédito</option>
+        <option value="debito">Cartão de Débito</option>
+        <option value="dinheiro">Dinheiro (Entregar à liderança)</option>
+      </select>
 
-    <div id="reg-box-pix" class="pix-box" style="display:none;">
-      <strong>Dados para Pagamento Pix:</strong>
-      <span id="reg-valor-pix-pagar" style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;"></span>
-      
-      <div class="pix-qr-wrapper" id="reg-qr-wrapper" style="display:none;">
-        <div id="reg-qr-canvas" class="pix-qr-canvas"></div>
-        <small style="font-size:11px; color:var(--text-muted); margin-top:4px;">Aponte a câmera no app do seu banco</small>
+      <div id="reg-box-pix" class="pix-box">
+        <strong>Dados para Pagamento Pix:</strong>
+        <span id="reg-valor-pix-pagar" style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;"></span>
+        
+        <div class="pix-qr-wrapper" id="reg-qr-wrapper" style="display:none;">
+          <div id="reg-qr-canvas" class="pix-qr-canvas"></div>
+          <small style="font-size:11px; color:var(--text-muted); margin-top:4px;">Aponte a câmera no app do seu banco</small>
+        </div>
+
+        <span style="font-size:11px; color:var(--text-muted);" id="reg-pix-titular"></span>
+        <div class="pix-code" id="reg-pix-chave"></div>
+        <div id="reg-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
+        
+        <div class="btn-row" style="margin-bottom:6px;">
+          <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPixDinamico('reg')">📋 Copiar Pix (Com Valor)</button>
+          <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px;" onclick="copiarPix()">🔑 Copiar Chave</button>
+        </div>
       </div>
 
-      <span style="font-size:11px; color:var(--text-muted);" id="reg-pix-titular"></span>
-      <div class="pix-code" id="reg-pix-chave"></div>
-      <div id="reg-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
-      
-      <div class="btn-row" style="margin-bottom:6px;">
-        <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPixDinamico('reg')">📋 Copiar Pix (Com Valor)</button>
-        <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px;" onclick="copiarPix()">🔑 Copiar Chave</button>
-      </div>
-      
-      <div id="reg-upload-wrapper" style="display:none; margin-top:10px; border-top:1px dashed #86efac; padding-top:10px;">
-        <label style="font-size:12px; font-weight:700; text-align:left; display:block;">Anexar Comprovante do Pix:</label>
+      <div id="reg-upload-wrapper" style="background:var(--stone); border:1px solid var(--border); border-radius:6px; padding:10px; margin-top:8px; text-align:left;">
+        <label id="reg-lbl-comprovante" style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante:</label>
         <div class="upload-smart-actions">
           <button type="button" class="btn-upload-gallery" onclick="document.getElementById('reg-comprovante-file').click()">🖼️ Galeria / Foto</button>
           <button type="button" class="btn-paste-clipboard" onclick="colarPrintAreaTransferencia('reg')">📋 Colar Print</button>
@@ -1847,7 +2123,7 @@
 <div class="modal" id="modal-auto-atualizacao">
   <div class="modal-content" style="max-width: 630px;">
     <h3>💳 Meu Carnê Digital</h3>
-    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Acesso privado para controle das suas cotas mensais e comprovantes.</p>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Acesso privado para controle das suas cotas mensais, localização do evento e comprovantes.</p>
     
     <!-- Passo 1: Autenticação -->
     <div id="step-auth-membro">
@@ -1879,6 +2155,17 @@
         </div>
       </div>
       <input type="hidden" id="auth-casal-id">
+
+      <!-- Card de Endereço & Rota GPS na Página do Membro -->
+      <div id="auth-local-evento-card" class="member-location-card" style="display:none;">
+        <h5 id="auth-local-titulo">📍 Local do Encontro</h5>
+        <p id="auth-local-endereco-txt" style="font-weight:700; color:var(--iron); margin-bottom:3px;"></p>
+        <p id="auth-local-desc-txt"></p>
+        <div class="member-route-btns">
+          <button type="button" class="btn-gps-route" onclick="tracarRotaEventoGPS()">🧭 Traçar Rota da Minha Localização (GPS)</button>
+          <a id="auth-btn-ver-mapa" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-bronze" style="display:none;">🗺️ Abrir no Google Maps</a>
+        </div>
+      </div>
 
       <!-- Seletor de Carnê por Pessoa (Aparece automaticamente quando há dependentes) -->
       <div id="auth-owner-tabs-container" class="carne-owner-tabs" style="display:none;"></div>
@@ -1947,10 +2234,11 @@
         <div id="auth-checkout-breakdown" class="checkout-breakdown-box" style="display:none;"></div>
 
         <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">Forma de Pagamento:</label>
-        <select id="auth-forma-pagamento" onchange="alternarBoxPix('auth')">
+        <select id="auth-forma-pagamento" onchange="alternarBoxPagamento('auth')">
           <option value="pix">Pix (QR Code & Copia e Cola com valor exato)</option>
+          <option value="credito">Cartão de Crédito</option>
+          <option value="debito">Cartão de Débito</option>
           <option value="dinheiro">Dinheiro (Entregar à liderança)</option>
-          <option value="cartao">Cartão de Crédito/Débito</option>
         </select>
 
         <div id="auth-box-pix" class="pix-box">
@@ -1965,29 +2253,26 @@
           <div class="pix-code" id="auth-pix-chave"></div>
           <div id="auth-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
           
-          <div class="btn-row" style="margin-bottom:10px;">
+          <div class="btn-row" style="margin-bottom:4px;">
             <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPixDinamico('auth')">📋 Copiar Pix (Com Valor)</button>
             <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px;" onclick="copiarPix()">🔑 Copiar Chave</button>
           </div>
-          
-          <div style="border-top:1px dashed #86efac; padding-top:10px;">
-            <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem, Print ou Compartilhado do Banco):</label>
-            <small style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:6px;">
-              💡 Dica: No app do banco, toque em <strong>Compartilhar Comprovante → Benditos</strong> (se instalado) ou volte aqui e toque em <strong>Colar Print</strong> / <strong>Galeria</strong>.
-            </small>
-            <div class="upload-smart-actions">
-              <button type="button" class="btn-upload-gallery" onclick="document.getElementById('auth-comprovante-file').click()">🖼️ Galeria / Foto</button>
-              <button type="button" class="btn-paste-clipboard" onclick="colarPrintAreaTransferencia('auth')">📋 Colar Print</button>
-            </div>
-            <div style="text-align:center; margin-top:6px;">
-              <button type="button" class="btn-link-esqueci" onclick="document.getElementById('auth-comprovante-pdf').click()">Ou anexar arquivo PDF</button>
-            </div>
-            <input type="file" id="auth-comprovante-file" accept="image/*" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
-            <input type="file" id="auth-comprovante-pdf" accept="application/pdf" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
-            <div id="auth-comp-preview" class="comprovante-preview-pill" style="display:none;">
-              <span id="auth-comp-nome">📎 Comprovante pronto</span>
-              <button type="button" style="background:none; border:none; color:var(--crimson); font-weight:700; cursor:pointer;" onclick="limparComprovanteAnexado('auth')">✕</button>
-            </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid var(--border); border-radius:6px; padding:10px; margin-top:8px;">
+          <label id="auth-lbl-comprovante" style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Obrigatório no Pix • Opcional em Cartão/Dinheiro):</label>
+          <div class="upload-smart-actions">
+            <button type="button" class="btn-upload-gallery" onclick="document.getElementById('auth-comprovante-file').click()">🖼️ Galeria / Foto</button>
+            <button type="button" class="btn-paste-clipboard" onclick="colarPrintAreaTransferencia('auth')">📋 Colar Print</button>
+          </div>
+          <div style="text-align:center; margin-top:6px;">
+            <button type="button" class="btn-link-esqueci" onclick="document.getElementById('auth-comprovante-pdf').click()">Ou anexar arquivo PDF</button>
+          </div>
+          <input type="file" id="auth-comprovante-file" accept="image/*" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
+          <input type="file" id="auth-comprovante-pdf" accept="application/pdf" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
+          <div id="auth-comp-preview" class="comprovante-preview-pill" style="display:none;">
+            <span id="auth-comp-nome">📎 Comprovante pronto</span>
+            <button type="button" style="background:none; border:none; color:var(--crimson); font-weight:700; cursor:pointer;" onclick="limparComprovanteAnexado('auth')">✕</button>
           </div>
         </div>
 
@@ -2046,8 +2331,8 @@
           <strong id="cred-qtd-pessoas" style="color:#fff;">1 Pessoa</strong>
         </div>
         <div>
-          <span style="color:#94a3b8; display:block; font-size:10px;">TRANSPORTE</span>
-          <strong id="cred-transporte" style="color:#fff;">Carro Próprio</strong>
+          <span style="color:#94a3b8; display:block; font-size:10px;">SITUAÇÃO</span>
+          <strong style="color:#6ee7b7;">Acesso Liberado</strong>
         </div>
         <div>
           <span style="color:#94a3b8; display:block; font-size:10px;">CÓDIGO</span>
@@ -2073,13 +2358,35 @@
       <div class="progress-label" id="admin-progress-label">0%</div>
     </div>
 
+    <div style="background:var(--stone); border:1px solid var(--border); border-radius:6px; padding:10px; margin-bottom:10px; text-align:left;">
+      <label style="font-size:11.5px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">Forma de Recebimento para Baixa Manual:</label>
+      <select id="admin-baixa-forma-padrao" style="margin-bottom:0; padding:8px; font-size:13px;">
+        <option value="pix">Pix</option>
+        <option value="credito">Cartão de Crédito</option>
+        <option value="debito">Cartão de Débito</option>
+        <option value="dinheiro">Dinheiro</option>
+      </select>
+    </div>
+
     <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
-      Toque em uma cota pendente/em análise para aprovar baixa manual individual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
+      Toque em uma cota pendente/em conferência para dar baixa manual individual ou clique em <strong>📎 Recibo</strong> para ver o comprovante.
     </p>
 
     <div id="admin-carne-sections-container" style="text-align:left;"></div>
 
     <button class="btn-close" onclick="fecharModal('modal-admin-cotas')">Fechar</button>
+  </div>
+</div>
+
+<!-- Modal: Recibos & Comprovantes do Participante (Atalho na Lista) -->
+<div class="modal" id="modal-recibos-varao">
+  <div class="modal-content" style="max-width: 600px;">
+    <h3 style="margin-bottom:4px;">📎 Comprovantes & Pagamentos</h3>
+    <p id="recibos-varao-titulo" style="font-weight:700; color:var(--iron); font-size:15px; margin:0 0 12px 0;"></p>
+    <input type="hidden" id="recibos-varao-id">
+    <div id="lista-recibos-varao-corpo" style="text-align:left;"></div>
+    <input type="file" id="admin-anexar-recibo-input" accept="image/*,.pdf" style="display:none;" onchange="processarAnexoReciboAdmin(this)">
+    <button class="btn-close" onclick="fecharModal('modal-recibos-varao')">Fechar</button>
   </div>
 </div>
 
@@ -2095,13 +2402,6 @@
     <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Telefone Secundário</label>
     <input type="text" id="edit-tel2" placeholder="Telefone 2">
 
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">🚌 Transporte</label>
-    <select id="edit-transporte">
-      <option value="proprio">🚗 Carro Próprio</option>
-      <option value="onibus">🚌 Precisa de Ônibus / Van</option>
-      <option value="carona">🤝 Oferece Carona</option>
-    </select>
-
     <div class="box-dependente">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:13px; font-weight:700; color:var(--iron);">👥 Dependentes / Acompanhantes</span>
@@ -2116,7 +2416,8 @@
     <select id="edit-forma-pagamento">
       <option value="indefinido">Ainda não sabe</option>
       <option value="pix">Pix</option>
-      <option value="cartao">Cartão</option>
+      <option value="credito">Cartão de Crédito</option>
+      <option value="debito">Cartão de Débito</option>
       <option value="dinheiro">Dinheiro</option>
     </select>
     <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Senha de 4 Dígitos:</label>
@@ -2191,7 +2492,6 @@
   let graficoPresencaObj = null, graficoFinanceiroObj = null;
   let timerInterval = null;
   let emProcessamentoNuvem = false;
-  let deferredInstallPrompt = null;
 
   let tipoGraficoPresenca = 'doughnut';
   let tipoGraficoFinancas = 'doughnut';
@@ -2202,6 +2502,8 @@
   let cacheComprovantes = {};
 
   let anexoTemporario = { reg: null, auth: null };
+  let anexoDespesaTemp = null;
+  let alvoAnexoAdminRecibo = null;
   let comprovanteRecebidoViaShare = false;
 
   let configuracoes = {
@@ -2214,6 +2516,7 @@
     vagasMaximas: 0,
     exigirAuditoriaPix: "sim",
     localNome: "",
+    localEndereco: "",
     localMaps: "",
     localDesc: "",
     dataEvento: "2027-11-20T19:00",
@@ -2240,7 +2543,7 @@
   let varoesFiltrados = [];
 
   // ==========================================
-  // SANITIZAÇÃO DE SEGURANÇA & REGRAS DE LÍDERES
+  // SANITIZAÇÃO DE SEGURANÇA & UTILITÁRIOS
   // ==========================================
   function esc(str) {
     if (str === null || str === undefined) return "";
@@ -2258,108 +2561,70 @@
     return n === "bispo jader" || n.includes("bispo jader");
   }
 
+  function obterIniciais(nomeStr) {
+    if (!nomeStr) return "IB";
+    const partes = nomeStr.trim().split(/\s+/).filter(Boolean);
+    if (partes.length === 1) return partes[0].slice(0, 2).toUpperCase();
+    return `${partes[0][0]}${partes[partes.length - 1][0]}`.toUpperCase();
+  }
+
+  function formatarFormaPagamento(cod) {
+    const mapa = {
+      pix: "Pix",
+      credito: "Cartão de Crédito",
+      debito: "Cartão de Débito",
+      cartao: "Cartão",
+      dinheiro: "Dinheiro",
+      indefinido: "Não informado"
+    };
+    return mapa[cod] || cod || "Não informado";
+  }
+
+  // ==========================================
+  // GEOLOCALIZAÇÃO & ROTA GOOGLE MAPS PARA O MEMBRO
+  // ==========================================
+  window.tracarRotaEventoGPS = function() {
+    const destino = (configuracoes.localEndereco || configuracoes.localNome || "").trim();
+    const linkMapsManual = (configuracoes.localMaps || "").trim();
+
+    if (!destino && linkMapsManual) {
+      window.open(linkMapsManual, "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (!destino) {
+      return alert("O endereço do encontro ainda não foi cadastrado pela liderança.");
+    }
+
+    const destEncoded = encodeURIComponent(destino);
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const urlRota = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${destEncoded}&travelmode=driving`;
+          window.open(urlRota, "_blank", "noopener,noreferrer");
+        },
+        () => {
+          // Caso o usuário negue GPS ou esteja sem sinal, abre Google Maps já com o destino preenchido
+          const urlFallback = `https://www.google.com/maps/dir/?api=1&destination=${destEncoded}&travelmode=driving`;
+          window.open(urlFallback, "_blank", "noopener,noreferrer");
+        },
+        { enableHighAccuracy: true, timeout: 7000 }
+      );
+    } else {
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${destEncoded}&travelmode=driving`, "_blank", "noopener,noreferrer");
+    }
+  };
+
   // ==========================================
   // PWA & COMPARTILHAMENTO NATIVO (WEB SHARE TARGET)
   // ==========================================
-  function gerarConteudoManifestJSON() {
-    const titulo = `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'}`;
-    return JSON.stringify({
-      name: `${titulo} — Encontro dos Varões | IBAC`,
-      short_name: titulo,
-      start_url: "./index.html",
-      scope: "./",
-      display: "standalone",
-      background_color: "#16191d",
-      theme_color: "#16191d",
-      icons: [
-        {
-          src: "./banner.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any maskable"
-        }
-      ],
-      share_target: {
-        action: "./index.html?share_target=1",
-        method: "POST",
-        enctype: "multipart/form-data",
-        params: {
-          title: "title",
-          text: "text",
-          files: [
-            {
-              name: "comprovante",
-              accept: ["image/*", "application/pdf"]
-            }
-          ]
-        }
-      }
-    }, null, 2);
-  }
-
-  function gerarConteudoServiceWorkerJS() {
-    return `const SHARE_CACHE = 'benditos-share-cache-v1';
-
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-  if (event.request.method === 'POST' && url.searchParams.has('share_target')) {
-    event.respondWith((async () => {
-      try {
-        const formData = await event.request.formData();
-        const file = formData.get('comprovante');
-        if (file) {
-          const cache = await caches.open(SHARE_CACHE);
-          const headers = new Headers({
-            'Content-Type': file.type || 'image/jpeg',
-            'X-File-Name': encodeURIComponent(file.name || 'comprovante_banco.jpg')
-          });
-          await cache.put('/shared-comprovante', new Response(file, { headers }));
-        }
-      } catch (err) {
-        console.error('Erro ao processar comprovante compartilhado:', err);
-      }
-      return Response.redirect('./index.html?shared=1', 303);
-    })());
-  }
-});
-`;
-  }
-
   function inicializarPWAEServiceWorker() {
     if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
-      navigator.serviceWorker.register('./sw.js').catch(() => {
-        try {
-          const blob = new Blob([gerarConteudoManifestJSON()], { type: 'application/manifest+json' });
-          const link = document.getElementById("pwa-manifest-link");
-          if (link) link.href = URL.createObjectURL(blob);
-        } catch (e) {}
-      });
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
   }
-
-  window.baixarArquivoManifestJSON = function() {
-    const blob = new Blob([gerarConteudoManifestJSON()], { type: 'application/manifest+json' });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "manifest.json";
-    link.click();
-  };
-
-  window.baixarArquivoServiceWorkerJS = function() {
-    const blob = new Blob([gerarConteudoServiceWorkerJS()], { type: 'application/javascript' });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "sw.js";
-    link.click();
-  };
 
   async function verificarComprovanteCompartilhadoRecebido() {
     const params = new URLSearchParams(window.location.search);
@@ -2392,42 +2657,16 @@ self.addEventListener('fetch', (event) => {
         comprovanteRecebidoViaShare = true;
         return true;
       }
-    } catch (err) {
-      console.warn("Falha ao recuperar comprovante do cache:", err);
-    }
+    } catch (err) {}
     return false;
   }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    const btn = document.getElementById("btn-instalar-pwa");
-    if (btn) btn.style.display = "flex";
-  });
-
-  window.instalarAplicativoPWA = async function() {
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      const { outcome } = await deferredInstallPrompt.userChoice;
-      if (outcome === 'accepted') {
-        document.getElementById("btn-instalar-pwa").style.display = "none";
-      }
-      deferredInstallPrompt = null;
-    } else {
-      alert("Para instalar o atalho no celular:\n\n• Android (Chrome): Toque nos 3 pontinhos (⋮) no canto superior e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'. Assim o Benditos aparecerá na lista de 'Compartilhar' do seu banco!\n• iPhone (Safari): Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha 'Adicionar à Tela de Início'.");
-    }
-  };
 
   // ==========================================
   // PERSISTÊNCIA DE SESSÃO DO PARTICIPANTE
   // ==========================================
   function salvarSessaoMembroLocal(varaoId, cotasSel = []) {
     try {
-      const payload = {
-        varaoId: varaoId,
-        cotasSel: cotasSel,
-        timestamp: Date.now()
-      };
+      const payload = { varaoId, cotasSel, timestamp: Date.now() };
       sessionStorage.setItem("benditos_membro_sessao", JSON.stringify(payload));
       localStorage.setItem("benditos_membro_sessao_recente", JSON.stringify(payload));
     } catch (e) {}
@@ -2450,9 +2689,7 @@ self.addEventListener('fetch', (event) => {
         return null;
       }
       return sessao;
-    } catch (e) {
-      return null;
-    }
+    } catch (e) { return null; }
   }
 
   function verificarRetornoSessaoMembro(forcarPorShare = false) {
@@ -2592,7 +2829,7 @@ self.addEventListener('fetch', (event) => {
 
     const payload = gerarPayloadPixEMV(valor, txid) || configuracoes.chavePix;
     navigator.clipboard.writeText(payload).then(() => {
-      alert(`✅ Código Pix Copia e Cola copiado${valor > 0 ? ` no valor exato de R$ ${valor.toFixed(2).replace('.', ',')}` : ''}!\n\nAbra o app do seu banco para pagar. Depois, basta compartilhar o comprovante com o Benditos ou voltar aqui para anexar!`);
+      alert(`✅ Código Pix Copia e Cola copiado${valor > 0 ? ` no valor exato de R$ ${valor.toFixed(2).replace('.', ',')}` : ''}!\n\nAbra o app do seu banco para pagar e depois anexe ou cole o print do comprovante.`);
     }).catch(() => {
       prompt("Copie o código Pix abaixo:", payload);
     });
@@ -2677,9 +2914,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   function obterMapaBiometriaLocal() {
-    try {
-      return JSON.parse(localStorage.getItem("benditos_bio_creds") || "{}");
-    } catch (e) { return {}; }
+    try { return JSON.parse(localStorage.getItem("benditos_bio_creds") || "{}"); } catch (e) { return {}; }
   }
 
   function salvarMapaBiometriaLocal(mapa) {
@@ -2693,9 +2928,8 @@ self.addEventListener('fetch', (event) => {
     if (!window.PublicKeyCredential || !navigator.credentials) {
       return alert("Este navegador ou dispositivo não suporta validação por impressão digital (WebAuthn). Use sua senha de 4 dígitos.");
     }
-
     if (window.location.protocol === "file:") {
-      return alert("ℹ️ A validação por impressão digital do navegador exige que o site esteja hospedado em HTTPS (ou localhost). Enquanto estiver abrindo direto do arquivo local, utilize sua senha de 4 dígitos.");
+      return alert("ℹ️ A validação por impressão digital exige que o site esteja hospedado em HTTPS (ou localhost).");
     }
 
     try {
@@ -2707,19 +2941,9 @@ self.addEventListener('fetch', (event) => {
         publicKey: {
           challenge: challenge,
           rp: { name: `${configuracoes.tituloEvento || 'Benditos'} — IBAC` },
-          user: {
-            id: userIdBytes,
-            name: v.tel1 || v.nome,
-            displayName: v.nome
-          },
-          pubKeyCredParams: [
-            { alg: -7, type: "public-key" },
-            { alg: -257, type: "public-key" }
-          ],
-          authenticatorSelection: {
-            authenticatorAttachment: "platform",
-            userVerification: "required"
-          },
+          user: { id: userIdBytes, name: v.tel1 || v.nome, displayName: v.nome },
+          pubKeyCredParams: [{ alg: -7, type: "public-key" }, { alg: -257, type: "public-key" }],
+          authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
           timeout: 60000
         }
       });
@@ -2740,10 +2964,10 @@ self.addEventListener('fetch', (event) => {
           btnPos.innerText = "✅ Impressão Digital Ativada neste Aparelho!";
         }
         atualizarIndicadorBiometriaCarne(v);
-        alert("👆 Impressão digital cadastrada com sucesso! Nas próximas vezes, basta tocar em 'Validar com Impressão Digital'.");
+        alert("👆 Impressão digital cadastrada com sucesso!");
       }
     } catch (err) {
-      alert("Não foi possível concluir a leitura da impressão digital neste momento. Você pode continuar usando sua senha de 4 dígitos.");
+      alert("Não foi possível concluir a leitura da impressão digital neste momento.");
     }
   };
 
@@ -2752,7 +2976,7 @@ self.addEventListener('fetch', (event) => {
       return alert("Dispositivo sem suporte a biometria neste navegador. Entre com seu WhatsApp e senha de 4 dígitos.");
     }
     if (window.location.protocol === "file:") {
-      return alert("ℹ️ A impressão digital funciona quando o sistema está publicado em HTTPS ou localhost. Use seu WhatsApp e senha de 4 dígitos.");
+      return alert("ℹ️ A impressão digital funciona quando o sistema está publicado em HTTPS ou localhost.");
     }
 
     const mapa = obterMapaBiometriaLocal();
@@ -2761,20 +2985,16 @@ self.addEventListener('fetch', (event) => {
     const registro = chaveBusca ? mapa[chaveBusca] : null;
 
     if (!registro || !registro.credId) {
-      return alert("Nenhuma impressão digital cadastrada neste aparelho ainda.\n\nEntre primeiro com seu WhatsApp + senha de 4 dígitos e clique em 'Cadastrar Impressão Digital'.");
+      return alert("Nenhuma impressão digital cadastrada neste aparelho ainda.");
     }
 
     try {
       const challenge = new Uint8Array(32);
       window.crypto.getRandomValues(challenge);
-
       const assertion = await navigator.credentials.get({
         publicKey: {
           challenge: challenge,
-          allowCredentials: [{
-            id: base64ToBuf(registro.credId),
-            type: "public-key"
-          }],
+          allowCredentials: [{ id: base64ToBuf(registro.credId), type: "public-key" }],
           userVerification: "required",
           timeout: 60000
         }
@@ -2786,7 +3006,7 @@ self.addEventListener('fetch', (event) => {
         abrirPainelPrivadoCarne(v);
       }
     } catch (err) {
-      alert("Validação biométrica cancelada ou não reconhecida. Tente novamente ou use sua senha de 4 dígitos.");
+      alert("Validação biométrica cancelada ou não reconhecida.");
     }
   };
 
@@ -2817,9 +3037,7 @@ self.addEventListener('fetch', (event) => {
 
   // --- BIOMETRIA DA LIDERANÇA ---
   function obterMapaBiometriaLider() {
-    try {
-      return JSON.parse(localStorage.getItem("benditos_lider_bio_creds") || "{}");
-    } catch (e) { return {}; }
+    try { return JSON.parse(localStorage.getItem("benditos_lider_bio_creds") || "{}"); } catch (e) { return {}; }
   }
 
   function salvarMapaBiometriaLider(mapa) {
@@ -2832,12 +3050,11 @@ self.addEventListener('fetch', (event) => {
     if (!l) return alert("Perfil de liderança não encontrado.");
 
     if (!window.PublicKeyCredential || !navigator.credentials) {
-      if (!silencioso) alert("Este navegador ou dispositivo não suporta validação por impressão digital (WebAuthn).");
+      if (!silencioso) alert("Este navegador ou dispositivo não suporta validação por impressão digital.");
       return false;
     }
-
     if (window.location.protocol === "file:") {
-      if (!silencioso) alert("ℹ️ A validação por impressão digital exige que o sistema esteja publicado em HTTPS ou localhost.");
+      if (!silencioso) alert("ℹ️ A validação por impressão digital exige HTTPS ou localhost.");
       return false;
     }
 
@@ -2850,19 +3067,9 @@ self.addEventListener('fetch', (event) => {
         publicKey: {
           challenge: challenge,
           rp: { name: `${configuracoes.tituloEvento || 'Benditos'} — Liderança IBAC` },
-          user: {
-            id: userIdBytes,
-            name: l.nome,
-            displayName: `${l.nome} (${l.cargo || 'Liderança'})`
-          },
-          pubKeyCredParams: [
-            { alg: -7, type: "public-key" },
-            { alg: -257, type: "public-key" }
-          ],
-          authenticatorSelection: {
-            authenticatorAttachment: "platform",
-            userVerification: "required"
-          },
+          user: { id: userIdBytes, name: l.nome, displayName: `${l.nome} (${l.cargo || 'Liderança'})` },
+          pubKeyCredParams: [{ alg: -7, type: "public-key" }, { alg: -257, type: "public-key" }],
+          authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
           timeout: 60000
         }
       });
@@ -2881,9 +3088,7 @@ self.addEventListener('fetch', (event) => {
         atualizarEstadoModalLoginBio();
         if (isAlfa || isAnalista) renderizarTabelaLideres();
 
-        if (!silencioso) {
-          alert(`👆 Biometria cadastrada com sucesso para ${l.nome}!`);
-        }
+        if (!silencioso) alert(`👆 Biometria cadastrada com sucesso para ${l.nome}!`);
         return true;
       }
     } catch (err) {
@@ -2945,7 +3150,6 @@ self.addEventListener('fetch', (event) => {
     try {
       const challenge = new Uint8Array(32);
       window.crypto.getRandomValues(challenge);
-
       const assertion = await navigator.credentials.get({
         publicKey: {
           challenge: challenge,
@@ -3104,17 +3308,16 @@ self.addEventListener('fetch', (event) => {
     return todas;
   }
 
-  function contarCotasPagas(v) {
-    garantirEstruturaCotas(v);
-    return v.cotas.filter(c => c.status === "pago" || c.pago === true).length;
-  }
-
   function contarCotasIndividuaisPagas(v) {
     return obterTodasCotasIndividuais(v).filter(item => item.cota.status === "pago" || item.cota.pago === true).length;
   }
 
   function contarCotasEmAnalise(v) {
     return obterTodasCotasIndividuais(v).filter(item => item.cota.status === "em_analise").length;
+  }
+
+  function contarRecibosAnexadosVarao(v) {
+    return obterTodasCotasIndividuais(v).filter(item => Boolean(item.cota.compId)).length;
   }
 
   function calcularValorArrecadadoInscricao(v) {
@@ -3305,7 +3508,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // UTILITÁRIOS GERAIS
+  // UTILITÁRIOS DE FORMULÁRIO & TELEFONE
   // ==========================================
   window.toggleMostrarSenha = function(inputId) {
     const input = document.getElementById(inputId);
@@ -3355,12 +3558,6 @@ self.addEventListener('fetch', (event) => {
     const partes = nomeStr.trim().split(/\s+/).filter(Boolean);
     if (partes.length <= 1) return (partes[0] || "").toUpperCase();
     return `${partes[0]} ${partes[partes.length - 1]}`.toUpperCase();
-  }
-
-  function labelTransporte(cod) {
-    if (cod === "onibus") return "🚌 Vai de Ônibus/Van";
-    if (cod === "carona") return "🤝 Oferece Carona";
-    return "🚗 Carro Próprio";
   }
 
   window.atualizarSugestaoNome = function(prefixo) {
@@ -3499,7 +3696,6 @@ self.addEventListener('fetch', (event) => {
             nome: "BISPO JADER",
             nomeCompleto: "BISPO JADER SANTOS",
             dependentes: [],
-            transporte: "proprio",
             confirmado: false,
             tel1: "",
             tel2: "",
@@ -3519,7 +3715,6 @@ self.addEventListener('fetch', (event) => {
             nome: "BISPO JADER",
             nomeCompleto: "BISPO JADER SANTOS",
             dependentes: [],
-            transporte: "proprio",
             confirmado: false,
             tel1: "",
             tel2: "",
@@ -3531,6 +3726,9 @@ self.addEventListener('fetch', (event) => {
         ];
       }
     }
+
+    const despDataInput = document.getElementById("desp-data");
+    if (despDataInput) despDataInput.value = new Date().toISOString().split('T')[0];
 
     preencherInputsConfiguracoes();
     atualizarElementosVisuaisConfig();
@@ -3608,6 +3806,8 @@ self.addEventListener('fetch', (event) => {
       preencherInputsConfiguracoes();
       atualizarElementosVisuaisConfig();
       renderizarLista();
+      renderizarCentralComprovantes();
+      renderizarListaDespesas();
       atualizarAlertaBloqueio();
       if (isAlfa || isAnalista) renderizarTabelaLideres();
       alert("✅ Dados sincronizados com a nuvem!");
@@ -3630,6 +3830,7 @@ self.addEventListener('fetch', (event) => {
     setVal('config-vagas-max', configuracoes.vagasMaximas || 0);
     setVal('config-auditoria-pix', configuracoes.exigirAuditoriaPix || "sim");
     setVal('config-local-nome', configuracoes.localNome);
+    setVal('config-local-endereco', configuracoes.localEndereco);
     setVal('config-local-maps', configuracoes.localMaps);
     setVal('config-local-desc', configuracoes.localDesc);
     setVal('config-data', configuracoes.dataEvento);
@@ -3676,8 +3877,9 @@ self.addEventListener('fetch', (event) => {
     }
 
     const boxSobre = document.getElementById("box-sobre-encontro");
-    if (configuracoes.localNome || configuracoes.localDesc) {
+    if (configuracoes.localNome || configuracoes.localEndereco || configuracoes.localDesc) {
       document.getElementById("pub-local-nome").innerText = `📍 ${configuracoes.localNome || 'Local do Encontro'}`;
+      document.getElementById("pub-local-endereco").innerText = configuracoes.localEndereco || "";
       document.getElementById("pub-local-desc").innerText = configuracoes.localDesc || "";
       const btnMaps = document.getElementById("btn-pub-maps");
       if (configuracoes.localMaps) {
@@ -3719,6 +3921,7 @@ self.addEventListener('fetch', (event) => {
     configuracoes.vagasMaximas = parseInt(document.getElementById('config-vagas-max').value) || 0;
     configuracoes.exigirAuditoriaPix = document.getElementById('config-auditoria-pix').value;
     configuracoes.localNome = document.getElementById('config-local-nome').value.trim();
+    configuracoes.localEndereco = document.getElementById('config-local-endereco').value.trim();
     configuracoes.localMaps = document.getElementById('config-local-maps').value.trim();
     configuracoes.localDesc = document.getElementById('config-local-desc').value.trim();
     configuracoes.dataEvento = document.getElementById('config-data').value;
@@ -3753,7 +3956,6 @@ self.addEventListener('fetch', (event) => {
         nome: "BISPO JADER",
         nomeCompleto: "BISPO JADER SANTOS",
         dependentes: [],
-        transporte: "proprio",
         confirmado: false,
         tel1: "",
         tel2: "",
@@ -3775,15 +3977,24 @@ self.addEventListener('fetch', (event) => {
     document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
     btnEl.classList.add('active');
     document.getElementById(tabId).classList.add('active');
-    if (tabId === 'tab-auditoria') renderizarPainelAuditoriaEDespesas();
+    if (tabId === 'tab-comprovantes') renderizarCentralComprovantes();
+    if (tabId === 'tab-despesas') renderizarListaDespesas();
     if (tabId === 'tab-portaria') renderizarPortaria();
     if (tabId === 'tab-config') preencherInputsConfiguracoes();
   };
 
-  window.alternarBoxPix = function(prefixo) {
+  window.alternarBoxPagamento = function(prefixo) {
     const valor = document.getElementById(`${prefixo}-forma-pagamento`).value;
-    const box = document.getElementById(`${prefixo}-box-pix`);
-    if (box) box.style.display = (valor === 'pix') ? 'block' : 'none';
+    const boxPix = document.getElementById(`${prefixo}-box-pix`);
+    const lblComp = document.getElementById(`${prefixo}-lbl-comprovante`);
+
+    if (boxPix) boxPix.style.display = (valor === 'pix') ? 'block' : 'none';
+    if (lblComp) {
+      lblComp.innerText = (valor === 'pix')
+        ? "Anexar Comprovante do Pix (Obrigatório):"
+        : "Anexar Comprovante / Recibo da Maquininha (Opcional):";
+    }
+
     if (valor === 'pix') {
       if (prefixo === 'reg') atualizarResumoCadastro();
       if (prefixo === 'auth') {
@@ -3828,14 +4039,6 @@ self.addEventListener('fetch', (event) => {
     const filtroPagamento = document.getElementById("filtro-pagamento") ? document.getElementById("filtro-pagamento").value : 'todos';
     const filtroPrazo = document.getElementById("filtro-prazo") ? document.getElementById("filtro-prazo").value : 'todos';
     const filtroDep = document.getElementById("filtro-dependente") ? document.getElementById("filtro-dependente").value : 'todos';
-    const filtroTransp = document.getElementById("filtro-transporte") ? document.getElementById("filtro-transporte").value : 'todos';
-
-    // Alterna grade de 2 colunas na visão pública vs. lista larga no painel da liderança
-    if (isLider || isAnalista) {
-      container.classList.remove("public-grid");
-    } else {
-      container.classList.add("public-grid");
-    }
 
     // Atualiza contadores da barra de resumo público
     let totalPessoasGeral = 0;
@@ -3883,7 +4086,6 @@ self.addEventListener('fetch', (event) => {
         if (filtroPrazo === 'no-prazo' && avalPrazo.alerta) return;
         if (filtroDep === 'com-dep' && deps.length === 0) return;
         if (filtroDep === 'sem-dep' && deps.length > 0) return;
-        if (filtroTransp !== 'todos' && (v.transporte || 'proprio') !== filtroTransp) return;
       }
 
       varoesFiltrados.push(v);
@@ -3910,11 +4112,13 @@ self.addEventListener('fetch', (event) => {
       const totalCotasIndiv = todasIndiv.length;
       const pagasIndiv = contarCotasIndividuaisPagas(v);
       const emAnalise = contarCotasEmAnalise(v);
+      const qtdRecibos = contarRecibosAnexadosVarao(v);
       const deps = obterDependentes(v);
       const qtdPessoas = obterQtdPessoas(v);
       const valTotalInscricao = obterValorTotalInscricao(v);
       const ehBispo = v.nome.includes("BISPO") || v.nome.includes("JADER");
       const avalPrazo = avaliarStatusPrazo(v);
+      const iniciais = obterIniciais(v.nome);
 
       const temTelefone = (v.tel1 && v.tel1.replace(/\D/g, '').length >= 10) || (v.tel2 && v.tel2.replace(/\D/g, '').length >= 10);
       const classZap = temTelefone ? "btn-icon btn-zap ativo" : "btn-icon btn-zap inativo";
@@ -3925,13 +4129,15 @@ self.addEventListener('fetch', (event) => {
         `<span class="badge-dependente-pub">+ ${esc(d.parentesco || 'Dep.')}: ${esc(obterPrimeiroEUltimoNome(d.nome))}</span>`
       ).join(" ");
 
-      let html = `<div class="casal-info">
-                    <span class="casal-nome">${esc(v.nome)} ${badgesDepHtml}</span>`;
+      let html = `<div class="item-left-group">
+                    <div class="avatar-monogram">${ehBispo ? '⚔️' : esc(iniciais)}</div>
+                    <div class="casal-info">
+                      <span class="casal-nome">${esc(v.nome)} ${badgesDepHtml}</span>`;
       
       if (isLider || isAnalista) {
         const tel1Visual = v.tel1 ? formatarTelefoneVisual(v.tel1) : 'Sem WhatsApp';
         const tel2Visual = v.tel2 ? formatarTelefoneVisual(v.tel2) : '';
-        html += `<span class="casal-tel">📱 ${esc(tel1Visual)} ${tel2Visual ? '| ' + esc(tel2Visual) : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas' : 'pessoa'}</strong> • <span class="badge-transporte">${labelTransporte(v.transporte)}</span></span>`;
+        html += `<span class="casal-tel">📱 ${esc(tel1Visual)} ${tel2Visual ? '| ' + esc(tel2Visual) : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas' : 'pessoa'}</strong></span>`;
         
         const perc = Math.min(100, Math.round((pagasIndiv / totalCotasIndiv) * 100));
         const valorPago = calcularValorArrecadadoInscricao(v);
@@ -3947,24 +4153,13 @@ self.addEventListener('fetch', (event) => {
           ? `<span class="badge-atraso">${esc(avalPrazo.titulo)}</span>`
           : `<span class="badge-em-dia">${avalPrazo.status === 'quitado' ? '🏆 Quitado' : '✅ No Prazo'}</span>`;
 
-        let badgeAnalise = emAnalise > 0 ? `<span class="badge-analise-tag">⏳ ${emAnalise} recibo(s) pendente(s)</span>` : '';
+        let badgeAnalise = emAnalise > 0 ? `<span class="badge-analise-tag">⏳ ${emAnalise} pendente(s)</span>` : '';
         let badgePrev = v.previsaoPagamento ? `<span class="badge-previsao">📅 Prev: ${formatarDataBR(v.previsaoPagamento)}</span>` : '';
         let btnCodigoOculto = `<button class="btn-recibo" onclick="revelarCodigoAcesso(${v.id}, this)">🔑 Ver Senha</button>`;
 
         html += `<div class="casal-meta">${badgePrazoHtml} ${badgeAnalise} ${badgePrev} ${btnCodigoOculto}</div>`;
-      } else {
-        // Linha informativa pública limpa: Número + Vagas + Transporte
-        const vagasTxt = qtdPessoas > 1 ? `👥 ${qtdPessoas} vagas` : `👤 1 vaga`;
-        html += `<div class="casal-public-meta">
-                   <span class="pub-id-tag">#${String(v.id).padStart(3, '0')}</span>
-                   <span>${vagasTxt}</span>
-                   <span class="pub-transporte-tag">${labelTransporte(v.transporte)}</span>
-                 </div>`;
-      }
+        html += `</div></div><div class="actions">`;
 
-      html += `</div><div class="actions">`;
-
-      if (isLider || isAnalista) {
         if (v.confirmado) {
           html += `<button class="btn-check confirmed" onclick="toggleConfirmacaoLider(${v.id})"><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
         } else {
@@ -3975,19 +4170,43 @@ self.addEventListener('fetch', (event) => {
         if (pagasIndiv >= totalCotasIndiv) classeCota = 'pago-quitado';
         else if (pagasIndiv > 0 || emAnalise > 0) classeCota = 'pago-parcial';
 
+        let classeReciboBtn = '';
+        if (emAnalise > 0) classeReciboBtn = 'pendente';
+        else if (qtdRecibos > 0) classeReciboBtn = 'ok';
+
         html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagasIndiv}/${totalCotasIndiv})</button>`;
+        html += `<button class="btn-recibos-row ${classeReciboBtn}" title="Ver ou anexar comprovantes deste participante" onclick="abrirModalRecibosVarao(${v.id})">📎 Recibos (${qtdRecibos})</button>`;
         html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
         html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
         if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
       } else {
-        // Visão Pública: Selo elegante quando confirmado ou grupo compacto Pendente + Confirmar
+        // Visão Pública Limpa (Sem "Carro Próprio")
+        const vagasTxt = qtdPessoas > 1 ? `👥 ${qtdPessoas} Vagas` : `👤 1 Vaga`;
+        html += `<div class="casal-public-meta">
+                   <span class="pub-id-tag">#${String(v.id).padStart(3, '0')}</span>
+                   <span class="pub-vagas-tag">${vagasTxt}</span>
+                 </div>`;
+        html += `</div></div>`;
+
+        if (v.confirmado) {
+          html += `<div class="item-center-status">
+                     <span class="center-connector-line"></span>
+                     <span class="journey-status-chip confirmed"><span class="status-pulse-dot"></span> Presença Confirmada</span>
+                     <span class="center-connector-line"></span>
+                   </div>`;
+        } else {
+          html += `<div class="item-center-status">
+                     <span class="center-connector-line"></span>
+                     <span class="journey-status-chip pending"><span class="status-pulse-dot"></span> Aguardando Confirmação</span>
+                     <span class="center-connector-line"></span>
+                   </div>`;
+        }
+
+        html += `<div class="actions">`;
         if (v.confirmado) {
           html += `<div class="status-confirmado-pill">${iconeCheck} Confirmado</div>`;
         } else {
-          html += `<div class="public-confirm-group">
-                     <span class="status-pendente-hint">Aguardando</span>
-                     <button class="btn-check" onclick="abrirValidadorMembro(${v.id})"><div class="check-box"></div>Confirmar</button>
-                   </div>`;
+          html += `<button class="btn-check" onclick="abrirValidadorMembro(${v.id})"><div class="check-box"></div>Confirmar</button>`;
         }
       }
 
@@ -3997,7 +4216,7 @@ self.addEventListener('fetch', (event) => {
     });
 
     if (paginaSlice.length === 0) {
-      container.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">Nenhum participante encontrado.</div>`;
+      container.innerHTML = `<div style="text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">Nenhum participante encontrado.</div>`;
     }
 
     if (isLider || isAnalista) setTimeout(atualizarDashboard, 50);
@@ -4077,7 +4296,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // ==========================================
-  // DASHBOARD FÍSICO, CONTÁBIL, AUDITORIA E PORTARIA
+  // DASHBOARD, CENTRAL DE COMPROVANTES & DESPESAS
   // ==========================================
   window.alterarTipoVisual = function(categoria, tipo, btn) {
     if (categoria === 'presenca') {
@@ -4140,8 +4359,9 @@ self.addEventListener('fetch', (event) => {
       });
     });
 
-    const totalDespesas = despesas.reduce((acc, d) => acc + (parseFloat(d.valor) || 0), 0);
-    const saldoLiquido = totalArrecadado - totalDespesas;
+    const totalDespesasPagas = despesas.filter(d => (d.status || 'pago') === 'pago').reduce((acc, d) => acc + (parseFloat(d.valor) || 0), 0);
+    const totalDespesasPrevistas = despesas.filter(d => d.status === 'a_pagar').reduce((acc, d) => acc + (parseFloat(d.valor) || 0), 0);
+    const saldoLiquido = totalArrecadado - totalDespesasPagas;
     const pendentesConf = totalPessoasFisicas - pessoasConfirmadas;
     const faltaArrecadar = Math.max(0, metaTotal - totalArrecadado);
     
@@ -4152,9 +4372,19 @@ self.addEventListener('fetch', (event) => {
     document.getElementById("dash-valor").innerText = `R$ ${totalArrecadado.toLocaleString('pt-BR')}`;
     document.getElementById("dash-meta-sub").innerText = `Meta: R$ ${metaTotal.toLocaleString('pt-BR')}`;
     document.getElementById("dash-falta").innerText = `R$ ${faltaArrecadar.toLocaleString('pt-BR')}`;
-    document.getElementById("dash-em-analise-sub").innerText = `Em análise: R$ ${totalEmAnalise.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-em-analise-sub").innerText = `Em conferência: R$ ${totalEmAnalise.toLocaleString('pt-BR')}`;
     document.getElementById("dash-saldo-liquido").innerText = `R$ ${saldoLiquido.toLocaleString('pt-BR')}`;
-    document.getElementById("dash-despesas-sub").innerText = `Despesas: R$ ${totalDespesas.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-despesas-sub").innerText = `Despesas: R$ ${totalDespesasPagas.toLocaleString('pt-BR')}`;
+
+    // Atualiza cards da aba Despesas & Caixa
+    const elDespEnt = document.getElementById("desp-card-entradas");
+    const elDespSai = document.getElementById("desp-card-saidas");
+    const elDespPrev = document.getElementById("desp-card-previstas");
+    const elDespSal = document.getElementById("desp-card-saldo");
+    if (elDespEnt) elDespEnt.innerText = `R$ ${totalArrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    if (elDespSai) elDespSai.innerText = `R$ ${totalDespesasPagas.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    if (elDespPrev) elDespPrev.innerText = `A pagar: R$ ${totalDespesasPrevistas.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+    if (elDespSal) elDespSal.innerText = `R$ ${saldoLiquido.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
 
     const badgeAudit = document.getElementById("badge-pendentes-audit");
     if (badgeAudit) {
@@ -4226,82 +4456,180 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  // --- CONFERÊNCIA DE COMPROVANTES & DESPESAS ---
-  function renderizarPainelAuditoriaEDespesas() {
+  // --- CENTRAL DE COMPROVANTES & PAGAMENTOS ---
+  window.renderizarCentralComprovantes = function() {
     const listaAudit = document.getElementById("lista-auditoria-comprovantes");
-    if (listaAudit) {
-      listaAudit.innerHTML = "";
-      let pendentes = [];
-      const valIndiv = obterValorParcelaIndividual();
+    if (!listaAudit) return;
 
-      varoes.forEach(v => {
-        const todas = obterTodasCotasIndividuais(v);
-        todas.forEach(item => {
-          if (item.cota.status === "em_analise") {
-            pendentes.push({
-              varao: v,
-              ownerType: item.ownerType,
-              depIdx: item.depIdx,
-              ownerName: item.ownerName,
-              ownerRole: item.ownerRole,
-              cota: item.cota,
-              valor: valIndiv
-            });
-          }
+    const termo = (document.getElementById("busca-comprovantes-input")?.value || "").toLowerCase();
+    const filtroStatus = document.getElementById("filtro-status-comprovantes")?.value || "pendentes";
+    const valIndiv = obterValorParcelaIndividual();
+
+    let registros = [];
+    varoes.forEach(v => {
+      const todas = obterTodasCotasIndividuais(v);
+      todas.forEach(item => {
+        const isPago = (item.cota.status === "pago" || item.cota.pago === true);
+        const isAnalise = (item.cota.status === "em_analise");
+        if (!isPago && !isAnalise) return;
+
+        const texto = `${v.nome} ${item.ownerName}`.toLowerCase();
+        if (termo && !texto.includes(termo)) return;
+
+        if (filtroStatus === "pendentes" && !isAnalise) return;
+        if (filtroStatus === "aprovados" && !isPago) return;
+        if (filtroStatus === "com-anexo" && !item.cota.compId) return;
+        if (filtroStatus === "sem-anexo" && item.cota.compId) return;
+
+        registros.push({
+          varao: v,
+          ownerType: item.ownerType,
+          depIdx: item.depIdx,
+          ownerName: item.ownerName,
+          ownerRole: item.ownerRole,
+          cota: item.cota,
+          isPago,
+          isAnalise,
+          valor: (typeof item.cota.valorPago === "number" && item.cota.valorPago > 0) ? item.cota.valorPago : valIndiv
         });
       });
+    });
 
-      if (pendentes.length === 0) {
-        listaAudit.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); font-size:13px; background:var(--stone); border-radius:6px;">✅ Nenhum comprovante aguardando conferência no momento.</div>`;
-      } else {
-        pendentes.forEach(item => {
-          const div = document.createElement("div");
-          div.className = "audit-item";
-          const tagDono = item.ownerType === "titular"
-            ? `Titular: ${esc(item.ownerName)}`
-            : `${esc(item.ownerRole)}: ${esc(item.ownerName)} (Resp: ${esc(item.varao.nome)})`;
-          div.innerHTML = `
-            <div>
-              <strong style="color:var(--iron); font-size:13.5px;">${tagDono}</strong>
-              <div style="font-size:12px; color:var(--text-muted);">
-                Cota ${String(item.cota.numero).padStart(2, '0')} • <strong>R$ ${item.valor.toFixed(2).replace('.', ',')}</strong> • Enviado em ${formatarDataBR(item.cota.dataPagamento)}
-              </div>
-            </div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              ${item.cota.compId ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(item.cota.compId)}', '${esc(item.ownerName)} — Cota ${item.cota.numero}')">👁️ Ver Recibo</button>` : ''}
-              <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, true)">✅ Aprovar</button>
-              <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, false)">❌ Recusar</button>
-            </div>
-          `;
-          listaAudit.appendChild(div);
-        });
-      }
+    listaAudit.innerHTML = "";
+    if (registros.length === 0) {
+      listaAudit.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); font-size:13px; background:var(--stone); border-radius:6px;">Nenhum registro de pagamento encontrado para este filtro.</div>`;
+      return;
     }
 
-    const listaDesp = document.getElementById("lista-despesas-admin");
-    if (listaDesp) {
-      listaDesp.innerHTML = "";
-      if (despesas.length === 0) {
-        listaDesp.innerHTML = `<div style="padding:14px; text-align:center; color:var(--text-muted); font-size:12px;">Nenhuma despesa lançada.</div>`;
-      } else {
-        despesas.forEach((d, idx) => {
-          const row = document.createElement("div");
-          row.className = "expense-item";
-          row.innerHTML = `
-            <div>
-              <strong>${esc(d.descricao)}</strong>
-              <small style="display:block; color:var(--text-muted); font-size:11px;">${formatarDataBR(d.data)} • por ${esc(d.autor || 'Liderança')}</small>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <strong style="color:var(--crimson);">- R$ ${parseFloat(d.valor).toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong>
-              <button type="button" style="background:none; border:none; color:var(--crimson); cursor:pointer; font-weight:700;" onclick="removerDespesa(${idx})">🗑️</button>
-            </div>
-          `;
-          listaDesp.appendChild(row);
-        });
-      }
+    registros.forEach(item => {
+      const div = document.createElement("div");
+      div.className = `audit-item ${item.isPago ? 'approved' : ''}`;
+      const tagDono = item.ownerType === "titular"
+        ? `Titular: ${esc(item.ownerName)}`
+        : `${esc(item.ownerRole)}: ${esc(item.ownerName)} (Resp: ${esc(item.varao.nome)})`;
+
+      const formaTxt = formatarFormaPagamento(item.cota.forma);
+      const statusBadge = item.isPago
+        ? `<span style="background:var(--green-bg); color:var(--green); padding:2px 7px; border-radius:4px; font-size:11px; font-weight:700;">✅ Validado</span>`
+        : `<span style="background:var(--amber-bg); color:var(--amber); padding:2px 7px; border-radius:4px; font-size:11px; font-weight:700;">⏳ Aguardando Conferência</span>`;
+
+      const anexoInfo = item.cota.compId
+        ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(item.cota.compId)}', '${esc(item.ownerName)} — Cota ${item.cota.numero}')">👁️ Ver Comprovante</button>`
+        : `<span style="font-size:11px; color:var(--text-muted); background:var(--stone); padding:3px 8px; border-radius:4px; border:1px solid var(--border);">Sem anexo (${esc(formaTxt)})</span>`;
+
+      div.innerHTML = `
+        <div style="flex:1; min-width:210px;">
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <strong style="color:var(--iron); font-size:13.5px;">${tagDono}</strong>
+            ${statusBadge}
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+            Cota ${String(item.cota.numero).padStart(2, '0')} • <strong>R$ ${item.valor.toFixed(2).replace('.', ',')}</strong> • Forma: <strong>${esc(formaTxt)}</strong> • Data: ${formatarDataBR(item.cota.dataPagamento)}
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          ${anexoInfo}
+          ${item.isAnalise ? `
+            <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, true)">✅ Aprovar</button>
+            <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, '${item.ownerType}', ${item.depIdx}, ${item.cota.numero}, false)">❌ Recusar</button>
+          ` : ''}
+        </div>
+      `;
+      listaAudit.appendChild(div);
+    });
+  };
+
+  // --- MODAL DE RECIBOS DO PARTICIPANTE (ATALHO AO LADO DE COTAS) ---
+  window.abrirModalRecibosVarao = function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    document.getElementById("recibos-varao-id").value = v.id;
+    document.getElementById("recibos-varao-titulo").innerText = v.nome;
+    renderizarListaRecibosVarao(v);
+    document.getElementById("modal-recibos-varao").classList.add("active");
+  };
+
+  function renderizarListaRecibosVarao(v) {
+    const corpo = document.getElementById("lista-recibos-varao-corpo");
+    if (!corpo) return;
+    const todas = obterTodasCotasIndividuais(v);
+    const valIndiv = obterValorParcelaIndividual();
+
+    const movimentadas = todas.filter(item => item.cota.status === "pago" || item.cota.pago || item.cota.status === "em_analise");
+
+    corpo.innerHTML = "";
+    if (movimentadas.length === 0) {
+      corpo.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); font-size:13px; background:var(--stone); border-radius:6px;">Nenhuma cota paga ou em conferência para este participante ainda.</div>`;
+      return;
     }
+
+    movimentadas.forEach(item => {
+      const c = item.cota;
+      const isPago = (c.status === "pago" || c.pago === true);
+      const isAnalise = (c.status === "em_analise");
+      const formaTxt = formatarFormaPagamento(c.forma);
+
+      const div = document.createElement("div");
+      div.className = `audit-item ${isPago ? 'approved' : ''}`;
+      div.innerHTML = `
+        <div style="flex:1; min-width:190px;">
+          <strong style="font-size:13px; color:var(--iron);">Cota ${String(c.numero).padStart(2, '0')} — ${esc(item.ownerName)} (${esc(item.ownerRole)})</strong>
+          <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">
+            Valor: <strong>R$ ${valIndiv.toFixed(2).replace('.', ',')}</strong> • Forma: <strong>${esc(formaTxt)}</strong> • ${formatarDataBR(c.dataPagamento)}
+          </div>
+          <div style="margin-top:4px;">
+            ${isPago
+              ? `<span style="font-size:11px; font-weight:700; color:var(--green);">✅ Validado</span>`
+              : `<span style="font-size:11px; font-weight:700; color:var(--amber);">⏳ Aguardando Conferência</span>`
+            }
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          ${c.compId
+            ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(c.compId)}', '${esc(item.ownerName)} — Cota ${c.numero}')">👁️ Ver Recibo</button>`
+            : `<span style="font-size:11px; color:var(--text-muted); background:var(--stone); padding:4px 7px; border-radius:4px; border:1px solid var(--border);">Sem arquivo</span>`
+          }
+          <button type="button" class="btn-outline-bronze" style="padding:5px 8px; font-size:11px;" onclick="solicitarAnexoReciboAdmin(${v.id}, '${item.ownerType}', ${item.depIdx}, ${c.numero})">📤 ${c.compId ? 'Trocar' : 'Anexar'}</button>
+          ${isAnalise ? `
+            <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 9px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${v.id}, '${item.ownerType}', ${item.depIdx}, ${c.numero}, true)">✅ Aprovar</button>
+            <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 9px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${v.id}, '${item.ownerType}', ${item.depIdx}, ${c.numero}, false)">❌ Recusar</button>
+          ` : ''}
+        </div>
+      `;
+      corpo.appendChild(div);
+    });
   }
+
+  window.solicitarAnexoReciboAdmin = function(varaoId, ownerType, depIdx, numeroCota) {
+    alvoAnexoAdminRecibo = { varaoId, ownerType, depIdx, numeroCota };
+    const inp = document.getElementById("admin-anexar-recibo-input");
+    if (inp) {
+      inp.value = "";
+      inp.click();
+    }
+  };
+
+  window.processarAnexoReciboAdmin = async function(inputEl) {
+    if (!alvoAnexoAdminRecibo || !inputEl.files || inputEl.files.length === 0) return;
+    const { varaoId, ownerType, depIdx, numeroCota } = alvoAnexoAdminRecibo;
+    const v = varoes.find(x => x.id === varaoId);
+    if (!v) return;
+    const cota = localizarObjetoCota(v, ownerType, depIdx, numeroCota);
+    if (!cota) return;
+
+    const base64 = await processarComprovanteOtimizado(inputEl.files[0]);
+    if (!base64) return;
+    const compId = await salvarComprovanteNuvem(base64);
+    if (compId) {
+      cota.compId = compId;
+      await salvarNoBanco();
+      renderizarListaRecibosVarao(v);
+      renderizarCentralComprovantes();
+      renderizarLista();
+      alert("✅ Comprovante anexado à cota com sucesso!");
+    }
+    alvoAnexoAdminRecibo = null;
+  };
 
   function localizarObjetoCota(v, ownerType, depIdx, numeroCota) {
     garantirEstruturaCotas(v);
@@ -4327,7 +4655,7 @@ self.addEventListener('fetch', (event) => {
       cota.valorPago = obterValorParcelaIndividual();
       cota.aprovadoPor = liderAtual;
     } else {
-      if (!confirm(`Recusar o comprovante da Cota ${numeroCota} e devolver para Pendente?`)) return;
+      if (!confirm(`Recusar o pagamento da Cota ${numeroCota} e devolver para Pendente?`)) return;
       cota.status = "pendente";
       cota.pago = false;
       cota.valorPago = 0;
@@ -4336,33 +4664,127 @@ self.addEventListener('fetch', (event) => {
     }
 
     await salvarNoBanco();
-    renderizarPainelAuditoriaEDespesas();
+    renderizarCentralComprovantes();
+    if (document.getElementById("modal-recibos-varao").classList.contains("active")) {
+      renderizarListaRecibosVarao(v);
+    }
     renderizarLista();
+  };
+
+  // --- CONTROLE DE DESPESAS & SAÍDAS ---
+  window.aoSelecionarAnexoDespesa = async function(inputEl) {
+    if (!inputEl.files || inputEl.files.length === 0) return;
+    const file = inputEl.files[0];
+    const base64 = await processarComprovanteOtimizado(file);
+    if (base64) {
+      anexoDespesaTemp = { base64, nome: `📎 ${file.name}` };
+      document.getElementById("desp-anexo-nome").innerText = anexoDespesaTemp.nome;
+      document.getElementById("desp-anexo-pill").style.display = "flex";
+    }
+  };
+
+  window.limparAnexoDespesa = function() {
+    anexoDespesaTemp = null;
+    const inp = document.getElementById("desp-comp-file");
+    if (inp) inp.value = "";
+    document.getElementById("desp-anexo-pill").style.display = "none";
   };
 
   window.adicionarDespesa = async function() {
     const desc = document.getElementById("desp-descricao").value.trim();
+    const categoria = document.getElementById("desp-categoria").value;
     const val = parseFloat(document.getElementById("desp-valor").value);
+    const data = document.getElementById("desp-data").value || new Date().toISOString().split('T')[0];
+    const forma = document.getElementById("desp-forma").value;
+    const status = document.getElementById("desp-status").value;
+    const obs = document.getElementById("desp-obs").value.trim();
+
     if (!desc || isNaN(val) || val <= 0) return alert("Informe a descrição e um valor válido para a despesa.");
 
+    let compId = "";
+    if (anexoDespesaTemp && anexoDespesaTemp.base64) {
+      compId = await salvarComprovanteNuvem(anexoDespesaTemp.base64);
+    }
+
     despesas.unshift({
+      id: Date.now(),
       descricao: desc,
+      categoria,
       valor: val,
-      data: new Date().toISOString().split('T')[0],
+      data,
+      forma,
+      status,
+      obs,
+      compId,
       autor: liderAtual
     });
 
     document.getElementById("desp-descricao").value = "";
     document.getElementById("desp-valor").value = "";
+    document.getElementById("desp-obs").value = "";
+    limparAnexoDespesa();
+
     await salvarNoBanco();
-    renderizarPainelAuditoriaEDespesas();
+    renderizarListaDespesas();
+  };
+
+  window.renderizarListaDespesas = function() {
+    atualizarDashboard();
+    const listaDesp = document.getElementById("lista-despesas-admin");
+    if (!listaDesp) return;
+
+    const filtroCat = document.getElementById("filtro-categoria-despesa")?.value || "todas";
+    const filtradas = despesas.filter(d => filtroCat === "todas" || (d.categoria || "Outros") === filtroCat);
+
+    listaDesp.innerHTML = "";
+    if (filtradas.length === 0) {
+      listaDesp.innerHTML = `<div style="padding:18px; text-align:center; color:var(--text-muted); font-size:13px; background:var(--stone); border-radius:6px;">Nenhuma despesa registrada nesta categoria.</div>`;
+      return;
+    }
+
+    filtradas.forEach((d) => {
+      const idxReal = despesas.indexOf(d);
+      const isPago = (d.status || "pago") === "pago";
+      const row = document.createElement("div");
+      row.className = `expense-item ${isPago ? '' : 'pendente-pag'}`;
+      row.innerHTML = `
+        <div style="flex:1; min-width:200px;">
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <strong>${esc(d.descricao)}</strong>
+            <span class="badge-cat-desp">${esc(d.categoria || 'Outros')}</span>
+            ${isPago
+              ? `<span style="font-size:11px; font-weight:700; color:var(--green);">✅ Pago</span>`
+              : `<span style="font-size:11px; font-weight:700; color:var(--amber);">⏳ A Pagar</span>`
+            }
+          </div>
+          <small style="display:block; color:var(--text-muted); font-size:11.5px; margin-top:3px;">
+            Data: ${formatarDataBR(d.data)} • Forma: <strong>${esc(d.forma || 'Pix')}</strong> • Lançado por ${esc(d.autor || 'Liderança')}
+            ${d.obs ? ` • Obs: ${esc(d.obs)}` : ''}
+          </small>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <strong style="color:${isPago ? 'var(--crimson)' : 'var(--amber)'}; font-size:14px;">- R$ ${parseFloat(d.valor).toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong>
+          ${d.compId ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(d.compId)}', 'Nota Fiscal — ${esc(d.descricao)}')">📎 Nota</button>` : ''}
+          ${!isPago ? `<button type="button" style="background:var(--green); color:#fff; border:none; padding:5px 9px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="marcarDespesaComoPaga(${idxReal})">✅ Quitar</button>` : ''}
+          <button type="button" style="background:var(--crimson-bg); border:none; color:var(--crimson); padding:5px 8px; border-radius:4px; cursor:pointer; font-weight:700;" onclick="removerDespesa(${idxReal})">🗑️</button>
+        </div>
+      `;
+      listaDesp.appendChild(row);
+    });
+  };
+
+  window.marcarDespesaComoPaga = async function(idx) {
+    if (!despesas[idx]) return;
+    despesas[idx].status = "pago";
+    await salvarNoBanco();
+    renderizarListaDespesas();
   };
 
   window.removerDespesa = async function(idx) {
     if (!confirm("Remover este lançamento de despesa?")) return;
     despesas.splice(idx, 1);
     await salvarNoBanco();
-    renderizarPainelAuditoriaEDespesas();
+    renderizarListaDespesas();
   };
 
   // --- MODO PORTARIA / CHECK-IN ---
@@ -4406,7 +4828,6 @@ self.addEventListener('fetch', (event) => {
               ? `<span class="checkin-status-pill checkin-ok">✅ 100% Quitado</span>`
               : `<span class="checkin-status-pill checkin-debt">⚠️ Saldo Pendente: R$ ${falta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagasIndiv}/${totalCotasIndiv})</span>`
             }
-            <span class="badge-transporte">${labelTransporte(v.transporte)}</span>
           </div>
         </div>
         <div>
@@ -4437,15 +4858,14 @@ self.addEventListener('fetch', (event) => {
     document.getElementById("reg-nome1").value = "";
     document.getElementById("reg-tel1").value = "";
     document.getElementById("reg-tel2").value = "";
-    document.getElementById("reg-transporte").value = "proprio";
     document.getElementById("reg-senha-pin").value = "";
     document.getElementById("reg-lista-dependentes").innerHTML = "";
     document.getElementById("reg-dep-aviso").style.display = "none";
     document.getElementById("reg-data-previsao").value = "";
     document.getElementById("reg-qtd-cotas-iniciais").value = "0";
-    document.getElementById("reg-forma-pagamento").value = "indefinido";
+    document.getElementById("reg-forma-pagamento").value = "pix";
     document.getElementById("reg-box-sugestao").style.display = "none";
-    document.getElementById("reg-box-pix").style.display = "none";
+    document.getElementById("reg-pagamento-detalhes").style.display = "none";
     limparComprovanteAnexado("reg");
     atualizarResumoCadastro();
     document.getElementById("modal-auto-cadastro").classList.add("active");
@@ -4457,21 +4877,18 @@ self.addEventListener('fetch', (event) => {
     const multiplicador = 1 + deps.length;
     const valParcela = obterValorParcelaIndividual() * multiplicador;
     const total = qtd * valParcela;
-    const uploadWrap = document.getElementById("reg-upload-wrapper");
+    const detalhesWrap = document.getElementById("reg-pagamento-detalhes");
     const valorLabel = document.getElementById("reg-valor-pix-pagar");
 
     if (qtd > 0) {
-      uploadWrap.style.display = "block";
-      valorLabel.innerText = `Total a transferir (${qtd} ${qtd === 1 ? 'cota' : 'cotas'} • ${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-      if (document.getElementById("reg-forma-pagamento").value === "indefinido") {
-        document.getElementById("reg-forma-pagamento").value = "pix";
-        alternarBoxPix('reg');
+      detalhesWrap.style.display = "block";
+      valorLabel.innerText = `Total a pagar (${qtd} ${qtd === 1 ? 'cota' : 'cotas'} • ${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+      alternarBoxPagamento('reg');
+      if (document.getElementById("reg-forma-pagamento").value === "pix") {
+        renderizarQRCodePix('reg', total, `BENDNOVOC${qtd}`);
       }
-      renderizarQRCodePix('reg', total, `BENDNOVOC${qtd}`);
     } else {
-      uploadWrap.style.display = "none";
-      valorLabel.innerText = `Valor de cada cota mensal (${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${valParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-      renderizarQRCodePix('reg', 0, 'BENDNOVO');
+      detalhesWrap.style.display = "none";
     }
   };
 
@@ -4479,12 +4896,11 @@ self.addEventListener('fetch', (event) => {
     const n1 = document.getElementById("reg-nome1").value.trim();
     const t1 = document.getElementById("reg-tel1").value;
     const t2 = document.getElementById("reg-tel2").value;
-    const transporte = document.getElementById("reg-transporte").value;
     const pinPreferido = document.getElementById("reg-senha-pin").value.trim();
     const dependentes = lerDependentesDoForm("reg");
     const dataPrev = document.getElementById("reg-data-previsao").value;
     const qtdIniciais = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
-    const forma = document.getElementById("reg-forma-pagamento").value || "indefinido";
+    const forma = qtdIniciais > 0 ? (document.getElementById("reg-forma-pagamento").value || "pix") : "indefinido";
 
     if (!n1) return alert("Por favor, preencha o seu nome completo.");
     if (!validarTelefone(t1, true)) return alert("O WhatsApp principal informado é inválido! Digite com DDD (10 ou 11 dígitos).");
@@ -4498,7 +4914,7 @@ self.addEventListener('fetch', (event) => {
     }
 
     if (qtdIniciais > 0 && forma === "pix" && !anexoTemporario.reg) {
-      return alert("Para registrar pagamento via Pix, anexe ou cole o print do comprovante (ou selecione 'Não agora').");
+      return alert("Para registrar pagamento via Pix, anexe ou cole o print do comprovante (ou escolha Cartão/Dinheiro, ou selecione 'Não agora').");
     }
 
     let nomeFinal = obterPrimeiroEUltimoNome(n1);
@@ -4519,11 +4935,11 @@ self.addEventListener('fetch', (event) => {
       const hojeISO = new Date().toISOString().split('T')[0];
       const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
       const valIndiv = obterValorParcelaIndividual();
-      const statusInicial = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
+      const statusInicial = exigirAuditoria ? "em_analise" : "pago";
 
       const preencherCotasPessoa = () => {
         const arr = gerarCotasIniciais();
-        if (qtdIniciais > 0 && (compId || forma !== "pix")) {
+        if (qtdIniciais > 0) {
           for (let i = 0; i < Math.min(qtdIniciais, arr.length); i++) {
             arr[i].status = statusInicial;
             arr[i].pago = (statusInicial === "pago");
@@ -4551,7 +4967,6 @@ self.addEventListener('fetch', (event) => {
         nome: nomeFinal,
         nomeCompleto: n1.toUpperCase(),
         dependentes: depsComCotas,
-        transporte: transporte,
         confirmado: false,
         biometriaAtiva: false,
         tel1: tel1Limpo,
@@ -4678,7 +5093,7 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // CARNÊ DIGITAL PRIVADO DO PARTICIPANTE (COM SEPARAÇÃO POR PESSOA)
+  // CARNÊ DIGITAL PRIVADO DO PARTICIPANTE (COM LOCALIZAÇÃO GPS E SEPARAÇÃO POR PESSOA)
   // ==========================================
   window.abrirModalAutoAtualizacao = function() {
     document.getElementById("auth-membro-tel").value = "";
@@ -4751,6 +5166,26 @@ self.addEventListener('fetch', (event) => {
     cotasSelecionadasMembro = selecaoInicial;
     salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
 
+    // Exibe endereço e rota GPS do encontro na página do membro
+    const cardLocal = document.getElementById("auth-local-evento-card");
+    if (cardLocal) {
+      if (configuracoes.localNome || configuracoes.localEndereco || configuracoes.localDesc || configuracoes.localMaps) {
+        document.getElementById("auth-local-titulo").innerText = `📍 Local do Encontro: ${configuracoes.localNome || 'A confirmar'}`;
+        document.getElementById("auth-local-endereco-txt").innerText = configuracoes.localEndereco || "";
+        document.getElementById("auth-local-desc-txt").innerText = configuracoes.localDesc || "";
+        const btnMapaDireto = document.getElementById("auth-btn-ver-mapa");
+        if (configuracoes.localMaps) {
+          btnMapaDireto.href = configuracoes.localMaps;
+          btnMapaDireto.style.display = "inline-flex";
+        } else {
+          btnMapaDireto.style.display = "none";
+        }
+        cardLocal.style.display = "block";
+      } else {
+        cardLocal.style.display = "none";
+      }
+    }
+
     document.getElementById("auth-casal-id").value = v.id;
     document.getElementById("auth-data-previsao").value = v.previsaoPagamento || "";
     document.getElementById("auth-nova-senha-pin").value = "";
@@ -4758,7 +5193,7 @@ self.addEventListener('fetch', (event) => {
       ? "pix"
       : ((v.formaPagamento && v.formaPagamento !== 'indefinido') ? v.formaPagamento : "pix");
 
-    alternarBoxPix('auth');
+    alternarBoxPagamento('auth');
     atualizarPreviewAnexo('auth');
     atualizarIndicadorBiometriaCarne(v);
 
@@ -5023,12 +5458,12 @@ self.addEventListener('fetch', (event) => {
     const forma = document.getElementById("auth-forma-pagamento").value;
 
     if (forma === "pix" && !anexoTemporario.auth) {
-      return alert("Anexe, compartilhe pelo banco ou cole o print do comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
+      return alert("Para pagamentos via Pix, anexe ou cole o print do comprovante (ou selecione Cartão de Crédito, Débito ou Dinheiro).");
     }
 
     const btn = document.getElementById("btn-confirmar-cotas-membro");
     btn.disabled = true;
-    btn.innerText = "⏳ Enviando comprovante...";
+    btn.innerText = "⏳ Registrando pagamento...";
 
     try {
       let compId = "";
@@ -5040,7 +5475,7 @@ self.addEventListener('fetch', (event) => {
       garantirEstruturaCotas(v);
       const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
       const valIndiv = obterValorParcelaIndividual();
-      const novoStatus = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
+      const novoStatus = exigirAuditoria ? "em_analise" : "pago";
 
       cotasSelecionadasMembro.forEach(sel => {
         const cotaObj = localizarObjetoCota(v, sel.ownerType, sel.depIdx, sel.numero);
@@ -5067,7 +5502,7 @@ self.addEventListener('fetch', (event) => {
       renderizarCarnePrivado(v);
 
       if (novoStatus === "em_analise") {
-        alert("✅ Comprovante enviado com sucesso!\n\nAs cotas selecionadas foram marcadas como 'Conferência' e serão validadas pela tesouraria em breve.");
+        alert(`✅ Pagamento em ${formatarFormaPagamento(forma)} registrado!\n\nAs cotas selecionadas foram enviadas para conferência da liderança e serão validadas em breve.`);
       } else {
         alert("✅ Pagamento registrado com sucesso! Veja seu progresso atualizado.");
       }
@@ -5124,7 +5559,6 @@ self.addEventListener('fetch', (event) => {
 
     const qtdP = obterQtdPessoas(v);
     document.getElementById("cred-qtd-pessoas").innerText = `${qtdP} ${qtdP > 1 ? 'Pessoas' : 'Pessoa'}`;
-    document.getElementById("cred-transporte").innerText = labelTransporte(v.transporte).replace(/^[^\w]+/, '');
     document.getElementById("cred-registro-id").innerText = `#${String(v.id).padStart(3, '0')}`;
 
     document.getElementById("modal-credencial-vip").classList.add("active");
@@ -5205,12 +5639,12 @@ self.addEventListener('fetch', (event) => {
         card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''}`;
 
         let stClass = isPago ? 'st-pago' : (isAnalise ? 'st-analise' : 'st-pend');
-        let stTxt = isPago ? '✅ Pago' : (isAnalise ? '⏳ Conferir' : 'Pendente');
+        let stTxt = isPago ? `✅ ${formatarFormaPagamento(c.forma)}` : (isAnalise ? '⏳ Conferir' : 'Pendente');
 
         let inner = `
           <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
           <span class="cota-val">R$ ${valIndiv.toFixed(2).replace('.', ',')}</span>
-          <span class="cota-status ${stClass}">${stTxt}</span>
+          <span class="cota-status ${stClass}">${esc(stTxt)}</span>
         `;
 
         if ((isPago || isAnalise) && c.compId) {
@@ -5241,11 +5675,12 @@ self.addEventListener('fetch', (event) => {
       cota.dataPagamento = "";
       cota.compId = "";
     } else {
+      const formaBaixa = document.getElementById("admin-baixa-forma-padrao")?.value || "dinheiro";
       cota.status = "pago";
       cota.pago = true;
       cota.valorPago = obterValorParcelaIndividual();
       cota.dataPagamento = cota.dataPagamento || new Date().toISOString().split('T')[0];
-      if (!cota.forma) cota.forma = v.formaPagamento !== 'indefinido' ? v.formaPagamento : 'dinheiro';
+      cota.forma = cota.forma && cota.forma !== 'indefinido' ? cota.forma : formaBaixa;
     }
 
     await salvarNoBanco();
@@ -5260,7 +5695,6 @@ self.addEventListener('fetch', (event) => {
     const n = document.getElementById("add-nome").value.trim().toUpperCase();
     const t1 = document.getElementById("add-tel1").value;
     const t2 = document.getElementById("add-tel2").value;
-    const transporte = document.getElementById("add-transporte").value;
     const prev = document.getElementById("add-previsao").value;
     const dependentes = lerDependentesDoForm("add").map(d => ({
       nome: d.nome,
@@ -5278,7 +5712,6 @@ self.addEventListener('fetch', (event) => {
       nome: n,
       nomeCompleto: n,
       dependentes: dependentes,
-      transporte: transporte,
       confirmado: false,
       biometriaAtiva: false,
       tel1: t1 ? t1.replace(/\D/g, '') : "",
@@ -5307,7 +5740,6 @@ self.addEventListener('fetch', (event) => {
     inputNome.disabled = !(isAlfa || isAnalista);
     document.getElementById("edit-tel1").value = v.tel1 || "";
     document.getElementById("edit-tel2").value = v.tel2 || "";
-    document.getElementById("edit-transporte").value = v.transporte || "proprio";
 
     const containerDeps = document.getElementById("edit-lista-dependentes");
     containerDeps.innerHTML = "";
@@ -5345,11 +5777,11 @@ self.addEventListener('fetch', (event) => {
     if (isAlfa || isAnalista) v.nome = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
     v.tel1 = t1 ? t1.replace(/\D/g, '') : "";
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
-    v.transporte = document.getElementById("edit-transporte").value;
     v.dependentes = depsAtualizados;
     delete v.temDependente;
     delete v.nomeDependente;
     delete v.parentescoDependente;
+    delete v.transporte;
 
     v.previsaoPagamento = document.getElementById("edit-data-previsao").value;
     v.formaPagamento = document.getElementById("edit-forma-pagamento").value;
@@ -5652,17 +6084,18 @@ self.addEventListener('fetch', (event) => {
   };
 
   // ==========================================
-  // EXPORTAÇÃO EXCEL (CSV) E PDF EXECUTIVO
+  // EXPORTAÇÃO COMPLETA EXCEL (CSV) E PDF EXECUTIVO DE TODOS OS MÓDULOS
   // ==========================================
   window.exportarCSVModulo = function(tipo) {
     let linhas = [];
     const ano = configuracoes.anoEvento || "2027";
-    let nomeArquivo = `Relatorio_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
+    const evNome = configuracoes.tituloEvento || "Benditos";
+    let nomeArquivo = `Relatorio_${evNome}_${tipo}_${ano}.csv`;
     let csvContent = "\uFEFFsep=;\r\n";
 
-    if (tipo === 'presenca') {
-      nomeArquivo = `Participantes_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
-      linhas.push(["ID", "Titular", "Dependentes", "Qtd Pessoas", "Transporte", "Presenca", "WhatsApp 1"]);
+    if (tipo === 'presenca' || tipo === 'portaria') {
+      nomeArquivo = `${tipo === 'portaria' ? 'Portaria' : 'Participantes'}_${evNome}_${ano}.csv`;
+      linhas.push(["ID", "Titular", "Dependentes", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
       varoesFiltrados.forEach(v => {
         const deps = obterDependentes(v);
         const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
@@ -5671,13 +6104,12 @@ self.addEventListener('fetch', (event) => {
           `"${v.nome}"`,
           `"${depStr}"`,
           obterQtdPessoas(v),
-          `"${labelTransporte(v.transporte)}"`,
           v.confirmado ? "Confirmado" : "Pendente",
           `"${v.tel1 ? formatarTelefoneVisual(v.tel1) : ''}"`
         ]);
       });
-    } else {
-      nomeArquivo = `Financeiro_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
+    } else if (tipo === 'financeiro') {
+      nomeArquivo = `Financeiro_${evNome}_${ano}.csv`;
       linhas.push(["ID", "Titular", "Dependentes", "Pessoas", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)", "Status Prazo"]);
       varoesFiltrados.forEach(v => {
         const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
@@ -5699,6 +6131,78 @@ self.addEventListener('fetch', (event) => {
           aval.alerta ? "Em Atraso / Alerta" : "No Prazo"
         ]);
       });
+    } else if (tipo === 'comprovantes') {
+      nomeArquivo = `Comprovantes_Pagamentos_${evNome}_${ano}.csv`;
+      linhas.push(["ID Inscricao", "Responsavel", "Beneficiario", "Vinculo", "Cota", "Valor (R$)", "Forma Pagamento", "Data", "Status", "Anexo"]);
+      const valIndiv = obterValorParcelaIndividual();
+      varoes.forEach(v => {
+        obterTodasCotasIndividuais(v).forEach(item => {
+          const isPago = (item.cota.status === "pago" || item.cota.pago);
+          const isAnalise = (item.cota.status === "em_analise");
+          if (!isPago && !isAnalise) return;
+          linhas.push([
+            v.id,
+            `"${v.nome}"`,
+            `"${item.ownerName}"`,
+            `"${item.ownerRole}"`,
+            item.cota.numero,
+            valIndiv.toFixed(2).replace('.', ','),
+            `"${formatarFormaPagamento(item.cota.forma)}"`,
+            formatarDataBR(item.cota.dataPagamento),
+            isPago ? "Validado" : "Em Conferencia",
+            item.cota.compId ? "Sim" : "Nao"
+          ]);
+        });
+      });
+    } else if (tipo === 'despesas') {
+      nomeArquivo = `Despesas_Caixa_${evNome}_${ano}.csv`;
+      linhas.push(["Data", "Descricao", "Categoria", "Forma Pagamento", "Valor (R$)", "Situacao", "Observacao", "Responsavel"]);
+      despesas.forEach(d => {
+        linhas.push([
+          formatarDataBR(d.data),
+          `"${d.descricao}"`,
+          `"${d.categoria || 'Outros'}"`,
+          `"${d.forma || 'Pix'}"`,
+          parseFloat(d.valor).toFixed(2).replace('.', ','),
+          (d.status || 'pago') === 'pago' ? "Pago" : "A Pagar",
+          `"${d.obs || '-'}"`,
+          `"${d.autor || '-'}"`
+        ]);
+      });
+    } else if (tipo === 'geral') {
+      nomeArquivo = `Relatorio_Geral_Consolidado_${evNome}_${ano}.csv`;
+      let arrecadado = 0;
+      let totalPessoas = 0;
+      let confirmados = 0;
+      varoes.forEach(v => {
+        const qp = obterQtdPessoas(v);
+        totalPessoas += qp;
+        if (v.confirmado) confirmados += qp;
+        arrecadado += calcularValorArrecadadoInscricao(v);
+      });
+      const totalDesp = despesas.filter(d => (d.status || 'pago') === 'pago').reduce((a, b) => a + (parseFloat(b.valor) || 0), 0);
+      linhas.push(["RESUMO GERAL DO EVENTO", "VALOR"]);
+      linhas.push(["Cadastros Titulares", varoes.length]);
+      linhas.push(["Total de Pessoas Fisicas", totalPessoas]);
+      linhas.push(["Pessoas Confirmadas", confirmados]);
+      linhas.push(["Total Arrecadado (R$)", arrecadado.toFixed(2).replace('.', ',')]);
+      linhas.push(["Total Despesas Pagas (R$)", totalDesp.toFixed(2).replace('.', ',')]);
+      linhas.push(["Saldo Liquido em Caixa (R$)", (arrecadado - totalDesp).toFixed(2).replace('.', ',')]);
+      linhas.push([]);
+      linhas.push(["ID", "Titular", "Dependentes", "Pessoas", "Presenca", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)"]);
+      varoes.forEach(v => {
+        const deps = obterDependentes(v);
+        const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
+        const totC = obterTodasCotasIndividuais(v).length;
+        const pagC = contarCotasIndividuaisPagas(v);
+        const pagoV = calcularValorArrecadadoInscricao(v);
+        const faltaV = Math.max(0, obterValorTotalInscricao(v) - pagoV);
+        linhas.push([
+          v.id, `"${v.nome}"`, `"${depStr}"`, obterQtdPessoas(v),
+          v.confirmado ? "Confirmado" : "Pendente",
+          pagC, totC, pagoV.toFixed(2).replace('.', ','), faltaV.toFixed(2).replace('.', ',')
+        ]);
+      });
     }
 
     csvContent += linhas.map(e => e.join(";")).join("\r\n");
@@ -5711,51 +6215,105 @@ self.addEventListener('fetch', (event) => {
 
   window.exportarRelatorioPDF = function(tipo) {
     const tituloEv = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
-    let titulo = tipo === 'presenca' ? "Relatório de Participantes (Físico)" : "Relatório Financeiro & Cotas";
-    let nomeArquivo = `Relatorio_${tituloEv.replace(/\s+/g, '_')}_${tipo}.pdf`;
+    const titulosMap = {
+      presenca: "Relatório de Participantes (Físico)",
+      portaria: "Lista Oficial de Portaria / Check-in",
+      financeiro: "Relatório Financeiro & Cotas",
+      comprovantes: "Relatório de Comprovantes & Recebimentos",
+      despesas: "Relatório de Despesas & Fluxo de Caixa",
+      geral: "Relatório Geral Consolidado"
+    };
+    const titulo = titulosMap[tipo] || "Relatório Oficial";
+    const nomeArquivo = `Relatorio_${tituloEv.replace(/\s+/g, '_')}_${tipo}.pdf`;
 
     let totalPessoas = 0, confirmadosPessoas = 0, arrecadado = 0;
-    varoesFiltrados.forEach(v => {
+    varoes.forEach(v => {
       const qp = obterQtdPessoas(v);
       totalPessoas += qp;
       if (v.confirmado) confirmadosPessoas += qp;
       arrecadado += calcularValorArrecadadoInscricao(v);
     });
+    const totalDesp = despesas.filter(d => (d.status || 'pago') === 'pago').reduce((a, b) => a + (parseFloat(b.valor) || 0), 0);
 
-    const colunas = tipo === 'presenca'
-      ? ["Nº", "Titular", "Dependentes", "Pessoas", "Transporte", "Presença", "WhatsApp"]
-      : ["Nº", "Titular", "Dependentes", "Pessoas", "Cotas", "Arrecadado", "Restante"];
+    let colunas = [];
+    let dadosLinhas = [];
+    let resumoHTML = `
+      <div><strong>Cadastros:</strong> ${varoes.length}</div>
+      <div><strong>Pessoas Físicas:</strong> ${totalPessoas}</div>
+      <div><strong>Confirmados:</strong> ${confirmadosPessoas}</div>
+      <div><strong>Arrecadado:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+    `;
 
-    const dadosLinhas = varoesFiltrados.map(v => {
-      const qp = obterQtdPessoas(v);
-      const deps = obterDependentes(v);
-      const depStr = deps.length > 0 ? deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(", ") : "-";
-      if (tipo === 'presenca') {
+    if (tipo === 'presenca' || tipo === 'portaria') {
+      colunas = ["Nº", "Titular", "Dependentes", "Pessoas", "Presença", "WhatsApp"];
+      dadosLinhas = varoesFiltrados.map(v => {
+        const qp = obterQtdPessoas(v);
+        const deps = obterDependentes(v);
+        const depStr = deps.length > 0 ? deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(", ") : "-";
         return [
-          v.id,
-          esc(v.nome),
-          depStr,
-          qp,
-          esc(labelTransporte(v.transporte)),
+          v.id, esc(v.nome), depStr, qp,
           v.confirmado ? '<span style="color:#1b7a43; font-weight:bold;">Confirmado</span>' : 'Pendente',
           v.tel1 ? formatarTelefoneVisual(v.tel1) : '-'
         ];
-      } else {
+      });
+    } else if (tipo === 'financeiro' || tipo === 'geral') {
+      colunas = ["Nº", "Titular", "Dependentes", "Pessoas", "Cotas", "Arrecadado", "Restante"];
+      if (tipo === 'geral') {
+        resumoHTML += `<div><strong>Despesas:</strong> R$ ${totalDesp.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+                       <div><strong>Saldo Líquido:</strong> R$ ${(arrecadado - totalDesp).toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>`;
+      }
+      const baseLista = tipo === 'geral' ? varoes : varoesFiltrados;
+      dadosLinhas = baseLista.map(v => {
+        const qp = obterQtdPessoas(v);
+        const deps = obterDependentes(v);
+        const depStr = deps.length > 0 ? deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(", ") : "-";
         const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
         const pagasIndiv = contarCotasIndividuaisPagas(v);
         const pagoVal = calcularValorArrecadadoInscricao(v);
         const faltaVal = Math.max(0, obterValorTotalInscricao(v) - pagoVal);
         return [
-          v.id,
-          esc(v.nome),
-          depStr,
-          qp,
+          v.id, esc(v.nome), depStr, qp,
           `${pagasIndiv}/${totalCotasIndiv}`,
           `R$ ${pagoVal.toFixed(2).replace('.', ',')}`,
           `R$ ${faltaVal.toFixed(2).replace('.', ',')}`
         ];
-      }
-    });
+      });
+    } else if (tipo === 'comprovantes') {
+      colunas = ["Nº", "Beneficiário", "Vínculo", "Cota", "Forma", "Data", "Status", "Recibo"];
+      const valIndiv = obterValorParcelaIndividual();
+      varoes.forEach(v => {
+        obterTodasCotasIndividuais(v).forEach(item => {
+          const isPago = (item.cota.status === "pago" || item.cota.pago);
+          const isAnalise = (item.cota.status === "em_analise");
+          if (!isPago && !isAnalise) return;
+          dadosLinhas.push([
+            v.id,
+            esc(item.ownerName),
+            esc(item.ownerRole),
+            `Cota ${String(item.cota.numero).padStart(2, '0')} (R$ ${valIndiv.toFixed(2).replace('.', ',')})`,
+            esc(formatarFormaPagamento(item.cota.forma)),
+            formatarDataBR(item.cota.dataPagamento),
+            isPago ? '<span style="color:#1b7a43; font-weight:bold;">Validado</span>' : '<span style="color:#b45309;">Conferência</span>',
+            item.cota.compId ? 'Anexado' : 'Sem anexo'
+          ]);
+        });
+      });
+    } else if (tipo === 'despesas') {
+      colunas = ["Data", "Descrição", "Categoria", "Forma", "Valor", "Situação"];
+      resumoHTML = `
+        <div><strong>Entradas:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+        <div><strong>Saídas Pagas:</strong> R$ ${totalDesp.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+        <div><strong>Saldo Líquido:</strong> R$ ${(arrecadado - totalDesp).toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+      `;
+      dadosLinhas = despesas.map(d => [
+        formatarDataBR(d.data),
+        esc(d.descricao),
+        esc(d.categoria || 'Outros'),
+        esc(d.forma || 'Pix'),
+        `R$ ${parseFloat(d.valor).toFixed(2).replace('.', ',')}`,
+        (d.status || 'pago') === 'pago' ? '<span style="color:#1b7a43; font-weight:bold;">Pago</span>' : 'A Pagar'
+      ]);
+    }
 
     const containerPDF = document.createElement("div");
     containerPDF.style.padding = "20px";
@@ -5771,13 +6329,10 @@ self.addEventListener('fetch', (event) => {
           <small style="color:#5c6370;">Emissão: ${new Date().toLocaleDateString('pt-BR')}</small>
         </div>
       </div>
-      <div style="display:flex; gap:12px; background:#f4f3ef; padding:10px; border-radius:4px; margin-bottom:16px; font-size:12px;">
-        <div><strong>Cadastros:</strong> ${varoesFiltrados.length}</div>
-        <div><strong>Pessoas Físicas:</strong> ${totalPessoas}</div>
-        <div><strong>Confirmados:</strong> ${confirmadosPessoas}</div>
-        <div><strong>Arrecadado:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; background:#f4f3ef; padding:10px; border-radius:4px; margin-bottom:16px; font-size:11.5px;">
+        ${resumoHTML}
       </div>
-      <table style="width:100%; border-collapse:collapse; font-size:10.5px;">
+      <table style="width:100%; border-collapse:collapse; font-size:10px;">
         <thead>
           <tr style="background:#16191d; color:#fff;">
             ${colunas.map(c => `<th style="padding:6px; text-align:left;">${c}</th>`).join('')}
@@ -5820,7 +6375,6 @@ self.addEventListener('fetch', (event) => {
               nome,
               nomeCompleto: nome,
               dependentes: [],
-              transporte: "proprio",
               confirmado: false,
               biometriaAtiva: false,
               tel1: cols.length > 3 ? cols[3].replace(/['"\D]/g, '') : "",
