@@ -11,7 +11,7 @@
   <meta property="og:description" content="Plataforma oficial de inscrição, presença e carnê digital do Encontro dos Varões.">
   <meta property="og:image" content="./banner.png">
 
-  <link id="pwa-manifest-link" rel="manifest" href="">
+  <link id="pwa-manifest-link" rel="manifest" href="./manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -639,6 +639,26 @@
     }
     .encouragement-banner strong { color: var(--bronze); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
 
+    /* Banner de Sugestão de Comprovante Recebido via Compartilhamento */
+    .share-suggestion-banner {
+      background: #eff6ff;
+      border: 1px solid #93c5fd;
+      border-left: 4px solid var(--blue);
+      color: #1e3a8a;
+      border-radius: 6px;
+      padding: 11px 14px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      text-align: left;
+    }
+    .share-suggestion-banner strong {
+      display: block;
+      font-size: 12px;
+      color: var(--blue);
+      margin-bottom: 2px;
+    }
+
     /* Alerta Inteligente de Prazo */
     .deadline-alert-box {
       border-radius: 6px;
@@ -962,7 +982,7 @@
 <!-- Cabeçalho Espartano -->
 <div class="hero-header">
   <div class="hero-top-actions">
-    <button class="btn-install-pwa" id="btn-instalar-pwa" style="display:none;" onclick="instalarAplicativoPWA()">📲 Instalar App</button>
+    <button class="btn-install-pwa" id="btn-instalar-pwa" onclick="instalarAplicativoPWA()">📲 Instalar App</button>
     <button class="btn-lider" onclick="abrirLogin()">🔒 Liderança</button>
   </div>
 
@@ -1059,7 +1079,7 @@
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-auditoria', this)">🔍 Comprovantes & Caixa <span class="tab-badge-count" id="badge-pendentes-audit" style="display:none;">0</span></button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-portaria', this)">🚪 Portaria / Check-in</button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Inscrito</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & Local</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & App</button>
       <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança</button>
     </div>
 
@@ -1207,7 +1227,7 @@
       </div>
     </div>
 
-    <!-- ABA 5: CONFIGURAÇÕES, LOCAL E REAPROVEITAMENTO ANUAL -->
+    <!-- ABA 5: CONFIGURAÇÕES, LOCAL, PWA & REAPROVEITAMENTO ANUAL -->
     <div class="admin-tab-panel" id="tab-config">
       <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Local, Prazos & Reaproveitamento Anual</h4>
       <div class="btn-row">
@@ -1310,6 +1330,18 @@
       <textarea id="msg-padrao" rows="4"></textarea>
 
       <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Configurações da Edição</button>
+
+      <!-- Gerador de Arquivos PWA para Compartilhamento Nativo do Banco -->
+      <div style="margin-top: 18px; padding: 14px; background: #eff6ff; border: 1px solid #93c5fd; border-radius: 6px; text-align: left;">
+        <strong style="font-size: 12.5px; color: var(--blue); display: block; margin-bottom: 4px;">📲 Ativar Compartilhamento Direto do App do Banco (Web Share Target)</strong>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.4;">
+          Para que o celular mostre o <strong>Benditos</strong> na janela de <em>"Compartilhar Comprovante"</em> do Nubank, Itaú ou Caixa após instalar o app, salve os 2 arquivos abaixo na mesma pasta do <code>index.html</code> no seu servidor (GitHub Pages):
+        </p>
+        <div class="btn-row" style="margin-bottom: 0;">
+          <button type="button" class="primary-btn" style="font-size: 11.5px; padding: 9px;" onclick="baixarArquivoManifestJSON()">⬇️ Baixar manifest.json</button>
+          <button type="button" class="primary-btn" style="font-size: 11.5px; padding: 9px;" onclick="baixarArquivoServiceWorkerJS()">⬇️ Baixar sw.js</button>
+        </div>
+      </div>
 
       <div id="zona-nova-edicao" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson);">
         <p style="font-size:12px; color:var(--crimson); margin:0 0 8px 0; font-weight:700;">⚠️ Zona de Transição de Ano (Exclusivo Líder Alfa / Analista):</p>
@@ -1657,6 +1689,10 @@
     
     <!-- Passo 1: Autenticação -->
     <div id="step-auth-membro">
+      <div id="auth-login-share-alert" class="share-suggestion-banner" style="display:none;">
+        <strong>📲 Comprovante Recebido do Banco!</strong>
+        <span>Entre com seu WhatsApp e senha de 4 dígitos (ou impressão digital) abaixo para vincular automaticamente o recibo à sua próxima cota.</span>
+      </div>
       <input type="text" id="auth-membro-tel" placeholder="Seu WhatsApp cadastrado (Com DDD)">
       <input type="password" id="auth-membro-codigo" maxlength="4" inputmode="numeric" placeholder="Sua Senha de 4 dígitos" style="letter-spacing:3px; font-weight:700;">
       <div style="text-align: right; margin-bottom: 10px;">
@@ -1681,6 +1717,12 @@
         </div>
       </div>
       <input type="hidden" id="auth-casal-id">
+
+      <!-- Banner de Sugestão quando um comprovante é compartilhado pelo app do banco -->
+      <div id="auth-share-suggestion-banner" class="share-suggestion-banner" style="display:none; margin-top:10px;">
+        <strong>📲 Comprovante Recebido! Sugestão de Vínculo Automático:</strong>
+        <span id="auth-share-suggestion-txt">Anexamos o comprovante recebido à cota selecionada abaixo. Confira e toque em "Confirmar Pagamento".</span>
+      </div>
 
       <!-- Botão Credencial VIP (Quando 100% quitado) -->
       <div id="auth-box-credencial-vip" style="display:none; margin-top:10px;">
@@ -1766,9 +1808,9 @@
           </div>
           
           <div style="border-top:1px dashed #86efac; padding-top:10px;">
-            <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem ou Print):</label>
+            <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem, Print ou Compartilhado do Banco):</label>
             <small style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:6px;">
-              💡 Dica: Seu acesso fica salvo ao abrir o app do banco. Ao voltar, toque em <strong>Colar Print</strong> ou selecione na galeria.
+              💡 Dica: No app do banco, toque em <strong>Compartilhar Comprovante → Benditos</strong> (se instalado) ou volte aqui e toque em <strong>Colar Print</strong> / <strong>Galeria</strong>.
             </small>
             <div class="upload-smart-actions">
               <button type="button" class="btn-upload-gallery" onclick="document.getElementById('auth-comprovante-file').click()">🖼️ Galeria / Foto</button>
@@ -2007,8 +2049,9 @@
   let cacheComprovantes = {};
   let ultimoIdxIncentivo = -1;
 
-  // Armazena o comprovante pronto (via Galeria, PDF ou Colar Print) antes de salvar
+  // Armazena o comprovante pronto (via Compartilhamento Nativo, Galeria, PDF ou Colar Print)
   let anexoTemporario = { reg: null, auth: null };
+  let comprovanteRecebidoViaShare = false;
 
   let configuracoes = {
     tituloEvento: "BENDITOS",
@@ -2061,34 +2104,142 @@
   // ==========================================
   // PWA & COMPARTILHAMENTO NATIVO (WEB SHARE TARGET)
   // ==========================================
-  function configurarManifestoPWA() {
-    try {
-      const baseUrl = window.location.href.split('?')[0].split('#')[0];
-      const manifest = {
-        name: `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'} — IBAC`,
-        short_name: `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'}`,
-        start_url: baseUrl,
-        display: "standalone",
-        background_color: "#16191d",
-        theme_color: "#16191d",
-        share_target: {
-          action: `${baseUrl}?share_target=1`,
-          method: "POST",
-          enctype: "multipart/form-data",
-          params: {
-            title: "title",
-            text: "text",
-            files: [{
+  function gerarConteudoManifestJSON() {
+    const titulo = `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'}`;
+    return JSON.stringify({
+      name: `${titulo} — Encontro dos Varões | IBAC`,
+      short_name: titulo,
+      start_url: "./index.html",
+      scope: "./",
+      display: "standalone",
+      background_color: "#16191d",
+      theme_color: "#16191d",
+      icons: [
+        {
+          src: "./banner.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable"
+        }
+      ],
+      share_target: {
+        action: "./index.html?share_target=1",
+        method: "POST",
+        enctype: "multipart/form-data",
+        params: {
+          title: "title",
+          text: "text",
+          files: [
+            {
               name: "comprovante",
               accept: ["image/*", "application/pdf"]
-            }]
-          }
+            }
+          ]
         }
-      };
-      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-      const link = document.getElementById("pwa-manifest-link");
-      if (link) link.href = URL.createObjectURL(blob);
+      }
+    }, null, 2);
+  }
+
+  function gerarConteudoServiceWorkerJS() {
+    return `const SHARE_CACHE = 'benditos-share-cache-v1';
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  if (event.request.method === 'POST' && url.searchParams.has('share_target')) {
+    event.respondWith((async () => {
+      try {
+        const formData = await event.request.formData();
+        const file = formData.get('comprovante');
+        if (file) {
+          const cache = await caches.open(SHARE_CACHE);
+          const headers = new Headers({
+            'Content-Type': file.type || 'image/jpeg',
+            'X-File-Name': encodeURIComponent(file.name || 'comprovante_banco.jpg')
+          });
+          await cache.put('/shared-comprovante', new Response(file, { headers }));
+        }
+      } catch (err) {
+        console.error('Erro ao processar comprovante compartilhado:', err);
+      }
+      return Response.redirect('./index.html?shared=1', 303);
+    })());
+  }
+});
+`;
+  }
+
+  function inicializarPWAEServiceWorker() {
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+      navigator.serviceWorker.register('./sw.js').catch(() => {
+        // Caso sw.js ainda não tenha sido colocado na raiz, usa manifest dinâmico como fallback
+        try {
+          const blob = new Blob([gerarConteudoManifestJSON()], { type: 'application/manifest+json' });
+          const link = document.getElementById("pwa-manifest-link");
+          if (link) link.href = URL.createObjectURL(blob);
+        } catch (e) {}
+      });
+    }
+  }
+
+  window.baixarArquivoManifestJSON = function() {
+    const blob = new Blob([gerarConteudoManifestJSON()], { type: 'application/manifest+json' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "manifest.json";
+    link.click();
+  };
+
+  window.baixarArquivoServiceWorkerJS = function() {
+    const blob = new Blob([gerarConteudoServiceWorkerJS()], { type: 'application/javascript' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "sw.js";
+    link.click();
+  };
+
+  async function verificarComprovanteCompartilhadoRecebido() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('shared') !== '1') return false;
+
+    try {
+      window.history.replaceState({}, document.title, window.location.pathname);
     } catch (e) {}
+
+    if (!('caches' in window)) return false;
+
+    try {
+      const cache = await caches.open('benditos-share-cache-v1');
+      const response = await cache.match('/shared-comprovante');
+      if (!response) return false;
+
+      const blob = await response.blob();
+      const rawName = response.headers.get('X-File-Name');
+      const fileName = rawName ? decodeURIComponent(rawName) : 'comprovante_compartilhado.jpg';
+      const file = new File([blob], fileName, { type: blob.type || 'image/jpeg' });
+
+      await cache.delete('/shared-comprovante');
+
+      const base64 = await processarComprovanteOtimizado(file);
+      if (base64) {
+        anexoTemporario.auth = {
+          base64,
+          nome: `📲 Compartilhado: ${fileName}`
+        };
+        comprovanteRecebidoViaShare = true;
+        return true;
+      }
+    } catch (err) {
+      console.warn("Falha ao recuperar comprovante do cache:", err);
+    }
+    return false;
   }
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -2107,7 +2258,7 @@
       }
       deferredInstallPrompt = null;
     } else {
-      alert("Para instalar o atalho no celular:\n\n• Android (Chrome): Toque nos 3 pontinhos (⋮) no canto superior e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n• iPhone (Safari): Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha 'Adicionar à Tela de Início'.");
+      alert("Para instalar o atalho no celular:\n\n• Android (Chrome): Toque nos 3 pontinhos (⋮) no canto superior e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'. Assim o Benditos aparecerá na lista de 'Compartilhar' do seu banco!\n• iPhone (Safari): Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha 'Adicionar à Tela de Início'.");
     }
   };
 
@@ -2133,28 +2284,47 @@
     } catch (e) {}
   }
 
-  function verificarRetornoSessaoMembro() {
+  function obterSessaoMembroAtiva() {
     try {
       const raw = sessionStorage.getItem("benditos_membro_sessao") || localStorage.getItem("benditos_membro_sessao_recente");
-      if (!raw) return;
+      if (!raw) return null;
       const sessao = JSON.parse(raw);
-      // Mantém sessão ativa por até 30 minutos para facilitar ir no app do banco e voltar
-      if (!sessao || !sessao.varaoId || (Date.now() - sessao.timestamp > 30 * 60 * 1000)) {
+      // Mantém sessão ativa por até 45 minutos para facilitar ir no app do banco e voltar
+      if (!sessao || !sessao.varaoId || (Date.now() - sessao.timestamp > 45 * 60 * 1000)) {
         limparSessaoMembroLocal();
-        return;
+        return null;
       }
+      return sessao;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function verificarRetornoSessaoMembro(forcarPorShare = false) {
+    const sessao = obterSessaoMembroAtiva();
+    if (sessao) {
       const v = varoes.find(x => x.id === sessao.varaoId);
       if (v) {
         document.getElementById("modal-auto-atualizacao").classList.add("active");
         abrirPainelPrivadoCarne(v, sessao.cotasSel || []);
+        return;
       }
-    } catch (e) {}
+    }
+
+    if (forcarPorShare && comprovanteRecebidoViaShare) {
+      document.getElementById("modal-auto-atualizacao").classList.add("active");
+      document.getElementById("step-auth-membro").style.display = "block";
+      document.getElementById("step-update-membro").style.display = "none";
+      const alertLogin = document.getElementById("auth-login-share-alert");
+      if (alertLogin) alertLogin.style.display = "block";
+    }
   }
 
   window.encerrarSessaoMembro = function() {
     limparSessaoMembroLocal();
     cotasSelecionadasMembro = [];
     anexoTemporario.auth = null;
+    comprovanteRecebidoViaShare = false;
     document.getElementById("step-update-membro").style.display = "none";
     document.getElementById("step-auth-membro").style.display = "block";
   };
@@ -2255,6 +2425,7 @@
       if (v && cotasSelecionadasMembro.length > 0) {
         valor = cotasSelecionadasMembro.length * obterValorParcelaInscricao(v);
         txid = `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`;
+        salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
       }
     } else if (prefixo === "reg") {
       const qtd = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
@@ -2266,7 +2437,7 @@
 
     const payload = gerarPayloadPixEMV(valor, txid) || configuracoes.chavePix;
     navigator.clipboard.writeText(payload).then(() => {
-      alert(`✅ Código Pix Copia e Cola copiado${valor > 0 ? ` no valor exato de R$ ${valor.toFixed(2).replace('.', ',')}` : ''}!\n\nAbra o app do seu banco e cole na opção Pix Copia e Cola.`);
+      alert(`✅ Código Pix Copia e Cola copiado${valor > 0 ? ` no valor exato de R$ ${valor.toFixed(2).replace('.', ',')}` : ''}!\n\nAbra o app do seu banco para pagar. Depois, basta compartilhar o comprovante com o Benditos ou voltar aqui para anexar!`);
     }).catch(() => {
       prompt("Copie o código Pix abaixo:", payload);
     });
@@ -2324,6 +2495,11 @@
 
   window.limparComprovanteAnexado = function(prefixo) {
     anexoTemporario[prefixo] = null;
+    if (prefixo === "auth") {
+      comprovanteRecebidoViaShare = false;
+      const bannerShare = document.getElementById("auth-share-suggestion-banner");
+      if (bannerShare) bannerShare.style.display = "none";
+    }
     const fImg = document.getElementById(`${prefixo}-comprovante-file`);
     const fPdf = document.getElementById(`${prefixo}-comprovante-pdf`);
     if (fImg) fImg.value = "";
@@ -2685,7 +2861,6 @@
     if (Array.isArray(v.dependentes) && v.dependentes.length > 0) {
       return v.dependentes.filter(d => d && d.nome && d.nome.trim() !== "");
     }
-    // Retrocompatibilidade com cadastros antigos de 1 dependente
     if (v.temDependente && v.nomeDependente) {
       return [{ nome: v.nomeDependente, parentesco: v.parentescoDependente || "Dependente" }];
     }
@@ -2736,7 +2911,6 @@
           v.cotas.push({ numero: i, status: "pendente", pago: false, valorPago: 0, dataPagamento: "", forma: "", compId: "" });
         }
       } else if (v.cotas.length > totalCotas) {
-        // Preserva cotas já pagas ou em análise se a liderança reduzir o total de cotas
         v.cotas = v.cotas.filter((c, idx) => idx < totalCotas || c.status === "pago" || c.status === "em_analise");
       }
     }
@@ -2762,7 +2936,6 @@
     }, 0);
   }
 
-  // UI Dinâmica para Múltiplos Dependentes
   window.adicionarCampoDependenteUI = function(prefixo, nomeVal = "", parentescoVal = "Filho") {
     const container = document.getElementById(`${prefixo}-lista-dependentes`);
     if (!container) return;
@@ -3093,6 +3266,9 @@
   // ==========================================
   async function inicializarDados() {
     sortearVersiculoEncorajamento();
+    inicializarPWAEServiceWorker();
+
+    const recebeuShare = await verificarComprovanteCompartilhadoRecebido();
 
     try {
       const res = await fetch(DB_URL);
@@ -3174,7 +3350,6 @@
       }
     }
 
-    configurarManifestoPWA();
     atualizarUIConfiguracoes(true);
     if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
       sortearVersiculoEncorajamento();
@@ -3182,7 +3357,7 @@
     iniciarContagem();
     renderizarLista();
     atualizarAlertaBloqueio();
-    verificarRetornoSessaoMembro();
+    verificarRetornoSessaoMembro(recebeuShare);
     setInterval(sincronizarEmSegundoPlano, 5000);
   }
 
@@ -4245,9 +4420,11 @@
     document.getElementById("auth-membro-codigo").value = "";
     document.getElementById("step-auth-membro").style.display = "block";
     document.getElementById("step-update-membro").style.display = "none";
+    const alertLogin = document.getElementById("auth-login-share-alert");
+    if (alertLogin) alertLogin.style.display = comprovanteRecebidoViaShare ? "block" : "none";
     cotasSelecionadasMembro = [];
     document.getElementById("modal-auto-atualizacao").classList.add("active");
-    verificarRetornoSessaoMembro();
+    verificarRetornoSessaoMembro(false);
   };
 
   window.esqueciSenhaMembro = function() {
@@ -4274,18 +4451,58 @@
   };
 
   function abrirPainelPrivadoCarne(v, cotasPreSelecionadas = []) {
-    cotasSelecionadasMembro = Array.isArray(cotasPreSelecionadas) ? [...cotasPreSelecionadas] : [];
+    const cotas = garantirEstruturaCotas(v);
+    let selecaoInicial = Array.isArray(cotasPreSelecionadas)
+      ? cotasPreSelecionadas.filter(num => {
+          const c = cotas.find(item => item.numero === num);
+          return c && c.status !== "pago" && !c.pago && c.status !== "em_analise";
+        })
+      : [];
+
+    // Se recebeu um comprovante compartilhado do app do banco e nenhuma cota estava selecionada,
+    // seleciona automaticamente a próxima cota pendente para sugerir o vínculo imediato!
+    if ((comprovanteRecebidoViaShare || anexoTemporario.auth) && selecaoInicial.length === 0) {
+      const proximaPendente = cotas.find(c => c.status !== "pago" && !c.pago && c.status !== "em_analise");
+      if (proximaPendente) {
+        selecaoInicial = [proximaPendente.numero];
+      }
+    }
+
+    cotasSelecionadasMembro = selecaoInicial;
     salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
 
     document.getElementById("auth-casal-id").value = v.id;
     document.getElementById("auth-data-previsao").value = v.previsaoPagamento || "";
     document.getElementById("auth-nova-senha-pin").value = "";
-    document.getElementById("auth-forma-pagamento").value = (v.formaPagamento && v.formaPagamento !== 'indefinido') ? v.formaPagamento : "pix";
+    document.getElementById("auth-forma-pagamento").value = (comprovanteRecebidoViaShare || anexoTemporario.auth)
+      ? "pix"
+      : ((v.formaPagamento && v.formaPagamento !== 'indefinido') ? v.formaPagamento : "pix");
+
     alternarBoxPix('auth');
+    atualizarPreviewAnexo('auth');
     atualizarIndicadorBiometriaCarne(v);
     atualizarMensagemIncentivo();
 
     renderizarCarnePrivado(v);
+
+    // Exibe banner de sugestão quando há comprovante compartilhado pronto
+    const bannerShare = document.getElementById("auth-share-suggestion-banner");
+    const txtShare = document.getElementById("auth-share-suggestion-txt");
+    if (bannerShare && txtShare) {
+      if (comprovanteRecebidoViaShare && anexoTemporario.auth) {
+        const valParcela = obterValorParcelaInscricao(v);
+        if (cotasSelecionadasMembro.length > 0) {
+          const totalSug = (cotasSelecionadasMembro.length * valParcela).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          const cotasStr = cotasSelecionadasMembro.map(n => `Cota ${String(n).padStart(2, '0')}`).join(', ');
+          txtShare.innerText = `Anexamos o comprovante recebido do banco e sugerimos vinculá-lo à ${cotasStr} (R$ ${totalSug}). Confira abaixo e toque em "Confirmar Pagamento".`;
+        } else {
+          txtShare.innerText = `Comprovante recebido do banco! Todas as suas cotas já foram quitadas ou enviadas para conferência.`;
+        }
+        bannerShare.style.display = "block";
+      } else {
+        bannerShare.style.display = "none";
+      }
+    }
 
     document.getElementById("step-auth-membro").style.display = "none";
     document.getElementById("step-update-membro").style.display = "block";
@@ -4316,7 +4533,6 @@
       document.getElementById("auth-dep-info").innerText = "👤 Inscrição Individual (1 pessoa)";
     }
 
-    // Credencial VIP se 100% quitado
     const boxCred = document.getElementById("auth-box-credencial-vip");
     if (boxCred) boxCred.style.display = (pagas >= totalCotas) ? "block" : "none";
 
@@ -4438,7 +4654,7 @@
     const forma = document.getElementById("auth-forma-pagamento").value;
 
     if (forma === "pix" && !anexoTemporario.auth) {
-      return alert("Anexe ou cole o print do comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
+      return alert("Anexe, compartilhe pelo banco ou cole o print do comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
     }
 
     const btn = document.getElementById("btn-confirmar-cotas-membro");
@@ -4719,7 +4935,6 @@
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
     v.transporte = document.getElementById("edit-transporte").value;
     v.dependentes = dependentes;
-    // Limpa campos legados para manter estrutura unificada
     delete v.temDependente;
     delete v.nomeDependente;
     delete v.parentescoDependente;
@@ -4957,6 +5172,19 @@
       await salvarNoBanco();
       renderizarTabelaLideres();
     }
+  };
+
+  window.salvarEdicaoCredencial = async function() {
+    const orig = document.getElementById("edit-lider-original").value;
+    const novoNome = document.getElementById("edit-lider-nome").value.trim();
+    const novaSenha = document.getElementById("edit-lider-senha").value.trim();
+    const l = lideres.find(x => x.nome === orig);
+    if (!l) return;
+    if (novoNome) l.nome = novoNome;
+    if (novaSenha && novaSenha.length >= 4) l.senha = novaSenha;
+    await salvarNoBanco();
+    fecharModal("modal-editar-credencial");
+    renderizarTabelaLideres();
   };
 
   // ==========================================
