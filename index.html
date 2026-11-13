@@ -302,11 +302,11 @@
     }
     .admin-tab-btn {
       flex: 1;
-      min-width: 130px;
+      min-width: 140px;
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 14px 10px;
+      padding: 14px 12px;
       font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
@@ -502,28 +502,6 @@
       color: var(--iron);
       border: 1px solid var(--border);
     }
-
-    /* ================= PORTARIA / CHECK-IN ================= */
-    .checkin-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .checkin-status-pill {
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .checkin-ok { background: var(--green-bg); color: var(--green); border: 1px solid #86efac; }
-    .checkin-debt { background: var(--crimson-bg); color: var(--crimson); border: 1px solid #f5c2c2; }
 
     /* ================= BUSCA, FILTROS E PAGINAÇÃO ================= */
     .search-filter-box { padding: 18px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
@@ -1384,12 +1362,9 @@
     <div class="dash-header-top">
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
         <h2 style="margin:0; font-family:'Cinzel', serif; font-size:18px; color:var(--bronze);">⚔️ Comando Administrativo</h2>
-        <div class="sync-status"><div class="sync-dot"></div> Nuvem Ativa</div>
+        <div class="sync-status"><div class="sync-dot"></div> Sincronização Automática</div>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <button type="button" onclick="sincronizarManualAdmin()" style="background:rgba(255,255,255,0.08); color:#f8fafc; border:1px solid rgba(184,125,75,0.5); padding:5px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Buscar atualizações da nuvem">🔄 Atualizar Dados</button>
-        <span id="badge-cargo-painel" style="display:none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;"></span>
-      </div>
+      <span id="badge-cargo-painel" style="display:none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;"></span>
     </div>
 
     <!-- BARRA DE BIOMETRIA DA LIDERANÇA NO PAINEL -->
@@ -1416,9 +1391,8 @@
       <button class="admin-tab-btn active" onclick="trocarAbaAdmin('tab-visao', this)">📊 Visão Geral</button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-comprovantes', this)">📎 Comprovantes <span class="tab-badge-count" id="badge-pendentes-audit" style="display:none;">0</span></button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-despesas', this)">💸 Despesas & Caixa</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-portaria', this)">🚪 Portaria</button>
       <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Inscrito</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & Local</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Gerenciar Evento</button>
       <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança</button>
     </div>
 
@@ -1456,7 +1430,7 @@
         <div class="dash-card alert">
           <h4 id="dash-falta">R$ 0</h4>
           <p>Falta Arrecadar</p>
-          <small id="dash-em-analise-sub">Em análise: R$ 0</small>
+          <small id="dash-em-analise-sub">Em conferência: R$ 0</small>
         </div>
         <div class="dash-card net">
           <h4 id="dash-saldo-liquido">R$ 0</h4>
@@ -1540,7 +1514,7 @@
         <div class="dash-card alert">
           <h4 id="desp-card-saidas">R$ 0,00</h4>
           <p>Saídas (Despesas Pagas)</p>
-          <small id="desp-card-previstas">Previsto a pagar: R$ 0,00</small>
+          <small id="desp-card-previstas">A pagar: R$ 0,00</small>
         </div>
         <div class="dash-card net">
           <h4 id="desp-card-saldo">R$ 0,00</h4>
@@ -1630,24 +1604,7 @@
       </div>
     </div>
 
-    <!-- ABA 4: PORTARIA / CHECK-IN NO DIA DO EVENTO -->
-    <div class="admin-tab-panel" id="tab-portaria">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-        <div>
-          <h4 style="margin:0; color:var(--iron);">🚪 Modo Portaria / Recepção</h4>
-          <small style="color:var(--text-muted);">Busque pelo nome ou código para conferir quitação, dependentes e dar check-in rápido.</small>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <button type="button" class="btn-mini-export pdf" onclick="exportarRelatorioPDF('portaria')">📄 Portaria - PDF</button>
-          <button type="button" class="btn-mini-export xls" onclick="exportarCSVModulo('portaria')">📊 Portaria - EXCEL</button>
-          <span id="portaria-resumo-pill" style="background:var(--iron); color:var(--bronze); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700;">0 / 0 Presentes</span>
-        </div>
-      </div>
-      <input type="text" id="portaria-busca-input" class="search-box-input" placeholder="🔍 Digitar nome do varão, dependente ou código..." oninput="renderizarPortaria()" style="margin-bottom:14px;">
-      <div id="lista-portaria-checkin"></div>
-    </div>
-
-    <!-- ABA 5: ADICIONAR / IMPORTAR -->
+    <!-- ABA 4: ADICIONAR / IMPORTAR -->
     <div class="admin-tab-panel" id="tab-cadastrar">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Varão (com ou sem Dependentes)</h4>
       <input type="text" id="add-nome" placeholder="Nome Completo do Titular (Ex: JOÃO CARLOS DA SILVA)">
@@ -1678,9 +1635,9 @@
       </div>
     </div>
 
-    <!-- ABA 6: CONFIGURAÇÕES, LOCAL & REAPROVEITAMENTO ANUAL -->
+    <!-- ABA 5: GERENCIAMENTO DE INFORMAÇÕES DO EVENTO -->
     <div class="admin-tab-panel" id="tab-config">
-      <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Local, Prazos & Reaproveitamento Anual</h4>
+      <h4 style="margin-top:0; color:var(--iron);">Gerenciamento de Informações & Regras do Evento</h4>
       <div class="btn-row">
         <div style="flex: 2;">
           <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Nome do Evento:</label>
@@ -1783,7 +1740,7 @@
       <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Mensagem Padrão WhatsApp — Tags: <code>{nome}</code>, <code>{evento}</code>, <code>{ano}</code>, <code>{pagas}</code>, <code>{total_cotas}</code>, <code>{pago_valor}</code>, <code>{restante}</code>, <code>{codigo}</code>:</label>
       <textarea id="msg-padrao" rows="4"></textarea>
 
-      <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Configurações da Edição</button>
+      <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Informações do Evento</button>
 
       <div id="zona-nova-edicao" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson);">
         <p style="font-size:12px; color:var(--crimson); margin:0 0 8px 0; font-weight:700;">⚠️ Zona de Transição de Ano (Exclusivo Líder Alfa / Analista):</p>
@@ -1791,7 +1748,7 @@
       </div>
     </div>
 
-    <!-- ABA 7: CONTROLE DE ACESSOS -->
+    <!-- ABA 6: CONTROLE DE ACESSOS -->
     <div class="admin-tab-panel" id="tab-alfa">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Perfil de Liderança</h4>
       <div class="btn-row">
@@ -1851,7 +1808,7 @@
       </select>
       <select id="filtro-pagamento" onchange="irParaPagina(1)">
         <option value="todos">Cotas: Todos</option>
-        <option value="quitados">Quitados (100%)</option>
+        <option value="quitados">Quitados e Liberados (100%)</option>
         <option value="andamento">Em Andamento</option>
         <option value="nao-iniciados">Não Iniciados (0%)</option>
         <option value="em-analise">⏳ Com Pagamento em Conferência</option>
@@ -2315,7 +2272,7 @@
           <span style="font-size:10px; letter-spacing:2px; color:var(--bronze); font-weight:700; text-transform:uppercase;" id="cred-subtitulo">IBAC • ENCONTRO DOS VARÕES</span>
           <h4 style="margin:2px 0 0 0; font-family:'Cinzel', serif; font-size:20px; color:#fff;" id="cred-evento-titulo">BENDITOS 2027</h4>
         </div>
-        <span class="credencial-stamp">✅ QUITADO</span>
+        <span class="credencial-stamp">✅ CONFIRMADO E LIBERADO</span>
       </div>
       <div style="margin-bottom:10px;">
         <small style="font-size:10px; color:#94a3b8; text-transform:uppercase;">Participante Titular</small>
@@ -2332,7 +2289,7 @@
         </div>
         <div>
           <span style="color:#94a3b8; display:block; font-size:10px;">SITUAÇÃO</span>
-          <strong style="color:#6ee7b7;">Acesso Liberado</strong>
+          <strong style="color:#6ee7b7;">100% Quitado</strong>
         </div>
         <div>
           <span style="color:#94a3b8; display:block; font-size:10px;">CÓDIGO</span>
@@ -2606,7 +2563,6 @@
           window.open(urlRota, "_blank", "noopener,noreferrer");
         },
         () => {
-          // Caso o usuário negue GPS ou esteja sem sinal, abre Google Maps já com o destino preenchido
           const urlFallback = `https://www.google.com/maps/dir/?api=1&destination=${destEncoded}&travelmode=driving`;
           window.open(urlFallback, "_blank", "noopener,noreferrer");
         },
@@ -3394,7 +3350,13 @@
     const valorFalta = restantes * valIndiv;
 
     if (pagas >= totalCotas) {
-      return { status: "quitado", alerta: false, mensagem: "🏆 Parabéns! Todas as cotas estão 100% quitadas." };
+      return {
+        status: "quitado",
+        alerta: false,
+        mensagem: v.confirmado
+          ? "🏆 Confirmado e Liberado! Todas as cotas estão 100% quitadas."
+          : "🏆 Todas as cotas estão 100% quitadas."
+      };
     }
     if (restantes === 0 && emAnalise > 0) {
       return { status: "no-prazo", alerta: false, mensagem: "⏳ Todas as cotas já foram enviadas e estão em conferência pela liderança." };
@@ -3652,7 +3614,7 @@
   }
 
   // ==========================================
-  // INICIALIZAÇÃO E SINCRONIZAÇÃO FIREBASE
+  // INICIALIZAÇÃO E SINCRONIZAÇÃO AUTOMÁTICA EM TEMPO REAL
   // ==========================================
   async function inicializarDados() {
     sortearVersiculoEncorajamento();
@@ -3739,7 +3701,7 @@
     renderizarLista();
     atualizarAlertaBloqueio();
     verificarRetornoSessaoMembro(recebeuShare);
-    setInterval(sincronizarEmSegundoPlano, 6000);
+    setInterval(sincronizarEmSegundoPlano, 5000);
   }
 
   async function salvarNoBanco() {
@@ -3759,8 +3721,10 @@
     }
   }
 
+  // Sincronização automática contínua (tanto na tela pública quanto no painel da liderança),
+  // pausando apenas enquanto o usuário digita em algum campo ou interage com um modal.
   async function sincronizarEmSegundoPlano() {
-    if (emProcessamentoNuvem || isLider || isAnalista) return;
+    if (emProcessamentoNuvem) return;
     const modaisAbertos = document.querySelectorAll('.modal.active');
     const focoEmCampo = document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
     if (modaisAbertos.length > 0 || focoEmCampo) return;
@@ -3784,37 +3748,26 @@
         if (dados.lideres) lideres = dados.lideres;
         if (Array.isArray(dados.despesas)) despesas = dados.despesas;
         configuracoes = dados.configuracoes || configuracoes;
+
         atualizarElementosVisuaisConfig();
         renderizarLista();
         atualizarAlertaBloqueio();
+
+        if (isLider || isAnalista) {
+          atualizarDashboard();
+          if (document.getElementById('tab-comprovantes')?.classList.contains('active')) {
+            renderizarCentralComprovantes();
+          }
+          if (document.getElementById('tab-despesas')?.classList.contains('active')) {
+            renderizarListaDespesas();
+          }
+          if ((isAlfa || isAnalista) && document.getElementById('tab-alfa')?.classList.contains('active')) {
+            renderizarTabelaLideres();
+          }
+        }
       }
     } catch (e) {}
   }
-
-  window.sincronizarManualAdmin = async function() {
-    if (emProcessamentoNuvem) return;
-    try {
-      const res = await fetch(DB_URL);
-      const dados = await res.json();
-      if (!dados || !dados.varoes) return;
-      varoes = dados.varoes;
-      varoes.forEach(v => garantirEstruturaCotas(v));
-      if (dados.lideres) lideres = dados.lideres;
-      if (Array.isArray(dados.despesas)) despesas = dados.despesas;
-      if (dados.configuracoes) configuracoes = { ...configuracoes, ...dados.configuracoes };
-
-      preencherInputsConfiguracoes();
-      atualizarElementosVisuaisConfig();
-      renderizarLista();
-      renderizarCentralComprovantes();
-      renderizarListaDespesas();
-      atualizarAlertaBloqueio();
-      if (isAlfa || isAnalista) renderizarTabelaLideres();
-      alert("✅ Dados sincronizados com a nuvem!");
-    } catch (e) {
-      alert("Não foi possível atualizar agora. Verifique sua conexão.");
-    }
-  };
 
   function preencherInputsConfiguracoes() {
     function setVal(id, val) {
@@ -3941,7 +3894,7 @@
     sortearVersiculoEncorajamento();
     iniciarContagem();
     renderizarLista();
-    alert("Configurações da edição salvas com sucesso!");
+    alert("Informações do evento salvas com sucesso!");
   };
 
   window.iniciarNovaEdicaoAnual = async function() {
@@ -3979,7 +3932,6 @@
     document.getElementById(tabId).classList.add('active');
     if (tabId === 'tab-comprovantes') renderizarCentralComprovantes();
     if (tabId === 'tab-despesas') renderizarListaDespesas();
-    if (tabId === 'tab-portaria') renderizarPortaria();
     if (tabId === 'tab-config') preencherInputsConfiguracoes();
   };
 
@@ -4119,6 +4071,7 @@
       const ehBispo = v.nome.includes("BISPO") || v.nome.includes("JADER");
       const avalPrazo = avaliarStatusPrazo(v);
       const iniciais = obterIniciais(v.nome);
+      const totalmenteLiberado = v.confirmado && (pagasIndiv >= totalCotasIndiv);
 
       const temTelefone = (v.tel1 && v.tel1.replace(/\D/g, '').length >= 10) || (v.tel2 && v.tel2.replace(/\D/g, '').length >= 10);
       const classZap = temTelefone ? "btn-icon btn-zap ativo" : "btn-icon btn-zap inativo";
@@ -4151,7 +4104,7 @@
 
         let badgePrazoHtml = avalPrazo.alerta
           ? `<span class="badge-atraso">${esc(avalPrazo.titulo)}</span>`
-          : `<span class="badge-em-dia">${avalPrazo.status === 'quitado' ? '🏆 Quitado' : '✅ No Prazo'}</span>`;
+          : `<span class="badge-em-dia">${totalmenteLiberado ? '🏆 Confirmado e Liberado' : (avalPrazo.status === 'quitado' ? '🏆 Quitado' : '✅ No Prazo')}</span>`;
 
         let badgeAnalise = emAnalise > 0 ? `<span class="badge-analise-tag">⏳ ${emAnalise} pendente(s)</span>` : '';
         let badgePrev = v.previsaoPagamento ? `<span class="badge-previsao">📅 Prev: ${formatarDataBR(v.previsaoPagamento)}</span>` : '';
@@ -4180,7 +4133,6 @@
         html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
         if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
       } else {
-        // Visão Pública Limpa (Sem "Carro Próprio")
         const vagasTxt = qtdPessoas > 1 ? `👥 ${qtdPessoas} Vagas` : `👤 1 Vaga`;
         html += `<div class="casal-public-meta">
                    <span class="pub-id-tag">#${String(v.id).padStart(3, '0')}</span>
@@ -4191,7 +4143,7 @@
         if (v.confirmado) {
           html += `<div class="item-center-status">
                      <span class="center-connector-line"></span>
-                     <span class="journey-status-chip confirmed"><span class="status-pulse-dot"></span> Presença Confirmada</span>
+                     <span class="journey-status-chip confirmed"><span class="status-pulse-dot"></span> ${totalmenteLiberado ? 'Confirmado & Liberado' : 'Presença Confirmada'}</span>
                      <span class="center-connector-line"></span>
                    </div>`;
         } else {
@@ -4376,7 +4328,6 @@
     document.getElementById("dash-saldo-liquido").innerText = `R$ ${saldoLiquido.toLocaleString('pt-BR')}`;
     document.getElementById("dash-despesas-sub").innerText = `Despesas: R$ ${totalDespesasPagas.toLocaleString('pt-BR')}`;
 
-    // Atualiza cards da aba Despesas & Caixa
     const elDespEnt = document.getElementById("desp-card-entradas");
     const elDespSai = document.getElementById("desp-card-saidas");
     const elDespPrev = document.getElementById("desp-card-previstas");
@@ -4787,69 +4738,6 @@
     renderizarListaDespesas();
   };
 
-  // --- MODO PORTARIA / CHECK-IN ---
-  window.renderizarPortaria = function() {
-    const container = document.getElementById("lista-portaria-checkin");
-    const termo = (document.getElementById("portaria-busca-input")?.value || "").toLowerCase();
-    if (!container) return;
-
-    let totalPessoas = 0;
-    let presentesPessoas = 0;
-    varoes.forEach(v => {
-      const qp = obterQtdPessoas(v);
-      totalPessoas += qp;
-      if (v.confirmado) presentesPessoas += qp;
-    });
-    document.getElementById("portaria-resumo-pill").innerText = `${presentesPessoas} / ${totalPessoas} Pessoas Presentes`;
-
-    const filtrados = varoes.filter(v => {
-      const deps = obterDependentes(v).map(d => d.nome).join(" ");
-      return `${v.nome} ${deps} ${v.id}`.toLowerCase().includes(termo);
-    }).sort((a, b) => a.nome.localeCompare(b.nome));
-
-    container.innerHTML = "";
-    filtrados.forEach(v => {
-      const totalCotasIndiv = obterTodasCotasIndividuais(v).length;
-      const pagasIndiv = contarCotasIndividuaisPagas(v);
-      const valTotal = obterValorTotalInscricao(v);
-      const valPago = calcularValorArrecadadoInscricao(v);
-      const falta = Math.max(0, valTotal - valPago);
-      const deps = obterDependentes(v);
-      const depsTxt = deps.length > 0 ? `<div style="font-size:12px; color:var(--bronze-dark); font-weight:600;">👥 Acompanhantes: ${deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(', ')}</div>` : '';
-
-      const card = document.createElement("div");
-      card.className = "checkin-card";
-      card.innerHTML = `
-        <div style="flex:1; min-width:200px;">
-          <strong style="font-size:15px; color:var(--iron);">#${String(v.id).padStart(3, '0')} — ${esc(v.nome)}</strong>
-          ${depsTxt}
-          <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-            ${falta <= 0
-              ? `<span class="checkin-status-pill checkin-ok">✅ 100% Quitado</span>`
-              : `<span class="checkin-status-pill checkin-debt">⚠️ Saldo Pendente: R$ ${falta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagasIndiv}/${totalCotasIndiv})</span>`
-            }
-          </div>
-        </div>
-        <div>
-          <button type="button" class="btn-check ${v.confirmado ? 'confirmed' : ''}" style="min-width:150px; padding:10px 14px;" onclick="toggleCheckinPortaria(${v.id})">
-            <div class="check-box">${v.confirmado ? iconeCheck : ''}</div>
-            ${v.confirmado ? 'Presente (Check-in OK)' : 'Registrar Entrada'}
-          </button>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  };
-
-  window.toggleCheckinPortaria = async function(id) {
-    const v = varoes.find(x => x.id === id);
-    if (!v) return;
-    v.confirmado = !v.confirmado;
-    await salvarNoBanco();
-    renderizarPortaria();
-    renderizarLista();
-  };
-
   // ==========================================
   // AUTO CADASTRO PÚBLICO + TELA PÓS-CADASTRO
   // ==========================================
@@ -5166,7 +5054,6 @@
     cotasSelecionadasMembro = selecaoInicial;
     salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
 
-    // Exibe endereço e rota GPS do encontro na página do membro
     const cardLocal = document.getElementById("auth-local-evento-card");
     if (cardLocal) {
       if (configuracoes.localNome || configuracoes.localEndereco || configuracoes.localDesc || configuracoes.localMaps) {
@@ -6093,8 +5980,8 @@
     let nomeArquivo = `Relatorio_${evNome}_${tipo}_${ano}.csv`;
     let csvContent = "\uFEFFsep=;\r\n";
 
-    if (tipo === 'presenca' || tipo === 'portaria') {
-      nomeArquivo = `${tipo === 'portaria' ? 'Portaria' : 'Participantes'}_${evNome}_${ano}.csv`;
+    if (tipo === 'presenca') {
+      nomeArquivo = `Participantes_${evNome}_${ano}.csv`;
       linhas.push(["ID", "Titular", "Dependentes", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
       varoesFiltrados.forEach(v => {
         const deps = obterDependentes(v);
@@ -6217,7 +6104,6 @@
     const tituloEv = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
     const titulosMap = {
       presenca: "Relatório de Participantes (Físico)",
-      portaria: "Lista Oficial de Portaria / Check-in",
       financeiro: "Relatório Financeiro & Cotas",
       comprovantes: "Relatório de Comprovantes & Recebimentos",
       despesas: "Relatório de Despesas & Fluxo de Caixa",
@@ -6244,7 +6130,7 @@
       <div><strong>Arrecadado:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
     `;
 
-    if (tipo === 'presenca' || tipo === 'portaria') {
+    if (tipo === 'presenca') {
       colunas = ["Nº", "Titular", "Dependentes", "Pessoas", "Presença", "WhatsApp"];
       dadosLinhas = varoesFiltrados.map(v => {
         const qp = obterQtdPessoas(v);
