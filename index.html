@@ -270,7 +270,7 @@
     }
     .btn-outline-bronze:hover { background: var(--bronze); color: var(--iron); }
 
-    .public-actions-bar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .public-actions-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
 
     /* ================= CONTAINER PRINCIPAL ================= */
     .container {
@@ -483,6 +483,32 @@
     .search-box-input { flex: 1; min-width: 220px; padding: 12px 14px; border: 2px solid var(--iron); border-radius: 6px; font-size: 14px; margin-bottom: 0; }
     .page-size-select { width: auto !important; min-width: 130px; padding: 12px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--stone); margin-bottom: 0; font-weight: 600; }
 
+    .public-summary-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fdfbf7;
+      border: 1px solid #e7e2d8;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .public-summary-strip strong { color: var(--iron); }
+    .public-summary-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .pill-stat-pub {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--iron);
+    }
+    .pill-stat-pub.ok { background: var(--green-bg); border-color: #bbf7d0; color: var(--green); }
+
     .filters-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .filters-row select { flex: 1; min-width: 140px; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--stone); margin-bottom: 0; }
 
@@ -516,6 +542,12 @@
 
     /* ================= LISTA DE PARTICIPANTES ================= */
     .list { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .list.public-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
     .item {
       display: flex;
       justify-content: space-between;
@@ -527,12 +559,19 @@
       border-radius: 6px;
       transition: 0.2s;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
     }
-    .item.bispo-destaque { border-left-color: var(--bronze); background: #fdfbf7; }
+    .item.is-confirmed {
+      border-left-color: var(--green);
+      background: #fbfefc;
+    }
+    .item.bispo-destaque {
+      border-left-color: var(--bronze);
+      background: #fdfbf7;
+    }
     .item:hover { border-color: var(--bronze); box-shadow: 0 4px 12px rgba(22, 25, 29, 0.06); }
 
-    .casal-info { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 220px; }
+    .casal-info { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 180px; }
     .casal-nome { font-weight: 700; font-size: 15px; color: var(--iron); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .badge-dependente-pub {
       font-size: 11px;
@@ -543,18 +582,61 @@
       padding: 2px 8px;
       border-radius: 4px;
     }
-    .btn-atalho-carne {
+
+    .casal-public-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .pub-id-tag {
+      font-family: monospace;
+      font-size: 11px;
       background: var(--stone);
       border: 1px solid var(--border);
       color: var(--iron);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
+      padding: 1px 6px;
       border-radius: 4px;
-      cursor: pointer;
-      transition: 0.2s;
+      font-weight: 700;
     }
-    .btn-atalho-carne:hover { background: var(--bronze); color: var(--iron); border-color: var(--bronze); }
+    .pub-transporte-tag {
+      font-size: 11px;
+      color: #0369a1;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+
+    .public-confirm-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .status-pendente-hint {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .status-confirmado-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid #86efac;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
     .casal-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
 
@@ -955,7 +1037,8 @@
     .badge-codigo { font-size: 10px; font-family: monospace; background: var(--stone); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--iron); }
 
     .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .btn-check { display: flex; align-items: center; gap: 8px; background: var(--stone); border: 1px solid var(--border); padding: 7px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--text-muted); transition: 0.2s; min-width: 120px; justify-content: center; }
+    .btn-check { display: flex; align-items: center; gap: 7px; background: var(--stone); border: 1px solid var(--border); padding: 8px 13px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--iron); transition: 0.2s; min-width: 115px; justify-content: center; }
+    .btn-check:hover:not([disabled]) { background: var(--bronze-soft); border-color: var(--bronze); }
     .btn-check.confirmed { background: var(--green-bg); border-color: #86efac; color: var(--green); }
     .btn-check.confirmed[disabled] { cursor: not-allowed; opacity: 0.92; }
     .check-box { width: 15px; height: 15px; border: 2px solid currentcolor; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
@@ -1034,7 +1117,10 @@
       .finance-summary-grid { grid-template-columns: 1fr; gap: 6px; }
       .carne-grid { grid-template-columns: repeat(2, 1fr); }
       .upload-smart-actions { grid-template-columns: 1fr; }
+      .list.public-grid { grid-template-columns: 1fr; }
       .item { flex-direction: column; align-items: stretch; }
+      .public-confirm-group { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; border-top: 1px dashed var(--border); padding-top: 8px; }
+      .status-confirmado-pill { width: 100%; justify-content: center; }
       .actions { width: 100%; }
       .actions .btn-check { width: 100%; }
       .actions .btn-pagamento { flex: 2; }
@@ -1097,14 +1183,12 @@
     </div>
     <div class="sobre-encontro-btns">
       <a id="btn-pub-maps" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-bronze" style="display:none;">🗺️ Ver no Maps</a>
-      <button type="button" class="btn-outline-bronze" onclick="compartilharConviteIrmao()">📲 Convidar um Irmão</button>
     </div>
   </div>
   
   <div class="public-actions-bar">
-    <button class="primary-btn bronze-btn" style="max-width: 250px;" onclick="abrirAutoCadastro()">+ Fazer Minha Inscrição</button>
-    <button class="primary-btn" style="max-width: 250px;" onclick="abrirModalAutoAtualizacao()">💳 Meu Carnê / Pagamentos</button>
-    <button class="primary-btn" id="btn-convidar-barra" style="max-width: 230px; background:var(--green); border-color:var(--green); color:#fff;" onclick="compartilharConviteIrmao()">📲 Convidar um Irmão</button>
+    <button class="primary-btn bronze-btn" style="max-width: 270px;" onclick="abrirAutoCadastro()">+ Fazer Minha Inscrição</button>
+    <button class="primary-btn" style="max-width: 270px;" onclick="abrirModalAutoAtualizacao()">💳 Meu Carnê / Pagamentos</button>
   </div>
 </div>
 
@@ -1461,6 +1545,15 @@
       </select>
     </div>
 
+    <!-- Barra de Resumo da Lista Pública -->
+    <div class="public-summary-strip" id="public-list-summary">
+      <span>⚔️ <strong>Lista Oficial de Inscritos</strong></span>
+      <div class="public-summary-badges">
+        <span class="pill-stat-pub" id="pub-stat-vagas">👥 0 Pessoas Inscritas</span>
+        <span class="pill-stat-pub ok" id="pub-stat-confirmados">✅ 0 Confirmados</span>
+      </div>
+    </div>
+
     <div class="filters-row" id="filtros-lideranca" style="display: none;">
       <select id="filtro-presenca" onchange="irParaPagina(1)">
         <option value="todos">Presença: Todos</option>
@@ -1495,7 +1588,7 @@
 
   <!-- LISTA PAGINADA -->
   <div id="area-exportacao">
-    <div class="list" id="lista-varoes"></div>
+    <div class="list public-grid" id="lista-varoes"></div>
   </div>
 
   <!-- BARRA DE PAGINAÇÃO -->
@@ -3265,7 +3358,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   function labelTransporte(cod) {
-    if (cod === "onibus") return "🚌 Precisa de Ônibus/Van";
+    if (cod === "onibus") return "🚌 Vai de Ônibus/Van";
     if (cod === "carona") return "🤝 Oferece Carona";
     return "🚗 Carro Próprio";
   }
@@ -3285,20 +3378,6 @@ self.addEventListener('fetch', (event) => {
   window.alternarCampoCustomNome = function(prefixo) {
     const concorda = document.getElementById(`${prefixo}-check-concorda`).checked;
     document.getElementById(`${prefixo}-custom-container`).style.display = concorda ? "none" : "block";
-  };
-
-  // ==========================================
-  // COMPARTILHAR CONVITE NO WHATSAPP
-  // ==========================================
-  window.compartilharConviteIrmao = function() {
-    const titulo = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
-    const dataFmt = formatarDataHoraEvento(configuracoes.dataEvento);
-    const link = window.location.href.split('?')[0].split('#')[0];
-    const texto = `⚔️ *${titulo}* — ${configuracoes.subtituloEvento || 'Encontro dos Varões'}\n\n` +
-                  (dataFmt ? `📅 *Data:* ${dataFmt}\n` : ``) +
-                  (configuracoes.localNome ? `📍 *Local:* ${configuracoes.localNome}\n` : ``) +
-                  `\nFaça sua inscrição e acompanhe seu carnê digital pelo link oficial:\n👉 ${link}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
   };
 
   // ==========================================
@@ -3482,8 +3561,6 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  // Sincronização em segundo plano: pausa automaticamente enquanto o painel de liderança
-  // está aberto ou quando algum campo/modal está em uso para nunca apagar o que está sendo digitado
   async function sincronizarEmSegundoPlano() {
     if (emProcessamentoNuvem || isLider || isAnalista) return;
     const modaisAbertos = document.querySelectorAll('.modal.active');
@@ -3599,7 +3676,6 @@ self.addEventListener('fetch', (event) => {
     }
 
     const boxSobre = document.getElementById("box-sobre-encontro");
-    const btnConvidarBarra = document.getElementById("btn-convidar-barra");
     if (configuracoes.localNome || configuracoes.localDesc) {
       document.getElementById("pub-local-nome").innerText = `📍 ${configuracoes.localNome || 'Local do Encontro'}`;
       document.getElementById("pub-local-desc").innerText = configuracoes.localDesc || "";
@@ -3611,10 +3687,8 @@ self.addEventListener('fetch', (event) => {
         btnMaps.style.display = "none";
       }
       boxSobre.style.display = "flex";
-      if (btnConvidarBarra) btnConvidarBarra.style.display = "none";
     } else {
       boxSobre.style.display = "none";
-      if (btnConvidarBarra) btnConvidarBarra.style.display = "block";
     }
 
     const pixChave = configuracoes.chavePix || "Chave não cadastrada ainda";
@@ -3745,15 +3819,6 @@ self.addEventListener('fetch', (event) => {
     renderizarLista();
   };
 
-  window.abrirAtalhoCarneParticipante = function(id) {
-    const v = varoes.find(x => x.id === id);
-    abrirModalAutoAtualizacao();
-    if (v && v.tel1) {
-      document.getElementById("auth-membro-tel").value = formatarTelefoneVisual(v.tel1);
-      document.getElementById("auth-membro-codigo").focus();
-    }
-  };
-
   function renderizarLista() {
     const container = document.getElementById("lista-varoes");
     const termo = document.getElementById("busca-input-geral").value.toLowerCase();
@@ -3764,6 +3829,26 @@ self.addEventListener('fetch', (event) => {
     const filtroPrazo = document.getElementById("filtro-prazo") ? document.getElementById("filtro-prazo").value : 'todos';
     const filtroDep = document.getElementById("filtro-dependente") ? document.getElementById("filtro-dependente").value : 'todos';
     const filtroTransp = document.getElementById("filtro-transporte") ? document.getElementById("filtro-transporte").value : 'todos';
+
+    // Alterna grade de 2 colunas na visão pública vs. lista larga no painel da liderança
+    if (isLider || isAnalista) {
+      container.classList.remove("public-grid");
+    } else {
+      container.classList.add("public-grid");
+    }
+
+    // Atualiza contadores da barra de resumo público
+    let totalPessoasGeral = 0;
+    let totalConfirmadosGeral = 0;
+    varoes.forEach(v => {
+      const qp = obterQtdPessoas(v);
+      totalPessoasGeral += qp;
+      if (v.confirmado) totalConfirmadosGeral += qp;
+    });
+    const elPubVagas = document.getElementById("pub-stat-vagas");
+    const elPubConf = document.getElementById("pub-stat-confirmados");
+    if (elPubVagas) elPubVagas.innerText = `👥 ${totalPessoasGeral} ${totalPessoasGeral === 1 ? 'Pessoa Inscrita' : 'Pessoas Inscritas'}`;
+    if (elPubConf) elPubConf.innerText = `✅ ${totalConfirmadosGeral} ${totalConfirmadosGeral === 1 ? 'Confirmado' : 'Confirmados'}`;
     
     container.innerHTML = "";
     varoesFiltrados = [];
@@ -3834,18 +3919,14 @@ self.addEventListener('fetch', (event) => {
       const temTelefone = (v.tel1 && v.tel1.replace(/\D/g, '').length >= 10) || (v.tel2 && v.tel2.replace(/\D/g, '').length >= 10);
       const classZap = temTelefone ? "btn-icon btn-zap ativo" : "btn-icon btn-zap inativo";
       const div = document.createElement("div");
-      div.className = `item ${ehBispo ? 'bispo-destaque' : ''}`;
+      div.className = `item ${ehBispo ? 'bispo-destaque' : ''} ${v.confirmado ? 'is-confirmed' : ''}`;
       
       let badgesDepHtml = deps.map(d =>
         `<span class="badge-dependente-pub">+ ${esc(d.parentesco || 'Dep.')}: ${esc(obterPrimeiroEUltimoNome(d.nome))}</span>`
       ).join(" ");
 
-      let btnAtalhoCarne = (!isLider && !isAnalista)
-        ? `<button type="button" class="btn-atalho-carne" title="Abrir Meu Carnê" onclick="abrirAtalhoCarneParticipante(${v.id})">💳 Carnê</button>`
-        : ``;
-
       let html = `<div class="casal-info">
-                    <span class="casal-nome">${esc(v.nome)} ${badgesDepHtml} ${btnAtalhoCarne}</span>`;
+                    <span class="casal-nome">${esc(v.nome)} ${badgesDepHtml}</span>`;
       
       if (isLider || isAnalista) {
         const tel1Visual = v.tel1 ? formatarTelefoneVisual(v.tel1) : 'Sem WhatsApp';
@@ -3871,17 +3952,25 @@ self.addEventListener('fetch', (event) => {
         let btnCodigoOculto = `<button class="btn-recibo" onclick="revelarCodigoAcesso(${v.id}, this)">🔑 Ver Senha</button>`;
 
         html += `<div class="casal-meta">${badgePrazoHtml} ${badgeAnalise} ${badgePrev} ${btnCodigoOculto}</div>`;
+      } else {
+        // Linha informativa pública limpa: Número + Vagas + Transporte
+        const vagasTxt = qtdPessoas > 1 ? `👥 ${qtdPessoas} vagas` : `👤 1 vaga`;
+        html += `<div class="casal-public-meta">
+                   <span class="pub-id-tag">#${String(v.id).padStart(3, '0')}</span>
+                   <span>${vagasTxt}</span>
+                   <span class="pub-transporte-tag">${labelTransporte(v.transporte)}</span>
+                 </div>`;
       }
 
       html += `</div><div class="actions">`;
 
-      if (v.confirmado) {
-        html += `<button class="btn-check confirmed" ${(isLider || isAnalista) ? `onclick="toggleConfirmacaoLider(${v.id})"` : "disabled"}><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
-      } else {
-        html += `<button class="btn-check" onclick="${(isLider || isAnalista) ? `toggleConfirmacaoLider(${v.id})` : `abrirValidadorMembro(${v.id})`}"><div class="check-box"></div>Confirmar</button>`;
-      }
-
       if (isLider || isAnalista) {
+        if (v.confirmado) {
+          html += `<button class="btn-check confirmed" onclick="toggleConfirmacaoLider(${v.id})"><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
+        } else {
+          html += `<button class="btn-check" onclick="toggleConfirmacaoLider(${v.id})"><div class="check-box"></div>Confirmar</button>`;
+        }
+
         let classeCota = 'pago-nao';
         if (pagasIndiv >= totalCotasIndiv) classeCota = 'pago-quitado';
         else if (pagasIndiv > 0 || emAnalise > 0) classeCota = 'pago-parcial';
@@ -3890,6 +3979,16 @@ self.addEventListener('fetch', (event) => {
         html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
         html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
         if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
+      } else {
+        // Visão Pública: Selo elegante quando confirmado ou grupo compacto Pendente + Confirmar
+        if (v.confirmado) {
+          html += `<div class="status-confirmado-pill">${iconeCheck} Confirmado</div>`;
+        } else {
+          html += `<div class="public-confirm-group">
+                     <span class="status-pendente-hint">Aguardando</span>
+                     <button class="btn-check" onclick="abrirValidadorMembro(${v.id})"><div class="check-box"></div>Confirmar</button>
+                   </div>`;
+        }
       }
 
       html += `</div>`;
@@ -3898,7 +3997,7 @@ self.addEventListener('fetch', (event) => {
     });
 
     if (paginaSlice.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">Nenhum participante encontrado.</div>`;
+      container.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">Nenhum participante encontrado.</div>`;
     }
 
     if (isLider || isAnalista) setTimeout(atualizarDashboard, 50);
