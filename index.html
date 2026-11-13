@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#16191d">
   <title>Benditos 2027 — Encontro dos Varões | IBAC</title>
 
   <meta property="og:type" content="website">
@@ -10,10 +11,12 @@
   <meta property="og:description" content="Plataforma oficial de inscrição, presença e carnê digital do Encontro dos Varões.">
   <meta property="og:image" content="./banner.png">
 
+  <link id="pwa-manifest-link" rel="manifest" href="">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
@@ -58,6 +61,35 @@
       border-bottom: 4px solid var(--bronze);
       padding: 48px 20px 42px 20px;
     }
+
+    .hero-top-actions {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .btn-lider, .btn-install-pwa {
+      background: rgba(22, 25, 29, 0.85);
+      color: #f8fafc;
+      border: 1px solid var(--bronze);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.25s;
+    }
+    .btn-lider:hover, .btn-install-pwa:hover { background: var(--bronze); color: var(--iron); }
+    .btn-install-pwa { border-color: #34d399; color: #6ee7b7; }
+    .btn-install-pwa:hover { background: #34d399; color: var(--iron); }
 
     .hero-emblem {
       display: inline-flex;
@@ -111,7 +143,6 @@
       margin-bottom: 14px;
     }
 
-    /* Bloco do Versículo Dinâmico */
     .hero-verse-box {
       max-width: 720px;
       margin: 0 auto;
@@ -160,29 +191,6 @@
     }
     .btn-refresh-verse:hover { background: var(--bronze); color: var(--iron); }
 
-    /* Botão Liderança */
-    .btn-lider {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(22, 25, 29, 0.82);
-      color: #f8fafc;
-      border: 1px solid var(--bronze);
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: 0.25s;
-      z-index: 10;
-    }
-    .btn-lider:hover { background: var(--bronze); color: var(--iron); }
-
     /* ================= BARRA PÚBLICA & CONTAGEM ================= */
     .info-evento-publico {
       background: var(--surface);
@@ -206,7 +214,75 @@
     .valor-ingresso { font-size: 18px; color: var(--iron); font-weight: 700; margin-top: 10px; }
     .sub-valor-ingresso { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
 
-    .public-actions-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    /* Termômetro de Vagas */
+    .vagas-thermometer-box {
+      max-width: 480px;
+      margin: 14px auto 4px auto;
+      background: var(--stone);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .vagas-top-txt {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--iron);
+      margin-bottom: 6px;
+    }
+
+    /* Bloco Sobre o Encontro */
+    .sobre-encontro-card {
+      max-width: 780px;
+      margin: 16px auto 0 auto;
+      background: #fdfbf7;
+      border: 1px solid rgba(184, 125, 75, 0.45);
+      border-radius: 8px;
+      padding: 14px 18px;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sobre-encontro-info h4 {
+      margin: 0 0 4px 0;
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: var(--iron);
+    }
+    .sobre-encontro-info p {
+      margin: 0;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .sobre-encontro-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-outline-bronze {
+      background: var(--surface);
+      color: var(--bronze-dark);
+      border: 1px solid var(--bronze);
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.2s;
+    }
+    .btn-outline-bronze:hover { background: var(--bronze); color: var(--iron); }
+
+    .public-actions-bar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
 
     /* ================= CONTAINER PRINCIPAL ================= */
     .container {
@@ -240,22 +316,33 @@
     }
     .admin-tab-btn {
       flex: 1;
-      min-width: 140px;
+      min-width: 135px;
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 14px 16px;
-      font-size: 12px;
+      padding: 14px 12px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.7px;
       cursor: pointer;
       border-right: 1px solid rgba(255,255,255,0.08);
       transition: 0.2s;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      position: relative;
     }
     .admin-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.04); }
     .admin-tab-btn.active { background: var(--bronze); color: var(--iron); }
+    .tab-badge-count {
+      display: inline-block;
+      background: var(--crimson);
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
 
     .admin-tab-panel { display: none; padding: 22px 20px; background: #faf9f6; }
     .admin-tab-panel.active { display: block; }
@@ -304,13 +391,15 @@
       border-top: 3px solid var(--iron);
       text-align: center;
     }
-    .dash-card h4 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--iron); margin: 0; }
-    .dash-card p { font-size: 11px; color: var(--text-muted); margin: 5px 0 0 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+    .dash-card h4 { font-family: 'Cinzel', serif; font-size: 20px; color: var(--iron); margin: 0; }
+    .dash-card p { font-size: 10.5px; color: var(--text-muted); margin: 5px 0 0 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
     .dash-card small { display: block; font-size: 10px; color: var(--text-muted); margin-top: 3px; }
     .dash-card.finance { border-top-color: var(--bronze); background: var(--bronze-soft); }
     .dash-card.finance h4 { color: var(--bronze-dark); }
     .dash-card.alert { border-top-color: var(--crimson); }
     .dash-card.alert h4 { color: var(--crimson); }
+    .dash-card.net { border-top-color: var(--green); background: var(--green-bg); }
+    .dash-card.net h4 { color: var(--green); }
 
     /* Gráficos */
     .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -346,6 +435,59 @@
     .btn-chart-export.btn-red { background: var(--crimson); }
     .btn-chart-export.btn-green { background: var(--green); }
     .canvas-wrapper { position: relative; height: 205px; width: 100%; display: flex; justify-content: center; }
+
+    /* ================= CONFERÊNCIA DE COMPROVANTES & DESPESAS ================= */
+    .audit-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+    .panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .panel-card h4 { margin: 0 0 12px 0; color: var(--iron); font-size: 14px; border-bottom: 1px solid #eceae4; padding-bottom: 8px; }
+    .audit-item {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--amber);
+      background: #fffbeb;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .expense-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid #eceae4;
+      font-size: 13px;
+    }
+
+    /* ================= PORTARIA / CHECK-IN ================= */
+    .checkin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .checkin-status-pill {
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .checkin-ok { background: var(--green-bg); color: var(--green); border: 1px solid #86efac; }
+    .checkin-debt { background: var(--crimson-bg); color: var(--crimson); border: 1px solid #f5c2c2; }
 
     /* ================= BUSCA, FILTROS E PAGINAÇÃO ================= */
     .search-filter-box { padding: 18px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
@@ -413,7 +555,19 @@
       padding: 2px 8px;
       border-radius: 4px;
     }
-    .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+    .btn-atalho-carne {
+      background: var(--stone);
+      border: 1px solid var(--border);
+      color: var(--iron);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-atalho-carne:hover { background: var(--bronze); color: var(--iron); border-color: var(--bronze); }
+    .casal-tel { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
     .casal-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
 
     /* ================= VISÃO OBJETIVA DE PAGAMENTO & BARRA MOTIVACIONAL ================= */
@@ -566,35 +720,152 @@
       transition: 0.2s;
       margin-top: 8px;
     }
-    .btn-biometric-outline:hover {
-      background: var(--bronze-soft);
-    }
+    .btn-biometric-outline:hover { background: var(--bronze-soft); }
 
     /* Grid das 10 Cotas */
     .carne-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0; }
-    .cota-card { border: 2px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; background: #fff; cursor: pointer; transition: 0.2s; user-select: none; }
-    .cota-card:hover:not(.pago) { border-color: var(--bronze); }
+    .cota-card { border: 2px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; background: #fff; cursor: pointer; transition: 0.2s; user-select: none; position: relative; }
+    .cota-card:hover:not(.pago):not(.analise) { border-color: var(--bronze); }
     .cota-card.selecionada { border-color: var(--blue); background: #eff6ff; }
     .cota-card.pago { border-color: #86efac; background: var(--green-bg); cursor: default; }
+    .cota-card.analise { border-color: #fde68a; background: var(--amber-bg); cursor: default; }
+    .cota-mult-tag {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 9px;
+      font-weight: 800;
+      background: var(--bronze-soft);
+      color: var(--bronze-dark);
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
     .cota-num { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; }
     .cota-card.pago .cota-num { color: var(--green); }
+    .cota-card.analise .cota-num { color: var(--amber); }
     .cota-card.selecionada .cota-num { color: var(--blue); }
     .cota-val { font-size: 13.5px; font-weight: 700; color: var(--iron); display: block; margin: 4px 0; }
-    .cota-status { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+    .cota-status { font-size: 9.5px; font-weight: 700; padding: 2px 5px; border-radius: 4px; display: inline-block; }
     .cota-status.st-pago { background: #dcfce7; color: var(--green); }
+    .cota-status.st-analise { background: #fef3c7; color: var(--amber); border: 1px solid #f59e0b; }
     .cota-status.st-sel { background: #dbeafe; color: var(--blue); }
     .cota-status.st-pend { background: var(--stone); color: var(--text-muted); }
     .btn-cota-recibo { margin-top: 5px; background: var(--iron); color: var(--bronze); border: none; border-radius: 4px; padding: 3px 6px; font-size: 10px; font-weight: 700; cursor: pointer; width: 100%; }
 
+    /* Mini-Recibo Detalhado no Checkout */
+    .checkout-breakdown-box {
+      background: #fff;
+      border: 1px solid rgba(184, 125, 75, 0.45);
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .checkout-breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      color: var(--text-muted);
+    }
+    .checkout-breakdown-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      margin-top: 4px;
+      border-top: 1px dashed var(--border);
+      font-weight: 700;
+      color: var(--iron);
+    }
+
+    /* QR Code Pix & Comprovante Facilitado */
+    .pix-qr-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #86efac;
+      margin: 8px 0;
+    }
+    .pix-qr-canvas {
+      padding: 8px;
+      background: #fff;
+      border-radius: 4px;
+    }
+    .upload-smart-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .btn-upload-gallery {
+      background: var(--iron);
+      color: var(--bronze);
+      border: 1px solid var(--iron);
+      padding: 10px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-paste-clipboard {
+      background: #fff;
+      color: var(--iron);
+      border: 1px dashed var(--bronze);
+      padding: 10px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-paste-clipboard:hover { background: var(--bronze-soft); }
+    .comprovante-preview-pill {
+      margin-top: 8px;
+      background: #fff;
+      border: 1px solid #86efac;
+      border-radius: 5px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* Credencial Digital VIP */
+    .credencial-card-vip {
+      background: linear-gradient(145deg, #16191d 0%, #242a33 100%);
+      color: #f8fafc;
+      border: 2px solid var(--bronze);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+    .credencial-stamp {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
     /* Badges & Botões */
-    .badge-metodo { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
-    .badge-pix { background: #e0f2fe; color: #0369a1; }
-    .badge-cartao { background: #f3e8ff; color: #6b21a8; }
-    .badge-dinheiro { background: #fef3c7; color: #92400e; }
-    .badge-indefinido { background: var(--stone); color: var(--text-muted); }
     .badge-previsao { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fdf2f8; color: #be185d; }
     .badge-atraso { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--crimson-bg); color: var(--crimson); }
     .badge-em-dia { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--green-bg); color: var(--green); }
+    .badge-analise-tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--amber-bg); color: var(--amber); }
+    .badge-transporte { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #e0f2fe; color: #0369a1; }
     .badge-codigo { font-size: 10px; font-family: monospace; background: var(--stone); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--iron); }
 
     .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -618,7 +889,7 @@
 
     /* Formulários & Modais */
     input, select, textarea { width: 100%; padding: 11px 12px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; }
-    button.primary-btn { background: var(--iron); color: var(--bronze); padding: 12px 16px; border: 1px solid var(--iron); border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 14px; text-transform: uppercase; letter-spacing: 0.8px; transition: 0.2s; }
+    button.primary-btn { background: var(--iron); color: var(--bronze); padding: 12px 16px; border: 1px solid var(--iron); border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.7px; transition: 0.2s; }
     button.primary-btn:hover { background: var(--iron-light); }
     button.bronze-btn { background: var(--bronze); color: var(--iron); border-color: var(--bronze); }
     button.bronze-btn:hover { background: #c98c58; }
@@ -626,13 +897,18 @@
     .btn-row > * { flex: 1; margin-bottom: 0; min-width: 130px; }
 
     .box-dependente { background: var(--bronze-soft); border: 1px solid rgba(184, 125, 75, 0.45); border-radius: 6px; padding: 12px; margin: 10px 0; text-align: left; }
+    .dep-row-item { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+    .dep-row-item input { flex: 2; min-width: 160px; margin-bottom: 0; }
+    .dep-row-item select { flex: 1; min-width: 110px; margin-bottom: 0; }
+    .btn-remove-dep { background: var(--crimson-bg); color: var(--crimson); border: 1px solid #f5c2c2; border-radius: 6px; padding: 10px 12px; cursor: pointer; font-weight: 700; }
+
     .box-sugestao-nome { background: var(--stone); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 8px 0; text-align: left; }
     .box-sugestao-nome span { font-size: 11px; color: var(--text-muted); }
     .box-sugestao-nome strong { display: block; color: var(--iron); font-size: 14px; margin: 3px 0 6px 0; }
 
     .pix-box { background: var(--green-bg); border: 1px dashed #86efac; padding: 14px; border-radius: 6px; margin: 10px 0; text-align: left; }
     .pix-box strong { color: var(--green); display: block; margin-bottom: 4px; font-size: 13px; }
-    .pix-code { font-family: monospace; background: white; padding: 8px 10px; border-radius: 4px; border: 1px solid var(--border); font-size: 12px; word-break: break-all; display: block; margin-bottom: 8px; }
+    .pix-code { font-family: monospace; background: white; padding: 8px 10px; border-radius: 4px; border: 1px solid var(--border); font-size: 11.5px; word-break: break-all; display: block; margin-bottom: 8px; }
 
     .password-wrapper { position: relative; width: 100%; margin-bottom: 10px; }
     .password-wrapper input { padding-right: 42px; margin-bottom: 0; }
@@ -653,13 +929,14 @@
 
     .modal { display: none; position: fixed; inset: 0; background: rgba(22, 25, 29, 0.85); align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
     .modal.active { display: flex; }
-    .modal-content { background: var(--surface); padding: 24px; border-radius: 8px; border-top: 4px solid var(--bronze); width: 100%; max-width: 550px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+    .modal-content { background: var(--surface); padding: 24px; border-radius: 8px; border-top: 4px solid var(--bronze); width: 100%; max-width: 560px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
     .modal-content h3 { font-family: 'Cinzel', serif; color: var(--iron); margin-top: 0; font-size: 20px; }
     .btn-close { background: var(--stone); color: var(--iron); width: 100%; padding: 11px; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; margin-top: 10px; cursor: pointer; }
 
     @media (max-width: 768px) {
-      .hero-header { padding: 52px 14px 26px 14px; }
-      .btn-lider { top: 10px; right: 10px; padding: 6px 11px; font-size: 11px; }
+      .hero-header { padding: 56px 14px 26px 14px; }
+      .hero-top-actions { top: 10px; right: 10px; }
+      .btn-lider, .btn-install-pwa { padding: 6px 10px; font-size: 10.5px; }
       .container { margin: 12px 10px 30px 10px; }
       input, select, textarea, .search-box-input { font-size: 16px !important; }
       .public-actions-bar { flex-direction: column; }
@@ -667,10 +944,10 @@
       .lider-bio-bar { flex-direction: column; align-items: stretch; }
       .lider-bio-bar .btn-biometric { width: 100% !important; }
       .dash-grid { grid-template-columns: repeat(2, 1fr); }
-      .dash-grid .dash-card:last-child { grid-column: span 2; }
-      .charts-container { grid-template-columns: 1fr; }
+      .charts-container, .audit-grid { grid-template-columns: 1fr; }
       .finance-summary-grid { grid-template-columns: 1fr; gap: 6px; }
       .carne-grid { grid-template-columns: repeat(2, 1fr); }
+      .upload-smart-actions { grid-template-columns: 1fr; }
       .item { flex-direction: column; align-items: stretch; }
       .actions { width: 100%; }
       .actions .btn-check { width: 100%; }
@@ -684,7 +961,10 @@
 
 <!-- Cabeçalho Espartano -->
 <div class="hero-header">
-  <button class="btn-lider" onclick="abrirLogin()">🔒 Liderança</button>
+  <div class="hero-top-actions">
+    <button class="btn-install-pwa" id="btn-instalar-pwa" style="display:none;" onclick="instalarAplicativoPWA()">📲 Instalar App</button>
+    <button class="btn-lider" onclick="abrirLogin()">🔒 Liderança</button>
+  </div>
 
   <div class="hero-emblem" id="hero-emblem-tag">⚔️ FORJADOS NA PALAVRA • IBAC</div>
   <h1 class="hero-brand-title" id="hero-title-display">BENDITOS <span>2027</span></h1>
@@ -710,11 +990,35 @@
     </div>
   </div>
   <div class="valor-ingresso" id="display-valor-publico">Investimento por Pessoa: R$ 200,00</div>
-  <div class="sub-valor-ingresso" id="display-parcela-publico">Plano Mensal: 10 cotas de R$ 20,00 por pessoa (pode incluir dependente no cadastro)</div>
+  <div class="sub-valor-ingresso" id="display-parcela-publico">Plano Mensal: 10 cotas de R$ 20,00 por pessoa (pode incluir dependentes no cadastro)</div>
+
+  <!-- Termômetro de Vagas -->
+  <div class="vagas-thermometer-box" id="box-termometro-vagas" style="display:none;">
+    <div class="vagas-top-txt">
+      <span>🔥 Lotação do Encontro</span>
+      <span id="txt-vagas-contagem">0 de 0 vagas preenchidas</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="bar-vagas-fill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <!-- Sobre o Encontro (Local & Infos) -->
+  <div class="sobre-encontro-card" id="box-sobre-encontro" style="display:none;">
+    <div class="sobre-encontro-info" style="flex:1; min-width:220px;">
+      <h4 id="pub-local-nome">📍 Local do Encontro</h4>
+      <p id="pub-local-desc"></p>
+    </div>
+    <div class="sobre-encontro-btns">
+      <a id="btn-pub-maps" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline-bronze" style="display:none;">🗺️ Ver no Maps</a>
+      <button type="button" class="btn-outline-bronze" onclick="compartilharConviteIrmao()">📲 Convidar um Irmão</button>
+    </div>
+  </div>
   
   <div class="public-actions-bar">
-    <button class="primary-btn bronze-btn" style="max-width: 270px;" onclick="abrirAutoCadastro()">+ Fazer Minha Inscrição</button>
-    <button class="primary-btn" style="max-width: 270px;" onclick="abrirModalAutoAtualizacao()">💳 Meu Carnê / Pagamentos</button>
+    <button class="primary-btn bronze-btn" style="max-width: 250px;" onclick="abrirAutoCadastro()">+ Fazer Minha Inscrição</button>
+    <button class="primary-btn" style="max-width: 250px;" onclick="abrirModalAutoAtualizacao()">💳 Meu Carnê / Pagamentos</button>
+    <button class="primary-btn" id="btn-convidar-barra" style="max-width: 230px; background:var(--green); border-color:var(--green); color:#fff;" onclick="compartilharConviteIrmao()">📲 Convidar um Irmão</button>
   </div>
 </div>
 
@@ -751,10 +1055,12 @@
 
     <!-- Navegação por Abas do Admin -->
     <div class="admin-tabs-bar">
-      <button class="admin-tab-btn active" onclick="trocarAbaAdmin('tab-visao', this)">📊 Visão Geral & Gráficos</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Participante</button>
-      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição, Prazos & Ano</button>
-      <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança & Acessos</button>
+      <button class="admin-tab-btn active" onclick="trocarAbaAdmin('tab-visao', this)">📊 Visão Geral</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-auditoria', this)">🔍 Comprovantes & Caixa <span class="tab-badge-count" id="badge-pendentes-audit" style="display:none;">0</span></button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-portaria', this)">🚪 Portaria / Check-in</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-cadastrar', this)">➕ Novo Inscrito</button>
+      <button class="admin-tab-btn" onclick="trocarAbaAdmin('tab-config', this)">⚙️ Edição & Local</button>
+      <button class="admin-tab-btn" id="btn-tab-alfa" style="display:none;" onclick="trocarAbaAdmin('tab-alfa', this)">👑 Liderança</button>
     </div>
 
     <!-- ABA 1: VISÃO GERAL -->
@@ -777,13 +1083,18 @@
         </div>
         <div class="dash-card finance">
           <h4 id="dash-valor">R$ 0</h4>
-          <p>Arrecadado</p>
+          <p>Arrecadado (Validado)</p>
           <small id="dash-meta-sub">Meta: R$ 0</small>
         </div>
         <div class="dash-card alert">
           <h4 id="dash-falta">R$ 0</h4>
           <p>Falta Arrecadar</p>
-          <small>Saldo pendente</small>
+          <small id="dash-em-analise-sub">Em análise: R$ 0</small>
+        </div>
+        <div class="dash-card net">
+          <h4 id="dash-saldo-liquido">R$ 0</h4>
+          <p>Saldo Líquido</p>
+          <small id="dash-despesas-sub">Despesas: R$ 0</small>
         </div>
       </div>
 
@@ -822,9 +1133,44 @@
       </div>
     </div>
 
-    <!-- ABA 2: ADICIONAR / IMPORTAR -->
+    <!-- ABA 2: CONFERÊNCIA DE COMPROVANTES & CONTROLE DE DESPESAS -->
+    <div class="admin-tab-panel" id="tab-auditoria">
+      <div class="audit-grid">
+        <div class="panel-card">
+          <h4>📎 Fila de Conferência de Comprovantes Pix</h4>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Valide os recibos enviados pelos participantes para efetivar a entrada no caixa.</p>
+          <div id="lista-auditoria-comprovantes"></div>
+        </div>
+
+        <div class="panel-card">
+          <h4>💸 Controle de Despesas / Saídas</h4>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Registre custos (adiantamento do sítio, transporte, alimentação) para acompanhar o saldo líquido.</p>
+          <div class="btn-row">
+            <input type="text" id="desp-descricao" placeholder="Descrição (Ex: Sinal do Sítio)" style="flex:2;">
+            <input type="number" id="desp-valor" step="0.01" placeholder="Valor (R$)" style="flex:1;">
+          </div>
+          <button type="button" class="primary-btn bronze-btn" style="padding:9px; font-size:12px; margin-bottom:12px;" onclick="adicionarDespesa()">+ Registrar Saída</button>
+          <div id="lista-despesas-admin" style="max-height:240px; overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 3: PORTARIA / CHECK-IN NO DIA DO EVENTO -->
+    <div class="admin-tab-panel" id="tab-portaria">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <div>
+          <h4 style="margin:0; color:var(--iron);">🚪 Modo Portaria / Embarque</h4>
+          <small style="color:var(--text-muted);">Busque pelo nome ou código para conferir quitação, dependentes e dar check-in rápido.</small>
+        </div>
+        <span id="portaria-resumo-pill" style="background:var(--iron); color:var(--bronze); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700;">0 / 0 Presentes</span>
+      </div>
+      <input type="text" id="portaria-busca-input" class="search-box-input" placeholder="🔍 Digitar nome do varão, dependente ou código..." oninput="renderizarPortaria()" style="margin-bottom:14px;">
+      <div id="lista-portaria-checkin"></div>
+    </div>
+
+    <!-- ABA 4: ADICIONAR / IMPORTAR -->
     <div class="admin-tab-panel" id="tab-cadastrar">
-      <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Varão (com ou sem Dependente)</h4>
+      <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Varão (com ou sem Dependentes)</h4>
       <input type="text" id="add-nome" placeholder="Nome Completo do Titular (Ex: JOÃO CARLOS DA SILVA)">
       <div class="btn-row">
         <input type="text" id="add-tel1" placeholder="WhatsApp Principal (Com DDD)">
@@ -833,28 +1179,25 @@
 
       <div class="btn-row">
         <div>
-          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Prazo / Previsão estipulada para pagamento (Opcional):</label>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Transporte:</label>
+          <select id="add-transporte">
+            <option value="proprio">🚗 Vou de carro próprio</option>
+            <option value="onibus">🚌 Preciso de vaga no ônibus / van</option>
+            <option value="carona">🤝 Tenho vagas no meu carro para carona</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Prazo / Previsão estipulada (Opcional):</label>
           <input type="date" id="add-previsao">
         </div>
       </div>
 
       <div class="box-dependente">
-        <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
-          <input type="checkbox" id="add-tem-dep" onchange="toggleCamposDependente('add')" style="width:auto; margin:0;">
-          Incluir Dependente / Acompanhante sob responsabilidade deste titular (Filho, Irmão, Pai)
-        </label>
-        <div id="add-dep-campos" style="display:none; margin-top:10px;">
-          <div class="btn-row">
-            <input type="text" id="add-dep-nome" placeholder="Nome Completo do Dependente">
-            <select id="add-dep-parentesco">
-              <option value="Filho">Filho</option>
-              <option value="Irmão">Irmão</option>
-              <option value="Pai">Pai</option>
-              <option value="Sobrinho">Sobrinho</option>
-              <option value="Outro">Outro</option>
-            </select>
-          </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <strong style="font-size:13px; color:var(--iron);">👥 Dependentes / Acompanhantes (Filhos, Irmãos, Pai)</strong>
+          <button type="button" class="btn-outline-bronze" onclick="adicionarCampoDependenteUI('add')">+ Adicionar Dependente</button>
         </div>
+        <div id="add-lista-dependentes" style="margin-top:10px;"></div>
       </div>
 
       <div class="btn-row" style="margin-top: 12px;">
@@ -864,9 +1207,9 @@
       </div>
     </div>
 
-    <!-- ABA 3: CONFIGURAÇÕES E REAPROVEITAMENTO ANUAL -->
+    <!-- ABA 5: CONFIGURAÇÕES, LOCAL E REAPROVEITAMENTO ANUAL -->
     <div class="admin-tab-panel" id="tab-config">
-      <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Prazos & Reaproveitamento Anual</h4>
+      <h4 style="margin-top:0; color:var(--iron);">Configurações da Edição, Local, Prazos & Reaproveitamento Anual</h4>
       <div class="btn-row">
         <div style="flex: 2;">
           <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Nome do Evento:</label>
@@ -888,8 +1231,12 @@
           <input type="datetime-local" id="config-data">
         </div>
         <div>
-          <label style="font-size: 12px; font-weight:700; color: var(--bronze-dark);">📅 Prazo Final para Quitação (Liderança):</label>
-          <input type="date" id="config-data-limite" title="Data máxima estipulada pela liderança para concluir os pagamentos">
+          <label style="font-size: 12px; font-weight:700; color: var(--bronze-dark);">📅 Prazo Final para Quitação:</label>
+          <input type="date" id="config-data-limite">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Limite de Vagas (0 = sem limite):</label>
+          <input type="number" id="config-vagas-max" min="0" placeholder="Ex: 80">
         </div>
       </div>
 
@@ -902,6 +1249,23 @@
           <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Cotas Mensais:</label>
           <input type="number" id="config-cotas" min="1" max="24" step="1">
         </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Conferência de Comprovantes:</label>
+          <select id="config-auditoria-pix">
+            <option value="sim">Exigir visto da liderança (Recomendado)</option>
+            <option value="nao">Aprovar automaticamente ao anexar</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Informações Públicas do Local -->
+      <div style="background: var(--stone); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 10px;">
+        <label style="font-size: 12px; font-weight:700; color: var(--iron); display:block; margin-bottom:6px;">📍 Informações Públicas do Local & Encontro:</label>
+        <div class="btn-row">
+          <input type="text" id="config-local-nome" placeholder="Nome do Local (Ex: Sítio Recanto das Águas)">
+          <input type="url" id="config-local-maps" placeholder="Link do Google Maps (https://maps.google.com/...)">
+        </div>
+        <textarea id="config-local-desc" rows="2" placeholder="Endereço, horário de saída da igreja e o que está incluso (alimentação, alojamento, etc.)" style="margin-bottom:0;"></textarea>
       </div>
 
       <div class="btn-row">
@@ -910,14 +1274,24 @@
           <input type="text" id="config-pix" placeholder="E-mail, CNPJ, Celular ou Aleatória">
         </div>
         <div>
-          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Titular da Conta Pix:</label>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Titular / Recebedor Pix:</label>
           <input type="text" id="config-titular-pix" placeholder="Ex: IBAC">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Cidade da Conta Pix (para QR Code):</label>
+          <input type="text" id="config-cidade-pix" placeholder="Ex: NOVA IGUACU">
         </div>
       </div>
 
-      <div>
-        <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Dados Bancários (Opcional):</label>
-        <input type="text" id="config-info-bancaria" placeholder="Banco | Agência | Conta | Favorecido">
+      <div class="btn-row">
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">Dados Bancários (Opcional):</label>
+          <input type="text" id="config-info-bancaria" placeholder="Banco | Agência | Conta | Favorecido">
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight:600; color: var(--text-muted);">WhatsApp da Tesouraria (Ajuda / Senha):</label>
+          <input type="text" id="config-zap-tesouraria" placeholder="Ex: 21999999999">
+        </div>
       </div>
 
       <div style="background: var(--stone); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 10px;">
@@ -943,7 +1317,7 @@
       </div>
     </div>
 
-    <!-- ABA 4: CONTROLE DE ACESSOS -->
+    <!-- ABA 6: CONTROLE DE ACESSOS -->
     <div class="admin-tab-panel" id="tab-alfa">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Perfil de Liderança</h4>
       <div class="btn-row">
@@ -997,6 +1371,7 @@
         <option value="quitados">Quitados (100%)</option>
         <option value="andamento">Em Andamento</option>
         <option value="nao-iniciados">Não Iniciados (0%)</option>
+        <option value="em-analise">⏳ Com Recibo em Análise</option>
       </select>
       <select id="filtro-prazo" onchange="irParaPagina(1)">
         <option value="todos">Prazos: Todos</option>
@@ -1005,8 +1380,14 @@
       </select>
       <select id="filtro-dependente" onchange="irParaPagina(1)">
         <option value="todos">Tipo: Todos</option>
-        <option value="com-dep">Com Dependente (2 pessoas)</option>
+        <option value="com-dep">Com Dependente(s)</option>
         <option value="sem-dep">Individual (1 pessoa)</option>
+      </select>
+      <select id="filtro-transporte" onchange="irParaPagina(1)">
+        <option value="todos">Transporte: Todos</option>
+        <option value="onibus">🚌 Precisa de Ônibus/Van</option>
+        <option value="carona">🤝 Oferece Carona</option>
+        <option value="proprio">🚗 Carro Próprio</option>
       </select>
     </div>
   </div>
@@ -1027,7 +1408,7 @@
   </div>
 </div>
 
-<!-- Modal: Login Liderança (Com Entrar por Biometria e Cadastro de Biometria) -->
+<!-- Modal: Login Liderança -->
 <div class="modal" id="modal-login">
   <div class="modal-content" style="max-width: 430px;">
     <h3>Acesso da Liderança</h3>
@@ -1094,7 +1475,7 @@
 <div class="modal" id="modal-auto-cadastro">
   <div class="modal-content">
     <h3 id="modal-cadastro-titulo">Nova Inscrição</h3>
-    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Informe seus dados. Você pode definir sua senha pessoal de 4 dígitos e optar por incluir um dependente.</p>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Informe seus dados. Você pode definir sua senha pessoal de 4 dígitos e incluir filhos, irmãos ou acompanhantes.</p>
     
     <input type="text" id="reg-nome1" placeholder="Seu Nome Completo (Responsável)" oninput="atualizarSugestaoNome('reg')">
     
@@ -1115,31 +1496,31 @@
       <input type="text" id="reg-tel2" placeholder="Telefone Secundário (Opcional)">
     </div>
 
+    <div style="text-align:left; margin-bottom:10px;">
+      <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">🚌 Como você pretende ir ao encontro?</label>
+      <select id="reg-transporte" style="margin-bottom:0;">
+        <option value="proprio">🚗 Vou de carro próprio</option>
+        <option value="onibus">🚌 Preciso de vaga no ônibus / van</option>
+        <option value="carona">🤝 Tenho vagas no meu carro para oferecer carona</option>
+      </select>
+    </div>
+
     <div style="text-align:left; background:var(--stone); padding:10px 12px; border-radius:6px; border:1px solid var(--border); margin-bottom:10px;">
       <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">🔑 Sua Senha Pessoal de Acesso (4 dígitos):</label>
       <input type="text" id="reg-senha-pin" maxlength="4" inputmode="numeric" pattern="\d{4}" placeholder="Digite 4 números de sua preferência (ou deixe vazio para gerar)" style="margin-bottom:4px; font-family:monospace; letter-spacing:3px; font-weight:700;">
-      <small style="font-size:11px; color:var(--text-muted); display:block;">Você poderá alterar essa senha ou ativar sua Impressão Digital logo após concluir.</small>
+      <small style="font-size:11px; color:var(--text-muted); display:block;">Você poderá salvar essa senha no seu WhatsApp ou ativar sua Impressão Digital logo após concluir.</small>
     </div>
 
-    <!-- OPÇÃO DE DEPENDENTE (FILHO / IRMÃO) -->
+    <!-- OPÇÃO DE MÚLTIPLOS DEPENDENTES -->
     <div class="box-dependente">
-      <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
-        <input type="checkbox" id="reg-tem-dep" onchange="toggleCamposDependente('reg'); atualizarResumoCadastro();" style="width:auto; margin:0;">
-        Cadastrar também um Filho, Irmão ou Acompanhante (Serei o responsável pelo pagamento dele)
-      </label>
-      <div id="reg-dep-campos" style="display:none; margin-top:10px;">
-        <input type="text" id="reg-dep-nome" placeholder="Nome Completo do Dependente (Ex: LUCAS SILVA)">
-        <select id="reg-dep-parentesco" style="margin-bottom:4px;">
-          <option value="Filho">Vínculo: Filho</option>
-          <option value="Irmão">Vínculo: Irmão</option>
-          <option value="Pai">Vínculo: Pai</option>
-          <option value="Sobrinho">Vínculo: Sobrinho</option>
-          <option value="Outro">Vínculo: Outro Acompanhante</option>
-        </select>
-        <small style="font-size:11px; color:var(--bronze-dark); display:block;">
-          * Contará <strong>2 pessoas</strong> no evento e seu carnê mensal somará as 2 cotas automaticamente.
-        </small>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:13px; font-weight:700; color:var(--iron);">👥 Vai levar Filho, Irmão ou Acompanhante?</span>
+        <button type="button" class="btn-outline-bronze" onclick="adicionarCampoDependenteUI('reg')">+ Adicionar Dependente</button>
       </div>
+      <div id="reg-lista-dependentes" style="margin-top:8px;"></div>
+      <small id="reg-dep-aviso" style="font-size:11px; color:var(--bronze-dark); display:none; margin-top:4px;">
+        * Cada pessoa adicionada soma 1 cota no seu carnê mensal e garante vaga reservada no evento.
+      </small>
     </div>
     
     <div style="text-align:left; margin: 8px 0 4px 0;">
@@ -1168,14 +1549,36 @@
     <div id="reg-box-pix" class="pix-box" style="display:none;">
       <strong>Dados para Pagamento Pix:</strong>
       <span id="reg-valor-pix-pagar" style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;"></span>
+      
+      <div class="pix-qr-wrapper" id="reg-qr-wrapper" style="display:none;">
+        <div id="reg-qr-canvas" class="pix-qr-canvas"></div>
+        <small style="font-size:11px; color:var(--text-muted); margin-top:4px;">Aponte a câmera no app do seu banco</small>
+      </div>
+
       <span style="font-size:11px; color:var(--text-muted);" id="reg-pix-titular"></span>
       <div class="pix-code" id="reg-pix-chave"></div>
       <div id="reg-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
-      <button type="button" class="primary-btn" style="padding:7px; font-size:12px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPix()">📋 Copiar Chave Pix</button>
       
-      <div id="reg-upload-wrapper" style="display:none;">
-        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-top:10px;">Anexar Comprovante do Pix:</label>
-        <input type="file" id="reg-comprovante-file" accept="image/*,.pdf" style="margin-bottom:0;">
+      <div class="btn-row" style="margin-bottom:6px;">
+        <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPixDinamico('reg')">📋 Copiar Pix (Com Valor)</button>
+        <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px;" onclick="copiarPix()">🔑 Copiar Chave</button>
+      </div>
+      
+      <div id="reg-upload-wrapper" style="display:none; margin-top:10px; border-top:1px dashed #86efac; padding-top:10px;">
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block;">Anexar Comprovante do Pix:</label>
+        <div class="upload-smart-actions">
+          <button type="button" class="btn-upload-gallery" onclick="document.getElementById('reg-comprovante-file').click()">🖼️ Galeria / Foto</button>
+          <button type="button" class="btn-paste-clipboard" onclick="colarPrintAreaTransferencia('reg')">📋 Colar Print</button>
+        </div>
+        <div style="text-align:center; margin-top:6px;">
+          <button type="button" class="btn-link-esqueci" onclick="document.getElementById('reg-comprovante-pdf').click()">Ou selecionar arquivo PDF</button>
+        </div>
+        <input type="file" id="reg-comprovante-file" accept="image/*" style="display:none;" onchange="aoSelecionarArquivoComprovante('reg', this)">
+        <input type="file" id="reg-comprovante-pdf" accept="application/pdf" style="display:none;" onchange="aoSelecionarArquivoComprovante('reg', this)">
+        <div id="reg-comp-preview" class="comprovante-preview-pill" style="display:none;">
+          <span id="reg-comp-nome">📎 Comprovante pronto</span>
+          <button type="button" style="background:none; border:none; color:var(--crimson); font-weight:700; cursor:pointer;" onclick="limparComprovanteAnexado('reg')">✕</button>
+        </div>
       </div>
     </div>
 
@@ -1184,7 +1587,7 @@
   </div>
 </div>
 
-<!-- Modal: Pós-Cadastro (Trocar Senha de 4 Dígitos + Ativar Impressão Digital) -->
+<!-- Modal: Pós-Cadastro -->
 <div class="modal" id="modal-pos-cadastro">
   <div class="modal-content" style="max-width: 450px;">
     <h3>✅ Inscrição Concluída!</h3>
@@ -1195,7 +1598,11 @@
     </div>
     <input type="hidden" id="pos-cad-id">
 
-    <div style="text-align:left; background:var(--stone); padding:12px; border-radius:6px; border:1px solid var(--border); margin:12px 0;">
+    <button type="button" class="primary-btn" style="background:#25D366; border-color:#25D366; color:#fff; margin-bottom:10px;" onclick="enviarSenhaParaMeuWhatsApp()">
+      📲 Salvar Minha Senha no Meu WhatsApp
+    </button>
+
+    <div style="text-align:left; background:var(--stone); padding:12px; border-radius:6px; border:1px solid var(--border); margin:10px 0;">
       <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:6px;">🔑 Quer personalizar sua senha de 4 dígitos agora?</label>
       <div class="btn-row" style="margin-bottom:0;">
         <input type="text" id="pos-cad-nova-senha" maxlength="4" inputmode="numeric" placeholder="Nova senha (4 dígitos)" style="font-family:monospace; letter-spacing:3px; font-weight:700;">
@@ -1244,14 +1651,17 @@
 
 <!-- Modal: Carnê Digital Privado do Participante -->
 <div class="modal" id="modal-auto-atualizacao">
-  <div class="modal-content" style="max-width: 610px;">
+  <div class="modal-content" style="max-width: 620px;">
     <h3>💳 Meu Carnê Digital</h3>
     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Acesso privado para controle das suas cotas mensais e comprovantes.</p>
     
-    <!-- Passo 1: Autenticação (Senha de 4 dígitos OU Impressão Digital) -->
+    <!-- Passo 1: Autenticação -->
     <div id="step-auth-membro">
       <input type="text" id="auth-membro-tel" placeholder="Seu WhatsApp cadastrado (Com DDD)">
       <input type="password" id="auth-membro-codigo" maxlength="4" inputmode="numeric" placeholder="Sua Senha de 4 dígitos" style="letter-spacing:3px; font-weight:700;">
+      <div style="text-align: right; margin-bottom: 10px;">
+        <button type="button" class="btn-link-esqueci" onclick="esqueciSenhaMembro()">Esqueci minha senha de 4 dígitos</button>
+      </div>
       <button class="primary-btn bronze-btn" onclick="autenticarMembroAuto()">Acessar Meu Carnê</button>
       <button type="button" class="btn-biometric" onclick="autenticarComBiometria()">
         👆 Validar com Impressão Digital
@@ -1265,9 +1675,19 @@
           <p id="auth-casal-nome" style="font-weight:700; color:var(--iron); font-size:17px; margin:0;"></p>
           <span id="auth-dep-info" style="font-size:12px; color:var(--bronze-dark); font-weight:600;"></span>
         </div>
-        <span id="auth-badge-bio-status" style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:4px; background:var(--stone); color:var(--text-muted);"></span>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <span id="auth-badge-bio-status" style="font-size:11px; font-weight:700; padding:4px 9px; border-radius:4px; background:var(--stone); color:var(--text-muted);"></span>
+          <button type="button" onclick="encerrarSessaoMembro()" style="background:var(--crimson-bg); color:var(--crimson); border:1px solid #f5c2c2; border-radius:4px; padding:4px 8px; font-size:11px; font-weight:700; cursor:pointer;">Sair</button>
+        </div>
       </div>
       <input type="hidden" id="auth-casal-id">
+
+      <!-- Botão Credencial VIP (Quando 100% quitado) -->
+      <div id="auth-box-credencial-vip" style="display:none; margin-top:10px;">
+        <button type="button" class="primary-btn" style="background:linear-gradient(90deg, #16191d, #2d333b); border:2px solid var(--bronze); color:var(--bronze);" onclick="abrirCredencialDigitalVIP()">
+          🎟️ Ver Minha Credencial Digital (100% Quitado)
+        </button>
+      </div>
 
       <!-- VISÃO CLARA E OBJETIVA: TOTAL / JÁ PAGO / FALTA PAGAR -->
       <div class="finance-summary-grid">
@@ -1313,27 +1733,57 @@
 
       <!-- Painel de Pagamento das Cotas Selecionadas -->
       <div id="auth-painel-pagamento" style="display:none; background:var(--stone); border:1px solid var(--border); border-radius:6px; padding:14px; margin-top:14px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
           <strong style="color:var(--iron); font-size:13px;" id="auth-selecao-titulo">1 cota selecionada</strong>
           <strong style="color:var(--green); font-size:16px;" id="auth-selecao-valor">Total: R$ 20,00</strong>
         </div>
 
+        <!-- Mini-Recibo Transparente (Quando há dependentes) -->
+        <div id="auth-checkout-breakdown" class="checkout-breakdown-box" style="display:none;"></div>
+
         <label style="font-size:12px; font-weight:700; color:var(--iron); display:block; margin-bottom:4px;">Forma de Pagamento:</label>
         <select id="auth-forma-pagamento" onchange="alternarBoxPix('auth')">
-          <option value="pix">Pix (Confirmação imediata com comprovante)</option>
+          <option value="pix">Pix (QR Code & Copia e Cola com valor exato)</option>
           <option value="dinheiro">Dinheiro (Entregar à liderança)</option>
           <option value="cartao">Cartão de Crédito/Débito</option>
         </select>
 
         <div id="auth-box-pix" class="pix-box">
-          <strong>Dados para Pagamento Pix:</strong>
+          <strong>Pagamento Rápido via Pix:</strong>
+          
+          <div class="pix-qr-wrapper" id="auth-qr-wrapper" style="display:none;">
+            <div id="auth-qr-canvas" class="pix-qr-canvas"></div>
+            <small style="font-size:11px; color:var(--text-muted); margin-top:4px;">Escaneie o QR Code no app do seu banco (valor já preenchido)</small>
+          </div>
+
           <span style="font-size:11px; color:var(--text-muted);" id="auth-pix-titular"></span>
           <div class="pix-code" id="auth-pix-chave"></div>
           <div id="auth-pix-banco" style="font-size:11px; color:var(--iron); background:#fff; padding:6px; border-radius:4px; border:1px solid var(--border); margin-bottom:8px; display:none;"></div>
-          <button type="button" class="primary-btn" style="padding:7px; font-size:12px; background:var(--green); border-color:var(--green); color:white; margin-bottom:8px;" onclick="copiarPix()">📋 Copiar Chave Pix</button>
           
-          <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem ou PDF):</label>
-          <input type="file" id="auth-comprovante-file" accept="image/*,.pdf" style="margin-bottom:0;">
+          <div class="btn-row" style="margin-bottom:10px;">
+            <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px; background:var(--green); border-color:var(--green); color:white;" onclick="copiarPixDinamico('auth')">📋 Copiar Pix (Com Valor)</button>
+            <button type="button" class="primary-btn" style="padding:8px; font-size:11.5px;" onclick="copiarPix()">🔑 Copiar Chave</button>
+          </div>
+          
+          <div style="border-top:1px dashed #86efac; padding-top:10px;">
+            <label style="font-size:12px; font-weight:700; display:block;">Anexar Comprovante (Imagem ou Print):</label>
+            <small style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:6px;">
+              💡 Dica: Seu acesso fica salvo ao abrir o app do banco. Ao voltar, toque em <strong>Colar Print</strong> ou selecione na galeria.
+            </small>
+            <div class="upload-smart-actions">
+              <button type="button" class="btn-upload-gallery" onclick="document.getElementById('auth-comprovante-file').click()">🖼️ Galeria / Foto</button>
+              <button type="button" class="btn-paste-clipboard" onclick="colarPrintAreaTransferencia('auth')">📋 Colar Print</button>
+            </div>
+            <div style="text-align:center; margin-top:6px;">
+              <button type="button" class="btn-link-esqueci" onclick="document.getElementById('auth-comprovante-pdf').click()">Ou anexar arquivo PDF</button>
+            </div>
+            <input type="file" id="auth-comprovante-file" accept="image/*" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
+            <input type="file" id="auth-comprovante-pdf" accept="application/pdf" style="display:none;" onchange="aoSelecionarArquivoComprovante('auth', this)">
+            <div id="auth-comp-preview" class="comprovante-preview-pill" style="display:none;">
+              <span id="auth-comp-nome">📎 Comprovante pronto</span>
+              <button type="button" style="background:none; border:none; color:var(--crimson); font-weight:700; cursor:pointer;" onclick="limparComprovanteAnexado('auth')">✕</button>
+            </div>
+          </div>
         </div>
 
         <button class="primary-btn" id="btn-confirmar-cotas-membro" style="background:var(--green); border-color:var(--green); color:white; margin-top:10px;" onclick="salvarPagamentoCotasMembro()">✅ Confirmar Pagamento</button>
@@ -1365,6 +1815,46 @@
   </div>
 </div>
 
+<!-- Modal: Credencial Digital VIP -->
+<div class="modal" id="modal-credencial-vip">
+  <div class="modal-content" style="max-width: 440px;">
+    <h3>🎟️ Credencial Oficial</h3>
+    <div id="credencial-print-area" class="credencial-card-vip">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(184,125,75,0.4); padding-bottom:10px; margin-bottom:12px;">
+        <div>
+          <span style="font-size:10px; letter-spacing:2px; color:var(--bronze); font-weight:700; text-transform:uppercase;" id="cred-subtitulo">IBAC • ENCONTRO DOS VARÕES</span>
+          <h4 style="margin:2px 0 0 0; font-family:'Cinzel', serif; font-size:20px; color:#fff;" id="cred-evento-titulo">BENDITOS 2027</h4>
+        </div>
+        <span class="credencial-stamp">✅ QUITADO</span>
+      </div>
+      <div style="margin-bottom:10px;">
+        <small style="font-size:10px; color:#94a3b8; text-transform:uppercase;">Participante Titular</small>
+        <div style="font-size:17px; font-weight:700; color:#fff;" id="cred-titular-nome"></div>
+      </div>
+      <div id="cred-dependentes-box" style="margin-bottom:10px; display:none;">
+        <small style="font-size:10px; color:#94a3b8; text-transform:uppercase;">Dependentes Vinculados</small>
+        <div style="font-size:13px; color:var(--bronze); font-weight:600;" id="cred-dependentes-lista"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; background:rgba(0,0,0,0.28); padding:10px; border-radius:6px; font-size:12px;">
+        <div>
+          <span style="color:#94a3b8; display:block; font-size:10px;">VAGAS RESERVADAS</span>
+          <strong id="cred-qtd-pessoas" style="color:#fff;">1 Pessoa</strong>
+        </div>
+        <div>
+          <span style="color:#94a3b8; display:block; font-size:10px;">TRANSPORTE</span>
+          <strong id="cred-transporte" style="color:#fff;">Carro Próprio</strong>
+        </div>
+        <div>
+          <span style="color:#94a3b8; display:block; font-size:10px;">CÓDIGO</span>
+          <strong id="cred-registro-id" style="color:var(--bronze); font-family:monospace;">#001</strong>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="primary-btn bronze-btn" style="margin-top:14px;" onclick="baixarCredencialPDF()">📥 Salvar Credencial em PDF</button>
+    <button type="button" class="btn-close" onclick="fecharModal('modal-credencial-vip')">Fechar</button>
+  </div>
+</div>
+
 <!-- Modal: Gerenciador Administrativo de Cotas -->
 <div class="modal" id="modal-admin-cotas">
   <div class="modal-content" style="max-width: 600px;">
@@ -1379,7 +1869,7 @@
     </div>
 
     <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
-      Toque em uma cota pendente para dar baixa manual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
+      Toque em uma cota pendente/em análise para aprovar baixa manual ou clique em <strong>📎 Recibo</strong> para auditar o comprovante.
     </p>
 
     <div class="carne-grid" id="admin-carne-grid"></div>
@@ -1400,21 +1890,19 @@
     <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Telefone Secundário</label>
     <input type="text" id="edit-tel2" placeholder="Telefone 2">
 
+    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">🚌 Transporte</label>
+    <select id="edit-transporte">
+      <option value="proprio">🚗 Carro Próprio</option>
+      <option value="onibus">🚌 Precisa de Ônibus / Van</option>
+      <option value="carona">🤝 Oferece Carona</option>
+    </select>
+
     <div class="box-dependente">
-      <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--iron); cursor:pointer;">
-        <input type="checkbox" id="edit-tem-dep" onchange="toggleCamposDependente('edit')" style="width:auto; margin:0;">
-        Possui Dependente / Acompanhante vinculado
-      </label>
-      <div id="edit-dep-campos" style="display:none; margin-top:10px;">
-        <input type="text" id="edit-dep-nome" placeholder="Nome do Dependente">
-        <select id="edit-dep-parentesco" style="margin-bottom:0;">
-          <option value="Filho">Filho</option>
-          <option value="Irmão">Irmão</option>
-          <option value="Pai">Pai</option>
-          <option value="Sobrinho">Sobrinho</option>
-          <option value="Outro">Outro</option>
-        </select>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:13px; font-weight:700; color:var(--iron);">👥 Dependentes / Acompanhantes</span>
+        <button type="button" class="btn-outline-bronze" onclick="adicionarCampoDependenteUI('edit')">+ Adicionar Dependente</button>
       </div>
+      <div id="edit-lista-dependentes" style="margin-top:8px;"></div>
     </div>
 
     <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">📅 Prazo / Previsão de Pagamento</label>
@@ -1493,7 +1981,6 @@
     { texto: "Sede fortes e destemidos, não vos assusteis, porque o Senhor vosso Deus vai adiante de vós e jamais vos desamparará.", ref: "Deuteronômio 31:6" }
   ];
 
-  // Mensagens de incentivo dinâmicas para a barra de progresso
   const mensagensIncentivo = [
     "Cada cota quitada é uma semente plantada no que Deus vai fazer na sua vida neste encontro!",
     "Constância vence qualquer obstáculo: continue firme passo a passo, sua conquista já está em andamento.",
@@ -1510,6 +1997,7 @@
   let graficoPresencaObj = null, graficoFinanceiroObj = null;
   let timerInterval = null;
   let emProcessamentoNuvem = false;
+  let deferredInstallPrompt = null;
 
   let tipoGraficoPresenca = 'doughnut';
   let tipoGraficoFinancas = 'doughnut';
@@ -1519,6 +2007,9 @@
   let cacheComprovantes = {};
   let ultimoIdxIncentivo = -1;
 
+  // Armazena o comprovante pronto (via Galeria, PDF ou Colar Print) antes de salvar
+  let anexoTemporario = { reg: null, auth: null };
+
   let configuracoes = {
     tituloEvento: "BENDITOS",
     anoEvento: "2027",
@@ -1526,11 +2017,18 @@
     mensagemPadrao: "Shalom, {nome}!\n\nPassando para lembrar do nosso \n⚔️ {evento} {ano} ⚔️\n\nVocê já quitou {pagas} de {total_cotas} cotas (R$ {pago_valor}). Falta apenas R$ {restante} para concluir!\n\n🔑 Sua senha de acesso: {codigo}\n\nContamos com você!",
     valorCota: 200.00,
     qtdCotas: 10,
+    vagasMaximas: 0,
+    exigirAuditoriaPix: "sim",
+    localNome: "",
+    localMaps: "",
+    localDesc: "",
     dataEvento: "2027-11-20T19:00",
     dataLimitePagamento: "2027-11-10",
     chavePix: "",
-    titularPix: "",
+    titularPix: "IBAC",
+    cidadePix: "NOVA IGUACU",
     infoBancaria: "",
+    whatsappTesouraria: "",
     modoVersiculo: "aleatorio",
     versiculoTexto: "",
     versiculoReferencia: ""
@@ -1544,7 +2042,294 @@
   ];
 
   let varoes = [];
+  let despesas = [];
   let varoesFiltrados = [];
+
+  // ==========================================
+  // SANITIZAÇÃO DE SEGURANÇA (ANTI-XSS)
+  // ==========================================
+  function esc(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // ==========================================
+  // PWA & COMPARTILHAMENTO NATIVO (WEB SHARE TARGET)
+  // ==========================================
+  function configurarManifestoPWA() {
+    try {
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const manifest = {
+        name: `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'} — IBAC`,
+        short_name: `${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'}`,
+        start_url: baseUrl,
+        display: "standalone",
+        background_color: "#16191d",
+        theme_color: "#16191d",
+        share_target: {
+          action: `${baseUrl}?share_target=1`,
+          method: "POST",
+          enctype: "multipart/form-data",
+          params: {
+            title: "title",
+            text: "text",
+            files: [{
+              name: "comprovante",
+              accept: ["image/*", "application/pdf"]
+            }]
+          }
+        }
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+      const link = document.getElementById("pwa-manifest-link");
+      if (link) link.href = URL.createObjectURL(blob);
+    } catch (e) {}
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const btn = document.getElementById("btn-instalar-pwa");
+    if (btn) btn.style.display = "flex";
+  });
+
+  window.instalarAplicativoPWA = async function() {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+      if (outcome === 'accepted') {
+        document.getElementById("btn-instalar-pwa").style.display = "none";
+      }
+      deferredInstallPrompt = null;
+    } else {
+      alert("Para instalar o atalho no celular:\n\n• Android (Chrome): Toque nos 3 pontinhos (⋮) no canto superior e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n• iPhone (Safari): Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha 'Adicionar à Tela de Início'.");
+    }
+  };
+
+  // ==========================================
+  // PERSISTÊNCIA DE SESSÃO DO PARTICIPANTE (AO IR PARA O BANCO)
+  // ==========================================
+  function salvarSessaoMembroLocal(varaoId, cotasSel = []) {
+    try {
+      const payload = {
+        varaoId: varaoId,
+        cotasSel: cotasSel,
+        timestamp: Date.now()
+      };
+      sessionStorage.setItem("benditos_membro_sessao", JSON.stringify(payload));
+      localStorage.setItem("benditos_membro_sessao_recente", JSON.stringify(payload));
+    } catch (e) {}
+  }
+
+  function limparSessaoMembroLocal() {
+    try {
+      sessionStorage.removeItem("benditos_membro_sessao");
+      localStorage.removeItem("benditos_membro_sessao_recente");
+    } catch (e) {}
+  }
+
+  function verificarRetornoSessaoMembro() {
+    try {
+      const raw = sessionStorage.getItem("benditos_membro_sessao") || localStorage.getItem("benditos_membro_sessao_recente");
+      if (!raw) return;
+      const sessao = JSON.parse(raw);
+      // Mantém sessão ativa por até 30 minutos para facilitar ir no app do banco e voltar
+      if (!sessao || !sessao.varaoId || (Date.now() - sessao.timestamp > 30 * 60 * 1000)) {
+        limparSessaoMembroLocal();
+        return;
+      }
+      const v = varoes.find(x => x.id === sessao.varaoId);
+      if (v) {
+        document.getElementById("modal-auto-atualizacao").classList.add("active");
+        abrirPainelPrivadoCarne(v, sessao.cotasSel || []);
+      }
+    } catch (e) {}
+  }
+
+  window.encerrarSessaoMembro = function() {
+    limparSessaoMembroLocal();
+    cotasSelecionadasMembro = [];
+    anexoTemporario.auth = null;
+    document.getElementById("step-update-membro").style.display = "none";
+    document.getElementById("step-auth-membro").style.display = "block";
+  };
+
+  // ==========================================
+  // GERADOR DE PIX EMV (BR CODE) COM VALOR EXATO + QR CODE
+  // ==========================================
+  function normalizarTextoPix(str, maxLen) {
+    return (str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9 ]/g, "")
+      .toUpperCase()
+      .trim()
+      .slice(0, maxLen);
+  }
+
+  function calcularCRC16Pix(payload) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < payload.length; i++) {
+      crc ^= payload.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) {
+        if ((crc & 0x8000) !== 0) {
+          crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+        } else {
+          crc = (crc << 1) & 0xFFFF;
+        }
+      }
+    }
+    return crc.toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  function emvField(id, value) {
+    const len = String(value.length).padStart(2, '0');
+    return `${id}${len}${value}`;
+  }
+
+  function gerarPayloadPixEMV(valorNumerico, txid = "BENDITOS2027") {
+    const chave = (configuracoes.chavePix || "").trim();
+    if (!chave) return "";
+
+    const nomeRecebedor = normalizarTextoPix(configuracoes.titularPix || "IBAC BENDITOS", 25) || "IBAC BENDITOS";
+    const cidadeRecebedor = normalizarTextoPix(configuracoes.cidadePix || "NOVA IGUACU", 15) || "BRASIL";
+    const txidLimpo = (txid || "BENDITOS2027").replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 25) || "***";
+
+    const gui = emvField("00", "br.gov.bcb.pix");
+    const keyField = emvField("01", chave);
+    const merchantAccount = emvField("26", gui + keyField);
+
+    let payload = "";
+    payload += emvField("00", "01");
+    payload += merchantAccount;
+    payload += emvField("52", "0000");
+    payload += emvField("53", "986");
+    if (valorNumerico && valorNumerico > 0) {
+      payload += emvField("54", Number(valorNumerico).toFixed(2));
+    }
+    payload += emvField("58", "BR");
+    payload += emvField("59", nomeRecebedor);
+    payload += emvField("60", cidadeRecebedor);
+    payload += emvField("62", emvField("05", txidLimpo));
+    payload += "6304";
+
+    return payload + calcularCRC16Pix(payload);
+  }
+
+  function renderizarQRCodePix(prefixo, valorTotal, txid) {
+    const wrapper = document.getElementById(`${prefixo}-qr-wrapper`);
+    const container = document.getElementById(`${prefixo}-qr-canvas`);
+    if (!wrapper || !container) return;
+
+    const payload = gerarPayloadPixEMV(valorTotal, txid);
+    if (!payload || typeof QRCode === "undefined") {
+      wrapper.style.display = "none";
+      return;
+    }
+
+    container.innerHTML = "";
+    wrapper.style.display = "flex";
+    new QRCode(container, {
+      text: payload,
+      width: 170,
+      height: 170,
+      colorDark: "#16191d",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+
+  window.copiarPixDinamico = function(prefixo) {
+    if (!configuracoes.chavePix) return alert("Nenhuma chave Pix configurada pela liderança.");
+    let valor = 0;
+    let txid = "BENDITOS2027";
+
+    if (prefixo === "auth") {
+      const id = parseInt(document.getElementById("auth-casal-id").value);
+      const v = varoes.find(x => x.id === id);
+      if (v && cotasSelecionadasMembro.length > 0) {
+        valor = cotasSelecionadasMembro.length * obterValorParcelaInscricao(v);
+        txid = `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`;
+      }
+    } else if (prefixo === "reg") {
+      const qtd = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
+      const deps = lerDependentesDoForm("reg");
+      const mult = 1 + deps.length;
+      valor = qtd * obterValorParcelaIndividual() * mult;
+      txid = `BENDNOVOC${qtd}`;
+    }
+
+    const payload = gerarPayloadPixEMV(valor, txid) || configuracoes.chavePix;
+    navigator.clipboard.writeText(payload).then(() => {
+      alert(`✅ Código Pix Copia e Cola copiado${valor > 0 ? ` no valor exato de R$ ${valor.toFixed(2).replace('.', ',')}` : ''}!\n\nAbra o app do seu banco e cole na opção Pix Copia e Cola.`);
+    }).catch(() => {
+      prompt("Copie o código Pix abaixo:", payload);
+    });
+  };
+
+  // ==========================================
+  // COLAR PRINT DA ÁREA DE TRANSFERÊNCIA & ANEXOS
+  // ==========================================
+  window.colarPrintAreaTransferencia = async function(prefixo) {
+    if (!navigator.clipboard || !navigator.clipboard.read) {
+      return alert("Seu navegador não permite colar imagens diretamente por botão. Toque em 'Galeria / Foto' para escolher o print salvo no celular.");
+    }
+    try {
+      const items = await navigator.clipboard.read();
+      for (const item of items) {
+        const imgType = item.types.find(t => t.startsWith("image/"));
+        if (imgType) {
+          const blob = await item.getType(imgType);
+          const file = new File([blob], "print_comprovante.png", { type: imgType });
+          const base64 = await processarComprovanteOtimizado(file);
+          if (base64) {
+            anexoTemporario[prefixo] = { base64, nome: "📋 Print colado da memória" };
+            atualizarPreviewAnexo(prefixo);
+          }
+          return;
+        }
+      }
+      alert("Nenhuma imagem encontrada na área de transferência. Tire o print no app do banco e tente novamente, ou use 'Galeria / Foto'.");
+    } catch (err) {
+      alert("Permissão para ler a área de transferência negada ou indisponível. Use o botão 'Galeria / Foto' para escolher o print.");
+    }
+  };
+
+  window.aoSelecionarArquivoComprovante = async function(prefixo, inputEl) {
+    if (!inputEl.files || inputEl.files.length === 0) return;
+    const file = inputEl.files[0];
+    const base64 = await processarComprovanteOtimizado(file);
+    if (base64) {
+      anexoTemporario[prefixo] = { base64, nome: `📎 ${file.name}` };
+      atualizarPreviewAnexo(prefixo);
+    }
+  };
+
+  function atualizarPreviewAnexo(prefixo) {
+    const box = document.getElementById(`${prefixo}-comp-preview`);
+    const txt = document.getElementById(`${prefixo}-comp-nome`);
+    if (!box || !txt) return;
+    if (anexoTemporario[prefixo]) {
+      txt.innerText = anexoTemporario[prefixo].nome;
+      box.style.display = "flex";
+    } else {
+      box.style.display = "none";
+    }
+  }
+
+  window.limparComprovanteAnexado = function(prefixo) {
+    anexoTemporario[prefixo] = null;
+    const fImg = document.getElementById(`${prefixo}-comprovante-file`);
+    const fPdf = document.getElementById(`${prefixo}-comprovante-pdf`);
+    if (fImg) fImg.value = "";
+    if (fPdf) fPdf.value = "";
+    atualizarPreviewAnexo(prefixo);
+  };
 
   // ==========================================
   // BIOMETRIA / IMPRESSÃO DIGITAL (WEBAUTHN)
@@ -1560,13 +2345,10 @@
     return bytes.buffer;
   }
 
-  // --- BIOMETRIA DOS PARTICIPANTES (CARNÊ) ---
   function obterMapaBiometriaLocal() {
     try {
       return JSON.parse(localStorage.getItem("benditos_bio_creds") || "{}");
-    } catch (e) {
-      return {};
-    }
+    } catch (e) { return {}; }
   }
 
   function salvarMapaBiometriaLocal(mapa) {
@@ -1630,7 +2412,6 @@
         alert("👆 Impressão digital cadastrada com sucesso! Nas próximas vezes, basta tocar em 'Validar com Impressão Digital'.");
       }
     } catch (err) {
-      console.warn("Erro biometria:", err);
       alert("Não foi possível concluir a leitura da impressão digital neste momento. Você pode continuar usando sua senha de 4 dígitos.");
     }
   };
@@ -1684,13 +2465,13 @@
     const mapa = obterMapaBiometriaLocal();
     const temLocal = !!(v.tel1 && mapa[v.tel1]);
 
-    if (temLocal || v.biometriaAtiva) {
+    if (temLocal) {
       badge.innerText = "👆 Biometria Ativa";
       badge.style.background = "var(--green-bg)";
       badge.style.color = "var(--green)";
       if (btn) {
         btn.classList.add("active-bio");
-        btn.innerText = "✅ Impressão Digital Ativa (Clique para revalidar)";
+        btn.innerText = "✅ Impressão Digital Ativa neste Aparelho";
       }
     } else {
       badge.innerText = "🔑 Senha 4 Dígitos";
@@ -1698,18 +2479,16 @@
       badge.style.color = "var(--text-muted)";
       if (btn) {
         btn.classList.remove("active-bio");
-        btn.innerText = "👆 Cadastrar Impressão Digital neste Aparelho";
+        btn.innerText = "👆 Vincular Impressão Digital neste Aparelho";
       }
     }
   }
 
-  // --- BIOMETRIA DA LIDERANÇA (MENU DE LIDERANÇA E PAINEL) ---
+  // --- BIOMETRIA DA LIDERANÇA ---
   function obterMapaBiometriaLider() {
     try {
       return JSON.parse(localStorage.getItem("benditos_lider_bio_creds") || "{}");
-    } catch (e) {
-      return {};
-    }
+    } catch (e) { return {}; }
   }
 
   function salvarMapaBiometriaLider(mapa) {
@@ -1727,7 +2506,7 @@
     }
 
     if (window.location.protocol === "file:") {
-      if (!silencioso) alert("ℹ️ A validação por impressão digital exige que o sistema esteja publicado em HTTPS (GitHub Pages) ou localhost.");
+      if (!silencioso) alert("ℹ️ A validação por impressão digital exige que o sistema esteja publicado em HTTPS ou localhost.");
       return false;
     }
 
@@ -1772,15 +2551,12 @@
         if (isAlfa || isAnalista) renderizarTabelaLideres();
 
         if (!silencioso) {
-          alert(`👆 Biometria cadastrada com sucesso para ${l.nome}!\n\nNas próximas vezes, basta clicar em 'Entrar com Impressão Digital' no menu de Liderança.`);
+          alert(`👆 Biometria cadastrada com sucesso para ${l.nome}!`);
         }
         return true;
       }
     } catch (err) {
-      console.warn("Erro biometria liderança:", err);
-      if (!silencioso) {
-        alert("Não foi possível concluir a leitura da impressão digital neste momento.");
-      }
+      if (!silencioso) alert("Não foi possível concluir a leitura da impressão digital neste momento.");
     }
     return false;
   };
@@ -1793,14 +2569,8 @@
     const l = lideres.find(x => x.nome === nomeSel);
     if (!l) return alert("Perfil não encontrado.");
     if (l.bloqueado) return alert(`⚠️ O perfil de ${l.nome} está bloqueado.`);
-
-    if (!senha) {
-      return alert("Por segurança, digite sua senha atual no campo acima e clique novamente em 'Cadastrar Biometria neste Aparelho'.");
-    }
-
-    if (l.senha !== senha) {
-      return alert("Senha incorreta! Digite sua senha válida para vincular sua impressão digital.");
-    }
+    if (!senha) return alert("Digite sua senha atual no campo acima e clique novamente em 'Cadastrar Biometria neste Aparelho'.");
+    if (l.senha !== senha) return alert("Senha incorreta!");
 
     if (l.primeiroAcesso === true || l.primeiroAcesso === undefined) {
       liderPendentePrimeiroAcesso = l;
@@ -1834,14 +2604,12 @@
     const registro = chaveBusca ? mapa[chaveBusca] : null;
 
     if (!registro || !registro.credId) {
-      return alert("Nenhuma biometria cadastrada para este perfil neste aparelho ainda.\n\nSelecione seu nome, digite sua senha e clique em 'Cadastrar Biometria neste Aparelho' (ou ative dentro do Painel).");
+      return alert("Nenhuma biometria cadastrada para este perfil neste aparelho ainda.");
     }
 
     const l = lideres.find(x => x.nome === registro.nome);
     if (!l) return alert("Perfil de liderança não encontrado na base.");
-    if (l.bloqueado) {
-      return alert(`⚠️ ACESSO BLOQUEADO!\n\nO perfil de ${l.nome} está bloqueado. Peça a outro líder para desbloquear ou a um Analista para redefinir a senha.`);
-    }
+    if (l.bloqueado) return alert(`⚠️ ACESSO BLOQUEADO! O perfil de ${l.nome} está bloqueado.`);
 
     try {
       const challenge = new Uint8Array(32);
@@ -1850,10 +2618,7 @@
       const assertion = await navigator.credentials.get({
         publicKey: {
           challenge: challenge,
-          allowCredentials: [{
-            id: base64ToBuf(registro.credId),
-            type: "public-key"
-          }],
+          allowCredentials: [{ id: base64ToBuf(registro.credId), type: "public-key" }],
           userVerification: "required",
           timeout: 60000
         }
@@ -1864,7 +2629,7 @@
         concluirLoginSucesso(l);
       }
     } catch (err) {
-      alert("Validação biométrica cancelada ou não reconhecida. Tente novamente ou entre com sua senha.");
+      alert("Validação biométrica cancelada ou não reconhecida.");
     }
   };
 
@@ -1913,10 +2678,22 @@
   }
 
   // ==========================================
-  // CÁLCULO FÍSICO E CONTÁBIL (TITULAR + DEPENDENTE)
+  // CÁLCULO FÍSICO, DEPENDENTES MÚLTIPLOS E CONTÁBIL
   // ==========================================
+  function obterDependentes(v) {
+    if (!v) return [];
+    if (Array.isArray(v.dependentes) && v.dependentes.length > 0) {
+      return v.dependentes.filter(d => d && d.nome && d.nome.trim() !== "");
+    }
+    // Retrocompatibilidade com cadastros antigos de 1 dependente
+    if (v.temDependente && v.nomeDependente) {
+      return [{ nome: v.nomeDependente, parentesco: v.parentescoDependente || "Dependente" }];
+    }
+    return [];
+  }
+
   function obterQtdPessoas(v) {
-    return (v && v.temDependente && v.nomeDependente) ? 2 : 1;
+    return 1 + obterDependentes(v).length;
   }
 
   function obterValorParcelaIndividual() {
@@ -1938,7 +2715,7 @@
     const totalCotas = qtd || parseInt(configuracoes.qtdCotas) || 10;
     const arr = [];
     for (let i = 1; i <= totalCotas; i++) {
-      arr.push({ numero: i, pago: false, dataPagamento: "", forma: "", compId: "" });
+      arr.push({ numero: i, status: "pendente", pago: false, valorPago: 0, dataPagamento: "", forma: "", compId: "" });
     }
     return arr;
   }
@@ -1947,30 +2724,110 @@
     const totalCotas = parseInt(configuracoes.qtdCotas) || 10;
     if (!Array.isArray(v.cotas)) {
       v.cotas = gerarCotasIniciais(totalCotas);
-    } else if (v.cotas.length < totalCotas) {
-      for (let i = v.cotas.length + 1; i <= totalCotas; i++) {
-        v.cotas.push({ numero: i, pago: false, dataPagamento: "", forma: "", compId: "" });
+    } else {
+      v.cotas.forEach(c => {
+        if (!c.status) {
+          c.status = c.pago ? "pago" : "pendente";
+        }
+        if (c.status === "pago") c.pago = true;
+      });
+      if (v.cotas.length < totalCotas) {
+        for (let i = v.cotas.length + 1; i <= totalCotas; i++) {
+          v.cotas.push({ numero: i, status: "pendente", pago: false, valorPago: 0, dataPagamento: "", forma: "", compId: "" });
+        }
+      } else if (v.cotas.length > totalCotas) {
+        // Preserva cotas já pagas ou em análise se a liderança reduzir o total de cotas
+        v.cotas = v.cotas.filter((c, idx) => idx < totalCotas || c.status === "pago" || c.status === "em_analise");
       }
     }
     return v.cotas;
   }
 
   function contarCotasPagas(v) {
-    return garantirEstruturaCotas(v).filter(c => c.pago).length;
+    return garantirEstruturaCotas(v).filter(c => c.status === "pago" || c.pago === true).length;
+  }
+
+  function contarCotasEmAnalise(v) {
+    return garantirEstruturaCotas(v).filter(c => c.status === "em_analise").length;
+  }
+
+  function calcularValorArrecadadoInscricao(v) {
+    const cotas = garantirEstruturaCotas(v);
+    const valAtual = obterValorParcelaInscricao(v);
+    return cotas.reduce((acc, c) => {
+      if (c.status === "pago" || c.pago === true) {
+        return acc + (typeof c.valorPago === "number" && c.valorPago > 0 ? c.valorPago : valAtual);
+      }
+      return acc;
+    }, 0);
+  }
+
+  // UI Dinâmica para Múltiplos Dependentes
+  window.adicionarCampoDependenteUI = function(prefixo, nomeVal = "", parentescoVal = "Filho") {
+    const container = document.getElementById(`${prefixo}-lista-dependentes`);
+    if (!container) return;
+    const row = document.createElement("div");
+    row.className = "dep-row-item";
+    row.innerHTML = `
+      <input type="text" class="dep-input-nome" value="${esc(nomeVal)}" placeholder="Nome Completo do Dependente">
+      <select class="dep-input-parentesco">
+        <option value="Filho" ${parentescoVal === 'Filho' ? 'selected' : ''}>Filho</option>
+        <option value="Irmão" ${parentescoVal === 'Irmão' ? 'selected' : ''}>Irmão</option>
+        <option value="Pai" ${parentescoVal === 'Pai' ? 'selected' : ''}>Pai</option>
+        <option value="Sobrinho" ${parentescoVal === 'Sobrinho' ? 'selected' : ''}>Sobrinho</option>
+        <option value="Outro" ${parentescoVal === 'Outro' ? 'selected' : ''}>Acompanhante</option>
+      </select>
+      <button type="button" class="btn-remove-dep" title="Remover" onclick="removerCampoDependenteUI(this, '${prefixo}')">✕</button>
+    `;
+    container.appendChild(row);
+    if (prefixo === "reg") {
+      const aviso = document.getElementById("reg-dep-aviso");
+      if (aviso) aviso.style.display = "block";
+      atualizarResumoCadastro();
+    }
+  };
+
+  window.removerCampoDependenteUI = function(btn, prefixo) {
+    const row = btn.closest(".dep-row-item");
+    if (row) row.remove();
+    if (prefixo === "reg") {
+      const container = document.getElementById("reg-lista-dependentes");
+      const aviso = document.getElementById("reg-dep-aviso");
+      if (aviso && container) aviso.style.display = container.children.length > 0 ? "block" : "none";
+      atualizarResumoCadastro();
+    }
+  };
+
+  function lerDependentesDoForm(prefixo) {
+    const container = document.getElementById(`${prefixo}-lista-dependentes`);
+    if (!container) return [];
+    const rows = container.querySelectorAll(".dep-row-item");
+    const lista = [];
+    rows.forEach(r => {
+      const nome = r.querySelector(".dep-input-nome").value.trim().toUpperCase();
+      const parentesco = r.querySelector(".dep-input-parentesco").value;
+      if (nome) lista.push({ nome, parentesco });
+    });
+    return lista;
   }
 
   // ==========================================
-  // AVALIAÇÃO INTELIGENTE DE PRAZOS (ZERO COBRANÇA SE ESTIVER NO PRAZO)
+  // AVALIAÇÃO INTELIGENTE DE PRAZOS
   // ==========================================
   function avaliarStatusPrazo(v) {
-    const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+    const cotas = garantirEstruturaCotas(v);
+    const totalCotas = cotas.length;
     const pagas = contarCotasPagas(v);
-    const restantes = Math.max(0, totalCotas - pagas);
+    const emAnalise = contarCotasEmAnalise(v);
+    const restantes = Math.max(0, totalCotas - pagas - emAnalise);
     const valParcela = obterValorParcelaInscricao(v);
     const valorFalta = restantes * valParcela;
 
-    if (restantes === 0) {
+    if (pagas >= totalCotas) {
       return { status: "quitado", alerta: false, mensagem: "🏆 Parabéns! Todas as cotas estão 100% quitadas." };
+    }
+    if (restantes === 0 && emAnalise > 0) {
+      return { status: "no-prazo", alerta: false, mensagem: "⏳ Todas as cotas já foram enviadas e estão em conferência pela liderança." };
     }
 
     const hoje = new Date();
@@ -2024,15 +2881,11 @@
           ? `✅ Você está dentro do prazo (Quitação até ${formatarDataBR(configuracoes.dataLimitePagamento)}).`
           : `✅ Situação regular — dentro do cronograma do evento.`);
 
-    return {
-      status: "no-prazo",
-      alerta: false,
-      mensagem: textoNoPrazo
-    };
+    return { status: "no-prazo", alerta: false, mensagem: textoNoPrazo };
   }
 
   // ==========================================
-  // MENSAGEM DE INCENTIVO DINÂMICA
+  // MENSAGEM DE INCENTIVO & VERSÍCULO
   // ==========================================
   window.atualizarMensagemIncentivo = function() {
     let idx = Math.floor(Math.random() * mensagensIncentivo.length);
@@ -2044,9 +2897,6 @@
     if (elMsg) elMsg.innerText = mensagensIncentivo[idx];
   };
 
-  // ==========================================
-  // VERSÍCULO BÍBLICO AUTOMÁTICO A CADA ABERTURA / ATUALIZAÇÃO
-  // ==========================================
   function sortearVersiculoEncorajamento() {
     if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
       document.getElementById("hero-verse-txt").innerText = `"${configuracoes.versiculoTexto}"`;
@@ -2055,18 +2905,14 @@
     }
 
     let ultimoIdx = -1;
-    try {
-      ultimoIdx = parseInt(localStorage.getItem("benditos_ultimo_versiculo_idx") || "-1", 10);
-    } catch (e) {}
+    try { ultimoIdx = parseInt(localStorage.getItem("benditos_ultimo_versiculo_idx") || "-1", 10); } catch (e) {}
 
     let novoIdx = Math.floor(Math.random() * versiculosEncorajamento.length);
     if (versiculosEncorajamento.length > 1 && novoIdx === ultimoIdx) {
       novoIdx = (novoIdx + 1) % versiculosEncorajamento.length;
     }
 
-    try {
-      localStorage.setItem("benditos_ultimo_versiculo_idx", novoIdx.toString());
-    } catch (e) {}
+    try { localStorage.setItem("benditos_ultimo_versiculo_idx", novoIdx.toString()); } catch (e) {}
 
     const escolhido = versiculosEncorajamento[novoIdx];
     document.getElementById("hero-verse-txt").innerText = `"${escolhido.texto}"`;
@@ -2076,11 +2922,6 @@
   window.alternarCampoVersiculoFixo = function() {
     const modo = document.getElementById("config-modo-versiculo").value;
     document.getElementById("box-versiculo-fixo").style.display = (modo === "fixo") ? "block" : "none";
-  };
-
-  window.toggleCamposDependente = function(prefixo) {
-    const ativo = document.getElementById(`${prefixo}-tem-dep`).checked;
-    document.getElementById(`${prefixo}-dep-campos`).style.display = ativo ? "block" : "none";
   };
 
   // ==========================================
@@ -2136,6 +2977,12 @@
     return `${partes[0]} ${partes[partes.length - 1]}`.toUpperCase();
   }
 
+  function labelTransporte(cod) {
+    if (cod === "onibus") return "🚌 Precisa de Ônibus/Van";
+    if (cod === "carona") return "🤝 Oferece Carona";
+    return "🚗 Carro Próprio";
+  }
+
   window.atualizarSugestaoNome = function(prefixo) {
     const n1 = document.getElementById(`${prefixo}-nome1`).value;
     const box = document.getElementById(`${prefixo}-box-sugestao`);
@@ -2151,6 +2998,20 @@
   window.alternarCampoCustomNome = function(prefixo) {
     const concorda = document.getElementById(`${prefixo}-check-concorda`).checked;
     document.getElementById(`${prefixo}-custom-container`).style.display = concorda ? "none" : "block";
+  };
+
+  // ==========================================
+  // COMPARTILHAR CONVITE NO WHATSAPP
+  // ==========================================
+  window.compartilharConviteIrmao = function() {
+    const titulo = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
+    const dataFmt = formatarDataHoraEvento(configuracoes.dataEvento);
+    const link = window.location.href.split('?')[0].split('#')[0];
+    const texto = `⚔️ *${titulo}* — ${configuracoes.subtituloEvento || 'Encontro dos Varões'}\n\n` +
+                  (dataFmt ? `📅 *Data:* ${dataFmt}\n` : ``) +
+                  (configuracoes.localNome ? `📍 *Local:* ${configuracoes.localNome}\n` : ``) +
+                  `\nFaça sua inscrição e acompanhe seu carnê digital pelo link oficial:\n👉 ${link}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
   };
 
   // ==========================================
@@ -2239,6 +3100,7 @@
 
       if (dados && Array.isArray(dados.varoes) && dados.varoes.length > 0) {
         varoes = dados.varoes;
+        despesas = Array.isArray(dados.despesas) ? dados.despesas : [];
         let precisouAtualizar = false;
 
         varoes.forEach(v => {
@@ -2278,9 +3140,8 @@
             id: 1,
             nome: "BISPO JADER",
             nomeCompleto: "BISPO JADER SANTOS",
-            temDependente: false,
-            nomeDependente: "",
-            parentescoDependente: "",
+            dependentes: [],
+            transporte: "proprio",
             confirmado: false,
             tel1: "",
             tel2: "",
@@ -2299,9 +3160,8 @@
             id: 1,
             nome: "BISPO JADER",
             nomeCompleto: "BISPO JADER SANTOS",
-            temDependente: false,
-            nomeDependente: "",
-            parentescoDependente: "",
+            dependentes: [],
+            transporte: "proprio",
             confirmado: false,
             tel1: "",
             tel2: "",
@@ -2314,6 +3174,7 @@
       }
     }
 
+    configurarManifestoPWA();
     atualizarUIConfiguracoes(true);
     if (configuracoes.modoVersiculo === "fixo" && configuracoes.versiculoTexto) {
       sortearVersiculoEncorajamento();
@@ -2321,7 +3182,8 @@
     iniciarContagem();
     renderizarLista();
     atualizarAlertaBloqueio();
-    setInterval(sincronizarEmSegundoPlano, 4500);
+    verificarRetornoSessaoMembro();
+    setInterval(sincronizarEmSegundoPlano, 5000);
   }
 
   async function salvarNoBanco() {
@@ -2330,9 +3192,9 @@
     try {
       emProcessamentoNuvem = true;
       await fetch(DB_URL, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ varoes, lideres, configuracoes })
+        body: JSON.stringify({ varoes, lideres, configuracoes, despesas })
       });
     } catch (erro) {
       console.error("Erro ao salvar no Firebase:", erro);
@@ -2352,13 +3214,19 @@
       const dados = await res.json();
       if (!dados || !dados.varoes) return;
 
-      const dadosNuvemStr = JSON.stringify(dados);
-      const dadosLocaisStr = JSON.stringify({ varoes, lideres, configuracoes });
+      const dadosNuvemStr = JSON.stringify({
+        varoes: dados.varoes,
+        lideres: dados.lideres || lideres,
+        configuracoes: dados.configuracoes || configuracoes,
+        despesas: dados.despesas || []
+      });
+      const dadosLocaisStr = JSON.stringify({ varoes, lideres, configuracoes, despesas });
 
       if (dadosNuvemStr !== dadosLocaisStr) {
         varoes = dados.varoes;
         varoes.forEach(v => garantirEstruturaCotas(v));
         if (dados.lideres) lideres = dados.lideres;
+        if (Array.isArray(dados.despesas)) despesas = dados.despesas;
         configuracoes = dados.configuracoes || configuracoes;
         atualizarUIConfiguracoes(false);
         renderizarLista();
@@ -2382,11 +3250,18 @@
     setSafe('msg-padrao', configuracoes.mensagemPadrao);
     setSafe('config-valor', configuracoes.valorCota);
     setSafe('config-cotas', configuracoes.qtdCotas || 10);
+    setSafe('config-vagas-max', configuracoes.vagasMaximas || 0);
+    setSafe('config-auditoria-pix', configuracoes.exigirAuditoriaPix || "sim");
+    setSafe('config-local-nome', configuracoes.localNome);
+    setSafe('config-local-maps', configuracoes.localMaps);
+    setSafe('config-local-desc', configuracoes.localDesc);
     setSafe('config-data', configuracoes.dataEvento);
     setSafe('config-data-limite', configuracoes.dataLimitePagamento);
     setSafe('config-pix', configuracoes.chavePix);
     setSafe('config-titular-pix', configuracoes.titularPix);
+    setSafe('config-cidade-pix', configuracoes.cidadePix || "NOVA IGUACU");
     setSafe('config-info-bancaria', configuracoes.infoBancaria);
+    setSafe('config-zap-tesouraria', configuracoes.whatsappTesouraria);
     setSafe('config-modo-versiculo', configuracoes.modoVersiculo || "aleatorio");
     setSafe('config-versiculo-texto', configuracoes.versiculoTexto);
     setSafe('config-versiculo-ref', configuracoes.versiculoReferencia);
@@ -2397,7 +3272,7 @@
     const sub = configuracoes.subtituloEvento || "Encontro dos Varões • IBAC";
 
     document.title = `${titulo} ${ano} — ${sub}`;
-    document.getElementById('hero-title-display').innerHTML = `${titulo} <span>${ano}</span>`;
+    document.getElementById('hero-title-display').innerHTML = `${esc(titulo)} <span>${esc(ano)}</span>`;
     document.getElementById('hero-sub-display').innerText = sub;
 
     const totalValor = parseFloat(configuracoes.valorCota || 200);
@@ -2405,12 +3280,45 @@
     const valorParcela = totalValor / totalCotas;
 
     document.getElementById('display-valor-publico').innerText = `Investimento por Pessoa: R$ ${totalValor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-    document.getElementById('display-parcela-publico').innerText = `Plano Mensal: ${totalCotas} cotas de R$ ${valorParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})} por pessoa (pode incluir dependente no cadastro)`;
-
+    document.getElementById('display-parcela-publico').innerText = `Plano Mensal: ${totalCotas} cotas de R$ ${valorParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})} por pessoa (pode incluir dependentes no cadastro)`;
     document.getElementById('hero-data-evento').innerText = formatarDataHoraEvento(configuracoes.dataEvento);
 
+    // Termômetro de Vagas na Tela Pública
+    const vagasMax = parseInt(configuracoes.vagasMaximas) || 0;
+    const boxVagas = document.getElementById("box-termometro-vagas");
+    if (vagasMax > 0) {
+      let totalPessoas = 0;
+      varoes.forEach(v => totalPessoas += obterQtdPessoas(v));
+      const percVagas = Math.min(100, Math.round((totalPessoas / vagasMax) * 100));
+      document.getElementById("txt-vagas-contagem").innerText = `${totalPessoas} de ${vagasMax} vagas preenchidas (${percVagas}%)`;
+      document.getElementById("bar-vagas-fill").style.width = `${percVagas}%`;
+      boxVagas.style.display = "block";
+    } else {
+      boxVagas.style.display = "none";
+    }
+
+    // Bloco Sobre o Encontro
+    const boxSobre = document.getElementById("box-sobre-encontro");
+    const btnConvidarBarra = document.getElementById("btn-convidar-barra");
+    if (configuracoes.localNome || configuracoes.localDesc) {
+      document.getElementById("pub-local-nome").innerText = `📍 ${configuracoes.localNome || 'Local do Encontro'}`;
+      document.getElementById("pub-local-desc").innerText = configuracoes.localDesc || "";
+      const btnMaps = document.getElementById("btn-pub-maps");
+      if (configuracoes.localMaps) {
+        btnMaps.href = configuracoes.localMaps;
+        btnMaps.style.display = "inline-flex";
+      } else {
+        btnMaps.style.display = "none";
+      }
+      boxSobre.style.display = "flex";
+      if (btnConvidarBarra) btnConvidarBarra.style.display = "none";
+    } else {
+      boxSobre.style.display = "none";
+      if (btnConvidarBarra) btnConvidarBarra.style.display = "block";
+    }
+
     const pixChave = configuracoes.chavePix || "Chave não cadastrada ainda";
-    const titular = configuracoes.titularPix ? `Titular: ${configuracoes.titularPix}` : "";
+    const titular = configuracoes.titularPix ? `Recebedor: ${configuracoes.titularPix}` : "";
     const infoBanco = configuracoes.infoBancaria ? `Dados Bancários: ${configuracoes.infoBancaria}` : "";
 
     ['reg', 'auth'].forEach(pref => {
@@ -2434,11 +3342,18 @@
     configuracoes.mensagemPadrao = document.getElementById('msg-padrao').value;
     configuracoes.valorCota = parseFloat(document.getElementById('config-valor').value) || 200;
     configuracoes.qtdCotas = parseInt(document.getElementById('config-cotas').value) || 10;
+    configuracoes.vagasMaximas = parseInt(document.getElementById('config-vagas-max').value) || 0;
+    configuracoes.exigirAuditoriaPix = document.getElementById('config-auditoria-pix').value;
+    configuracoes.localNome = document.getElementById('config-local-nome').value.trim();
+    configuracoes.localMaps = document.getElementById('config-local-maps').value.trim();
+    configuracoes.localDesc = document.getElementById('config-local-desc').value.trim();
     configuracoes.dataEvento = document.getElementById('config-data').value;
     configuracoes.dataLimitePagamento = document.getElementById('config-data-limite').value;
     configuracoes.chavePix = document.getElementById('config-pix').value.trim();
     configuracoes.titularPix = document.getElementById('config-titular-pix').value.trim();
+    configuracoes.cidadePix = document.getElementById('config-cidade-pix').value.trim() || "NOVA IGUACU";
     configuracoes.infoBancaria = document.getElementById('config-info-bancaria').value.trim();
+    configuracoes.whatsappTesouraria = document.getElementById('config-zap-tesouraria').value.replace(/\D/g, '');
     configuracoes.modoVersiculo = document.getElementById('config-modo-versiculo').value;
     configuracoes.versiculoTexto = document.getElementById('config-versiculo-texto').value.trim();
     configuracoes.versiculoReferencia = document.getElementById('config-versiculo-ref').value.trim();
@@ -2448,13 +3363,13 @@
     sortearVersiculoEncorajamento();
     iniciarContagem();
     renderizarLista();
-    alert("Configurações e prazos da edição salvos com sucesso!");
+    alert("Configurações da edição salvas com sucesso!");
   };
 
   window.iniciarNovaEdicaoAnual = async function() {
     if (!isAlfa && !isAnalista) return;
     const novoAno = document.getElementById('config-ano').value.trim() || "2028";
-    const ok1 = confirm(`ATENÇÃO: Você está prestes a iniciar uma nova edição (${novoAno}).\n\nIsso removerá todos os inscritos atuais (mantendo apenas o Bispo Jader zerado) para começar o novo ano do zero.\n\nCertifique-se de ter exportado os relatórios PDF/Excel antes.\n\nDeseja continuar?`);
+    const ok1 = confirm(`ATENÇÃO: Você está prestes a iniciar uma nova edição (${novoAno}).\n\nIsso removerá todos os inscritos e despesas atuais (mantendo apenas o Bispo Jader zerado) para começar o novo ano do zero.\n\nCertifique-se de ter exportado os relatórios PDF/Excel antes.\n\nDeseja continuar?`);
     if (!ok1) return;
 
     varoes = [
@@ -2462,9 +3377,8 @@
         id: 1,
         nome: "BISPO JADER",
         nomeCompleto: "BISPO JADER SANTOS",
-        temDependente: false,
-        nomeDependente: "",
-        parentescoDependente: "",
+        dependentes: [],
+        transporte: "proprio",
         confirmado: false,
         tel1: "",
         tel2: "",
@@ -2474,6 +3388,7 @@
         cotas: gerarCotasIniciais()
       }
     ];
+    despesas = [];
     await salvarNoBanco();
     paginaAtual = 1;
     renderizarLista();
@@ -2485,12 +3400,25 @@
     document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
     btnEl.classList.add('active');
     document.getElementById(tabId).classList.add('active');
+    if (tabId === 'tab-auditoria') renderizarPainelAuditoriaEDespesas();
+    if (tabId === 'tab-portaria') renderizarPortaria();
   };
 
   window.alternarBoxPix = function(prefixo) {
     const valor = document.getElementById(`${prefixo}-forma-pagamento`).value;
     const box = document.getElementById(`${prefixo}-box-pix`);
     if (box) box.style.display = (valor === 'pix') ? 'block' : 'none';
+    if (valor === 'pix') {
+      if (prefixo === 'reg') atualizarResumoCadastro();
+      if (prefixo === 'auth') {
+        const id = parseInt(document.getElementById("auth-casal-id").value);
+        const v = varoes.find(x => x.id === id);
+        if (v && cotasSelecionadasMembro.length > 0) {
+          const totalSel = cotasSelecionadasMembro.length * obterValorParcelaInscricao(v);
+          renderizarQRCodePix('auth', totalSel, `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`);
+        }
+      }
+    }
   };
 
   window.copiarPix = function() {
@@ -2515,6 +3443,15 @@
     renderizarLista();
   };
 
+  window.abrirAtalhoCarneParticipante = function(id) {
+    const v = varoes.find(x => x.id === id);
+    abrirModalAutoAtualizacao();
+    if (v && v.tel1) {
+      document.getElementById("auth-membro-tel").value = formatarTelefoneVisual(v.tel1);
+      document.getElementById("auth-membro-codigo").focus();
+    }
+  };
+
   function renderizarLista() {
     const container = document.getElementById("lista-varoes");
     const termo = document.getElementById("busca-input-geral").value.toLowerCase();
@@ -2524,6 +3461,7 @@
     const filtroPagamento = document.getElementById("filtro-pagamento") ? document.getElementById("filtro-pagamento").value : 'todos';
     const filtroPrazo = document.getElementById("filtro-prazo") ? document.getElementById("filtro-prazo").value : 'todos';
     const filtroDep = document.getElementById("filtro-dependente") ? document.getElementById("filtro-dependente").value : 'todos';
+    const filtroTransp = document.getElementById("filtro-transporte") ? document.getElementById("filtro-transporte").value : 'todos';
     
     container.innerHTML = "";
     varoesFiltrados = [];
@@ -2539,8 +3477,11 @@
 
     lista.forEach((v) => {
       const pagas = contarCotasPagas(v);
+      const emAnalise = contarCotasEmAnalise(v);
+      const deps = obterDependentes(v);
       const avalPrazo = avaliarStatusPrazo(v);
-      const textoBusca = `${v.nome} ${v.nomeDependente || ''}`.toLowerCase();
+      const nomesDepsStr = deps.map(d => d.nome).join(" ");
+      const textoBusca = `${v.nome} ${nomesDepsStr}`.toLowerCase();
       if (!textoBusca.includes(termo)) return;
 
       if (isLider || isAnalista) {
@@ -2548,11 +3489,13 @@
         if (filtroPresenca === 'pendentes' && v.confirmado) return;
         if (filtroPagamento === 'quitados' && pagas < totalCotas) return;
         if (filtroPagamento === 'andamento' && (pagas === 0 || pagas >= totalCotas)) return;
-        if (filtroPagamento === 'nao-iniciados' && pagas > 0) return;
+        if (filtroPagamento === 'nao-iniciados' && (pagas > 0 || emAnalise > 0)) return;
+        if (filtroPagamento === 'em-analise' && emAnalise === 0) return;
         if (filtroPrazo === 'atraso' && !avalPrazo.alerta) return;
         if (filtroPrazo === 'no-prazo' && avalPrazo.alerta) return;
-        if (filtroDep === 'com-dep' && !v.temDependente) return;
-        if (filtroDep === 'sem-dep' && v.temDependente) return;
+        if (filtroDep === 'com-dep' && deps.length === 0) return;
+        if (filtroDep === 'sem-dep' && deps.length > 0) return;
+        if (filtroTransp !== 'todos' && (v.transporte || 'proprio') !== filtroTransp) return;
       }
 
       varoesFiltrados.push(v);
@@ -2576,8 +3519,9 @@
 
     paginaSlice.forEach((v) => {
       const pagas = contarCotasPagas(v);
+      const emAnalise = contarCotasEmAnalise(v);
+      const deps = obterDependentes(v);
       const qtdPessoas = obterQtdPessoas(v);
-      const valParcelaInscricao = obterValorParcelaInscricao(v);
       const valTotalInscricao = obterValorTotalInscricao(v);
       const ehBispo = v.nome.includes("BISPO") || v.nome.includes("JADER");
       const avalPrazo = avaliarStatusPrazo(v);
@@ -2587,52 +3531,55 @@
       const div = document.createElement("div");
       div.className = `item ${ehBispo ? 'bispo-destaque' : ''}`;
       
-      let badgeDepHtml = "";
-      if (v.temDependente && v.nomeDependente) {
-        badgeDepHtml = `<span class="badge-dependente-pub">+ ${v.parentescoDependente || 'Dependente'}: ${obterPrimeiroEUltimoNome(v.nomeDependente)}</span>`;
-      }
+      let badgesDepHtml = deps.map(d =>
+        `<span class="badge-dependente-pub">+ ${esc(d.parentesco || 'Dep.')}: ${esc(obterPrimeiroEUltimoNome(d.nome))}</span>`
+      ).join(" ");
+
+      let btnAtalhoCarne = (!isLider && !isAnalista)
+        ? `<button type="button" class="btn-atalho-carne" title="Abrir Meu Carnê" onclick="abrirAtalhoCarneParticipante(${v.id})">💳 Carnê</button>`
+        : ``;
 
       let html = `<div class="casal-info">
-                    <span class="casal-nome">${v.nome} ${badgeDepHtml}</span>`;
+                    <span class="casal-nome">${esc(v.nome)} ${badgesDepHtml} ${btnAtalhoCarne}</span>`;
       
-      // DETALHES FINANCEIROS E PRAZOS: APENAS LIDERANÇA
       if (isLider || isAnalista) {
         const tel1Visual = v.tel1 ? formatarTelefoneVisual(v.tel1) : 'Sem WhatsApp';
         const tel2Visual = v.tel2 ? formatarTelefoneVisual(v.tel2) : '';
-        html += `<span class="casal-tel">📱 ${tel1Visual} ${tel2Visual ? '| ' + tel2Visual : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas (físico)' : 'pessoa'}</strong></span>`;
+        html += `<span class="casal-tel">📱 ${esc(tel1Visual)} ${tel2Visual ? '| ' + esc(tel2Visual) : ''} • <strong>${qtdPessoas} ${qtdPessoas > 1 ? 'pessoas' : 'pessoa'}</strong> • <span class="badge-transporte">${labelTransporte(v.transporte)}</span></span>`;
         
         const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
-        const valorPago = pagas * valParcelaInscricao;
+        const valorPago = calcularValorArrecadadoInscricao(v);
         const valorFalta = Math.max(0, valTotalInscricao - valorPago);
         html += `<div class="progress-track">
                    <div class="progress-fill" style="width:${perc}%;"></div>
                  </div>
                  <span style="font-size:11px; font-weight:700; color:${pagas >= totalCotas ? 'var(--green)' : 'var(--text-muted)'};">
-                   Pago: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} • Falta: R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas} cotas)
+                   Validado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} • Falta: R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas} cotas)
                  </span>`;
 
         let badgePrazoHtml = avalPrazo.alerta
-          ? `<span class="badge-atraso">${avalPrazo.titulo}</span>`
+          ? `<span class="badge-atraso">${esc(avalPrazo.titulo)}</span>`
           : `<span class="badge-em-dia">${avalPrazo.status === 'quitado' ? '🏆 Quitado' : '✅ No Prazo'}</span>`;
 
+        let badgeAnalise = emAnalise > 0 ? `<span class="badge-analise-tag">⏳ ${emAnalise} recibo(s) pendente(s)</span>` : '';
         let badgePrev = v.previsaoPagamento ? `<span class="badge-previsao">📅 Prev: ${formatarDataBR(v.previsaoPagamento)}</span>` : '';
         let btnCodigoOculto = `<button class="btn-recibo" onclick="revelarCodigoAcesso(${v.id}, this)">🔑 Ver Senha</button>`;
 
-        html += `<div class="casal-meta">${badgePrazoHtml} ${badgePrev} ${btnCodigoOculto}</div>`;
+        html += `<div class="casal-meta">${badgePrazoHtml} ${badgeAnalise} ${badgePrev} ${btnCodigoOculto}</div>`;
       }
 
       html += `</div><div class="actions">`;
 
       if (v.confirmado) {
-        html += `<button class="btn-check confirmed" ${ (isLider || isAnalista) ? `onclick="toggleConfirmacaoLider(${v.id})"` : "disabled"}><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
+        html += `<button class="btn-check confirmed" ${(isLider || isAnalista) ? `onclick="toggleConfirmacaoLider(${v.id})"` : "disabled"}><div class="check-box">${iconeCheck}</div>Confirmado</button>`;
       } else {
-        html += `<button class="btn-check" onclick="${ (isLider || isAnalista) ? `toggleConfirmacaoLider(${v.id})` : `abrirValidadorMembro(${v.id}, '${v.nome.replace(/'/g, "\\'")}')`}"><div class="check-box"></div>Confirmar</button>`;
+        html += `<button class="btn-check" onclick="${(isLider || isAnalista) ? `toggleConfirmacaoLider(${v.id})` : `abrirValidadorMembro(${v.id})`}"><div class="check-box"></div>Confirmar</button>`;
       }
 
       if (isLider || isAnalista) {
         let classeCota = 'pago-nao';
         if (pagas >= totalCotas) classeCota = 'pago-quitado';
-        else if (pagas > 0) classeCota = 'pago-parcial';
+        else if (pagas > 0 || emAnalise > 0) classeCota = 'pago-parcial';
 
         html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagas}/${totalCotas})</button>`;
         html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
@@ -2655,7 +3602,7 @@
   window.revelarCodigoAcesso = function(id, btnElement) {
     const v = varoes.find(x => x.id === id);
     if (!v) return;
-    btnElement.outerHTML = `<span class="badge-codigo" style="font-size:11px; font-weight:bold; background:var(--bronze-soft); color:var(--bronze-dark); padding:4px 8px;">🔑 Senha: ${v.codigoAcesso || 'Sem senha'}</span>`;
+    btnElement.outerHTML = `<span class="badge-codigo" style="font-size:11px; font-weight:bold; background:var(--bronze-soft); color:var(--bronze-dark); padding:4px 8px;">🔑 Senha: ${esc(v.codigoAcesso || 'Sem senha')}</span>`;
   };
 
   window.abrirModalComprovante = async function(compId, tituloExtra = "") {
@@ -2703,10 +3650,11 @@
     if (!tel.startsWith("55")) tel = "55" + tel;
 
     const totalCotas = parseInt(configuracoes.qtdCotas || 10);
-    const valParcela = obterValorParcelaInscricao(v);
     const pagas = contarCotasPagas(v);
-    const valorPago = (pagas * valParcela).toFixed(2).replace('.', ',');
-    const valorRestante = (Math.max(0, totalCotas - pagas) * valParcela).toFixed(2).replace('.', ',');
+    const valorPagoNum = calcularValorArrecadadoInscricao(v);
+    const valorTotal = obterValorTotalInscricao(v);
+    const valorPago = valorPagoNum.toFixed(2).replace('.', ',');
+    const valorRestante = Math.max(0, valorTotal - valorPagoNum).toFixed(2).replace('.', ',');
 
     let mensagemFinal = (configuracoes.mensagemPadrao || "")
       .replace(/\{nome\}/gi, v.nome)
@@ -2724,7 +3672,7 @@
   }
 
   // ==========================================
-  // DASHBOARD FÍSICO E CONTÁBIL
+  // DASHBOARD FÍSICO, CONTÁBIL, AUDITORIA E PORTARIA
   // ==========================================
   window.alterarTipoVisual = function(categoria, tipo, btn) {
     if (categoria === 'presenca') {
@@ -2753,6 +3701,8 @@
     let emAndamento = 0;
     let naoIniciados = 0;
     let totalArrecadado = 0;
+    let totalEmAnalise = 0;
+    let qtdRecibosEmAnalise = 0;
     let metaTotal = 0;
 
     const contagemPorCota = new Array(totalCotas).fill(0);
@@ -2764,21 +3714,26 @@
       if (v.confirmado) pessoasConfirmadas += qtdP;
 
       const cotas = garantirEstruturaCotas(v);
-      const pagas = cotas.filter(c => c.pago).length;
-      const valParcelaInscricao = obterValorParcelaInscricao(v);
+      const pagas = contarCotasPagas(v);
+      const analise = contarCotasEmAnalise(v);
+      qtdRecibosEmAnalise += analise;
 
-      totalArrecadado += pagas * valParcelaInscricao;
+      const valParcelaInscricao = obterValorParcelaInscricao(v);
+      totalArrecadado += calcularValorArrecadadoInscricao(v);
+      totalEmAnalise += analise * valParcelaInscricao;
       metaTotal += valIndividual * qtdP;
 
       if (pagas >= totalCotas) quitados++;
-      else if (pagas > 0) emAndamento++;
+      else if (pagas > 0 || analise > 0) emAndamento++;
       else naoIniciados++;
 
       cotas.forEach((c, idx) => {
-        if (c.pago && idx < totalCotas) contagemPorCota[idx] += qtdP;
+        if ((c.status === "pago" || c.pago) && idx < totalCotas) contagemPorCota[idx] += qtdP;
       });
     });
 
+    const totalDespesas = despesas.reduce((acc, d) => acc + (parseFloat(d.valor) || 0), 0);
+    const saldoLiquido = totalArrecadado - totalDespesas;
     const pendentesConf = totalPessoasFisicas - pessoasConfirmadas;
     const faltaArrecadar = Math.max(0, metaTotal - totalArrecadado);
     
@@ -2789,6 +3744,15 @@
     document.getElementById("dash-valor").innerText = `R$ ${totalArrecadado.toLocaleString('pt-BR')}`;
     document.getElementById("dash-meta-sub").innerText = `Meta: R$ ${metaTotal.toLocaleString('pt-BR')}`;
     document.getElementById("dash-falta").innerText = `R$ ${faltaArrecadar.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-em-analise-sub").innerText = `Em análise: R$ ${totalEmAnalise.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-saldo-liquido").innerText = `R$ ${saldoLiquido.toLocaleString('pt-BR')}`;
+    document.getElementById("dash-despesas-sub").innerText = `Despesas: R$ ${totalDespesas.toLocaleString('pt-BR')}`;
+
+    const badgeAudit = document.getElementById("badge-pendentes-audit");
+    if (badgeAudit) {
+      badgeAudit.innerText = qtdRecibosEmAnalise;
+      badgeAudit.style.display = qtdRecibosEmAnalise > 0 ? "inline-block" : "none";
+    }
 
     const ctxP = document.getElementById('graficoPresenca').getContext('2d');
     if (graficoPresencaObj) graficoPresencaObj.destroy();
@@ -2854,6 +3818,187 @@
     }
   }
 
+  // --- CONFERÊNCIA DE COMPROVANTES & DESPESAS ---
+  function renderizarPainelAuditoriaEDespesas() {
+    const listaAudit = document.getElementById("lista-auditoria-comprovantes");
+    if (listaAudit) {
+      listaAudit.innerHTML = "";
+      let pendentes = [];
+
+      varoes.forEach(v => {
+        const cotas = garantirEstruturaCotas(v);
+        const valParc = obterValorParcelaInscricao(v);
+        cotas.forEach(c => {
+          if (c.status === "em_analise") {
+            pendentes.push({ varao: v, cota: c, valor: valParc });
+          }
+        });
+      });
+
+      if (pendentes.length === 0) {
+        listaAudit.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted); font-size:13px; background:var(--stone); border-radius:6px;">✅ Nenhum comprovante aguardando conferência no momento.</div>`;
+      } else {
+        pendentes.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "audit-item";
+          div.innerHTML = `
+            <div>
+              <strong style="color:var(--iron); font-size:13.5px;">${esc(item.varao.nome)}</strong>
+              <div style="font-size:12px; color:var(--text-muted);">
+                Cota ${String(item.cota.numero).padStart(2, '0')} • <strong>R$ ${item.valor.toFixed(2).replace('.', ',')}</strong> • Enviado em ${formatarDataBR(item.cota.dataPagamento)}
+              </div>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              ${item.cota.compId ? `<button type="button" class="btn-recibo" onclick="abrirModalComprovante('${esc(item.cota.compId)}', '${esc(item.varao.nome)} — Cota ${item.cota.numero}')">👁️ Ver Recibo</button>` : ''}
+              <button type="button" style="background:var(--green); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, ${item.cota.numero}, true)">✅ Aprovar</button>
+              <button type="button" style="background:var(--crimson); color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" onclick="julgarComprovante(${item.varao.id}, ${item.cota.numero}, false)">❌ Recusar</button>
+            </div>
+          `;
+          listaAudit.appendChild(div);
+        });
+      }
+    }
+
+    const listaDesp = document.getElementById("lista-despesas-admin");
+    if (listaDesp) {
+      listaDesp.innerHTML = "";
+      if (despesas.length === 0) {
+        listaDesp.innerHTML = `<div style="padding:14px; text-align:center; color:var(--text-muted); font-size:12px;">Nenhuma despesa lançada.</div>`;
+      } else {
+        despesas.forEach((d, idx) => {
+          const row = document.createElement("div");
+          row.className = "expense-item";
+          row.innerHTML = `
+            <div>
+              <strong>${esc(d.descricao)}</strong>
+              <small style="display:block; color:var(--text-muted); font-size:11px;">${formatarDataBR(d.data)} • por ${esc(d.autor || 'Liderança')}</small>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="color:var(--crimson);">- R$ ${parseFloat(d.valor).toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong>
+              <button type="button" style="background:none; border:none; color:var(--crimson); cursor:pointer; font-weight:700;" onclick="removerDespesa(${idx})">🗑️</button>
+            </div>
+          `;
+          listaDesp.appendChild(row);
+        });
+      }
+    }
+  }
+
+  window.julgarComprovante = async function(varaoId, numeroCota, aprovar) {
+    const v = varoes.find(x => x.id === varaoId);
+    if (!v) return;
+    const cotas = garantirEstruturaCotas(v);
+    const cota = cotas.find(c => c.numero === numeroCota);
+    if (!cota) return;
+
+    if (aprovar) {
+      cota.status = "pago";
+      cota.pago = true;
+      cota.valorPago = obterValorParcelaInscricao(v);
+      cota.aprovadoPor = liderAtual;
+    } else {
+      if (!confirm(`Recusar o comprovante da Cota ${numeroCota} de ${v.nome} e devolver para Pendente?`)) return;
+      cota.status = "pendente";
+      cota.pago = false;
+      cota.valorPago = 0;
+      cota.dataPagamento = "";
+      cota.compId = "";
+    }
+
+    await salvarNoBanco();
+    renderizarPainelAuditoriaEDespesas();
+    renderizarLista();
+  };
+
+  window.adicionarDespesa = async function() {
+    const desc = document.getElementById("desp-descricao").value.trim();
+    const val = parseFloat(document.getElementById("desp-valor").value);
+    if (!desc || isNaN(val) || val <= 0) return alert("Informe a descrição e um valor válido para a despesa.");
+
+    despesas.unshift({
+      descricao: desc,
+      valor: val,
+      data: new Date().toISOString().split('T')[0],
+      autor: liderAtual
+    });
+
+    document.getElementById("desp-descricao").value = "";
+    document.getElementById("desp-valor").value = "";
+    await salvarNoBanco();
+    renderizarPainelAuditoriaEDespesas();
+  };
+
+  window.removerDespesa = async function(idx) {
+    if (!confirm("Remover este lançamento de despesa?")) return;
+    despesas.splice(idx, 1);
+    await salvarNoBanco();
+    renderizarPainelAuditoriaEDespesas();
+  };
+
+  // --- MODO PORTARIA / CHECK-IN ---
+  window.renderizarPortaria = function() {
+    const container = document.getElementById("lista-portaria-checkin");
+    const termo = (document.getElementById("portaria-busca-input")?.value || "").toLowerCase();
+    if (!container) return;
+
+    let totalPessoas = 0;
+    let presentesPessoas = 0;
+    varoes.forEach(v => {
+      const qp = obterQtdPessoas(v);
+      totalPessoas += qp;
+      if (v.confirmado) presentesPessoas += qp;
+    });
+    document.getElementById("portaria-resumo-pill").innerText = `${presentesPessoas} / ${totalPessoas} Pessoas Presentes`;
+
+    const filtrados = varoes.filter(v => {
+      const deps = obterDependentes(v).map(d => d.nome).join(" ");
+      return `${v.nome} ${deps} ${v.id}`.toLowerCase().includes(termo);
+    }).sort((a, b) => a.nome.localeCompare(b.nome));
+
+    container.innerHTML = "";
+    filtrados.forEach(v => {
+      const totalCotas = parseInt(configuracoes.qtdCotas || 10);
+      const pagas = contarCotasPagas(v);
+      const valTotal = obterValorTotalInscricao(v);
+      const valPago = calcularValorArrecadadoInscricao(v);
+      const falta = Math.max(0, valTotal - valPago);
+      const deps = obterDependentes(v);
+      const depsTxt = deps.length > 0 ? `<div style="font-size:12px; color:var(--bronze-dark); font-weight:600;">👥 Acompanhantes: ${deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(', ')}</div>` : '';
+
+      const card = document.createElement("div");
+      card.className = "checkin-card";
+      card.innerHTML = `
+        <div style="flex:1; min-width:200px;">
+          <strong style="font-size:15px; color:var(--iron);">#${String(v.id).padStart(3, '0')} — ${esc(v.nome)}</strong>
+          ${depsTxt}
+          <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            ${falta <= 0
+              ? `<span class="checkin-status-pill checkin-ok">✅ 100% Quitado</span>`
+              : `<span class="checkin-status-pill checkin-debt">⚠️ Saldo Pendente: R$ ${falta.toLocaleString('pt-BR', {minimumFractionDigits:2})} (${pagas}/${totalCotas})</span>`
+            }
+            <span class="badge-transporte">${labelTransporte(v.transporte)}</span>
+          </div>
+        </div>
+        <div>
+          <button type="button" class="btn-check ${v.confirmado ? 'confirmed' : ''}" style="min-width:150px; padding:10px 14px;" onclick="toggleCheckinPortaria(${v.id})">
+            <div class="check-box">${v.confirmado ? iconeCheck : ''}</div>
+            ${v.confirmado ? 'Presente (Check-in OK)' : 'Registrar Entrada'}
+          </button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  };
+
+  window.toggleCheckinPortaria = async function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+    v.confirmado = !v.confirmado;
+    await salvarNoBanco();
+    renderizarPortaria();
+    renderizarLista();
+  };
+
   // ==========================================
   // AUTO CADASTRO PÚBLICO + TELA PÓS-CADASTRO
   // ==========================================
@@ -2862,24 +4007,24 @@
     document.getElementById("reg-nome1").value = "";
     document.getElementById("reg-tel1").value = "";
     document.getElementById("reg-tel2").value = "";
+    document.getElementById("reg-transporte").value = "proprio";
     document.getElementById("reg-senha-pin").value = "";
-    document.getElementById("reg-tem-dep").checked = false;
-    document.getElementById("reg-dep-campos").style.display = "none";
-    document.getElementById("reg-dep-nome").value = "";
+    document.getElementById("reg-lista-dependentes").innerHTML = "";
+    document.getElementById("reg-dep-aviso").style.display = "none";
     document.getElementById("reg-data-previsao").value = "";
     document.getElementById("reg-qtd-cotas-iniciais").value = "0";
     document.getElementById("reg-forma-pagamento").value = "indefinido";
     document.getElementById("reg-box-sugestao").style.display = "none";
     document.getElementById("reg-box-pix").style.display = "none";
-    document.getElementById("reg-comprovante-file").value = "";
+    limparComprovanteAnexado("reg");
     atualizarResumoCadastro();
     document.getElementById("modal-auto-cadastro").classList.add("active");
   };
 
   window.atualizarResumoCadastro = function() {
     const qtd = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
-    const temDep = document.getElementById("reg-tem-dep").checked;
-    const multiplicador = temDep ? 2 : 1;
+    const deps = lerDependentesDoForm("reg");
+    const multiplicador = 1 + deps.length;
     const valParcela = obterValorParcelaIndividual() * multiplicador;
     const total = qtd * valParcela;
     const uploadWrap = document.getElementById("reg-upload-wrapper");
@@ -2892,9 +4037,11 @@
         document.getElementById("reg-forma-pagamento").value = "pix";
         alternarBoxPix('reg');
       }
+      renderizarQRCodePix('reg', total, `BENDNOVOC${qtd}`);
     } else {
       uploadWrap.style.display = "none";
       valorLabel.innerText = `Valor de cada cota mensal (${multiplicador} ${multiplicador > 1 ? 'pessoas' : 'pessoa'}): R$ ${valParcela.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+      renderizarQRCodePix('reg', 0, 'BENDNOVO');
     }
   };
 
@@ -2902,23 +4049,26 @@
     const n1 = document.getElementById("reg-nome1").value.trim();
     const t1 = document.getElementById("reg-tel1").value;
     const t2 = document.getElementById("reg-tel2").value;
+    const transporte = document.getElementById("reg-transporte").value;
     const pinPreferido = document.getElementById("reg-senha-pin").value.trim();
-    const temDep = document.getElementById("reg-tem-dep").checked;
-    const depNome = document.getElementById("reg-dep-nome").value.trim().toUpperCase();
-    const depParentesco = document.getElementById("reg-dep-parentesco").value;
+    const dependentes = lerDependentesDoForm("reg");
     const dataPrev = document.getElementById("reg-data-previsao").value;
     const qtdIniciais = parseInt(document.getElementById("reg-qtd-cotas-iniciais").value) || 0;
     const forma = document.getElementById("reg-forma-pagamento").value || "indefinido";
-    const fileInput = document.getElementById("reg-comprovante-file");
 
     if (!n1) return alert("Por favor, preencha o seu nome completo.");
     if (!validarTelefone(t1, true)) return alert("O WhatsApp principal informado é inválido! Digite com DDD (10 ou 11 dígitos).");
     if (t2 && !validarTelefone(t2, false)) return alert("O segundo telefone informado é inválido!");
     if (pinPreferido && !validarPin4Digitos(pinPreferido)) return alert("A senha pessoal deve conter exatamente 4 números (Ex: 1234).");
-    if (temDep && !depNome) return alert("Você marcou a opção de dependente. Informe o nome completo do seu filho, irmão ou acompanhante.");
 
-    if (qtdIniciais > 0 && forma === "pix" && fileInput.files.length === 0) {
-      return alert("Para dar baixa automática via Pix, anexe o comprovante de pagamento (ou selecione 'Não agora').");
+    const tel1Limpo = t1.replace(/\D/g, '');
+    const jaExiste = varoes.find(x => x.tel1 === tel1Limpo);
+    if (jaExiste) {
+      return alert(`Já existe uma inscrição cadastrada com este WhatsApp (${jaExiste.nome}).\n\nToque em 'Meu Carnê / Pagamentos' na tela inicial para acessar sua inscrição.`);
+    }
+
+    if (qtdIniciais > 0 && forma === "pix" && !anexoTemporario.reg) {
+      return alert("Para registrar pagamento via Pix, anexe ou cole o print do comprovante (ou selecione 'Não agora').");
     }
 
     let nomeFinal = obterPrimeiroEUltimoNome(n1);
@@ -2932,17 +4082,21 @@
 
     try {
       let compId = "";
-      if (fileInput.files.length > 0) {
-        const base64 = await processarComprovanteOtimizado(fileInput.files[0]);
-        if (base64) compId = await salvarComprovanteNuvem(base64);
+      if (anexoTemporario.reg && anexoTemporario.reg.base64) {
+        compId = await salvarComprovanteNuvem(anexoTemporario.reg.base64);
       }
 
       const cotas = gerarCotasIniciais();
       const hojeISO = new Date().toISOString().split('T')[0];
+      const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
+      const valParcelaInscricao = obterValorParcelaIndividual() * (1 + dependentes.length);
 
       if (qtdIniciais > 0 && (compId || forma !== "pix")) {
+        const statusInicial = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
         for (let i = 0; i < Math.min(qtdIniciais, cotas.length); i++) {
-          cotas[i].pago = true;
+          cotas[i].status = statusInicial;
+          cotas[i].pago = (statusInicial === "pago");
+          cotas[i].valorPago = (statusInicial === "pago") ? valParcelaInscricao : 0;
           cotas[i].dataPagamento = hojeISO;
           cotas[i].forma = forma;
           cotas[i].compId = compId;
@@ -2956,12 +4110,11 @@
         id: novoId,
         nome: nomeFinal,
         nomeCompleto: n1.toUpperCase(),
-        temDependente: temDep,
-        nomeDependente: temDep ? depNome : "",
-        parentescoDependente: temDep ? depParentesco : "",
+        dependentes: dependentes,
+        transporte: transporte,
         confirmado: false,
         biometriaAtiva: false,
-        tel1: t1.replace(/\D/g, ''),
+        tel1: tel1Limpo,
         tel2: t2 ? t2.replace(/\D/g, '') : "",
         formaPagamento: forma,
         previsaoPagamento: dataPrev,
@@ -2970,6 +4123,7 @@
       };
 
       varoes.push(novoRegistro);
+      limparComprovanteAnexado("reg");
       await salvarNoBanco();
       renderizarLista();
       fecharModal("modal-auto-cadastro");
@@ -2986,6 +4140,22 @@
       btnSalvar.disabled = false;
       btnSalvar.innerText = "Concluir Inscrição";
     }
+  };
+
+  window.enviarSenhaParaMeuWhatsApp = function() {
+    const id = parseInt(document.getElementById("pos-cad-id").value);
+    const v = varoes.find(x => x.id === id);
+    if (!v || !v.tel1) return alert("Telefone não localizado.");
+
+    let tel = v.tel1.replace(/\D/g, '');
+    if (!tel.startsWith("55")) tel = "55" + tel;
+    const link = window.location.href.split('?')[0].split('#')[0];
+    const titulo = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
+    const msg = `⚔️ *Minha Inscrição — ${titulo}*\n\n` +
+                `👤 *Nome:* ${v.nome}\n` +
+                `🔑 *Minha Senha de 4 dígitos:* ${v.codigoAcesso}\n\n` +
+                `Acesse meu carnê digital por aqui:\n👉 ${link}`;
+    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   window.alterarPinPosCadastro = async function() {
@@ -3016,9 +4186,11 @@
   // ==========================================
   // VALIDADOR / CONFIRMAÇÃO DE PRESENÇA PÚBLICA
   // ==========================================
-  window.abrirValidadorMembro = function(id, nome) {
+  window.abrirValidadorMembro = function(id) {
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
     document.getElementById("casal-id-confirmar").value = id;
-    document.getElementById("texto-confirmar").innerText = `Confirmando presença para: ${nome}`;
+    document.getElementById("texto-confirmar").innerText = `Confirmando presença para: ${v.nome}`;
     document.getElementById("valida-nome1").value = "";
     document.getElementById("valida-tel1").value = "";
     document.getElementById("valida-tel2").value = "";
@@ -3042,6 +4214,11 @@
       return alert("O nome informado não confere com o participante selecionado na lista.");
     }
 
+    const telLimpo = t1.replace(/\D/g, '');
+    if (v.tel1 && v.tel1 !== telLimpo) {
+      return alert("Este cadastro já possui um WhatsApp diferente vinculado. Entre em contato com a liderança para atualizar seu número.");
+    }
+
     let nomeFinal = obterPrimeiroEUltimoNome(n1);
     const concorda = document.getElementById("valida-check-concorda").checked;
     const custom = document.getElementById("valida-nome-custom").value.trim();
@@ -3049,7 +4226,7 @@
 
     v.nome = nomeFinal;
     v.nomeCompleto = n1;
-    v.tel1 = t1.replace(/\D/g, '');
+    v.tel1 = telLimpo;
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
     v.confirmado = true;
     if (!v.codigoAcesso) v.codigoAcesso = gerarCodigoAcessoUnico();
@@ -3070,6 +4247,18 @@
     document.getElementById("step-update-membro").style.display = "none";
     cotasSelecionadasMembro = [];
     document.getElementById("modal-auto-atualizacao").classList.add("active");
+    verificarRetornoSessaoMembro();
+  };
+
+  window.esqueciSenhaMembro = function() {
+    const telDigitado = document.getElementById("auth-membro-tel").value.trim();
+    const zapTesouraria = (configuracoes.whatsappTesouraria || "").replace(/\D/g, '');
+    if (!zapTesouraria) {
+      return alert("Procure um dos líderes do encontro na igreja ou no grupo oficial para solicitar o reenvio da sua senha de 4 dígitos.");
+    }
+    let telDest = zapTesouraria.startsWith("55") ? zapTesouraria : "55" + zapTesouraria;
+    const msg = `Shalom! Esqueci minha senha de 4 dígitos do carnê do ${configuracoes.tituloEvento || 'Benditos'} ${configuracoes.anoEvento || '2027'}.\nMeu WhatsApp cadastrado é: ${telDigitado || '(informar aqui)'}`;
+    window.open(`https://wa.me/${telDest}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   window.autenticarMembroAuto = function() {
@@ -3084,8 +4273,10 @@
     abrirPainelPrivadoCarne(v);
   };
 
-  function abrirPainelPrivadoCarne(v) {
-    cotasSelecionadasMembro = [];
+  function abrirPainelPrivadoCarne(v, cotasPreSelecionadas = []) {
+    cotasSelecionadasMembro = Array.isArray(cotasPreSelecionadas) ? [...cotasPreSelecionadas] : [];
+    salvarSessaoMembroLocal(v.id, cotasSelecionadasMembro);
+
     document.getElementById("auth-casal-id").value = v.id;
     document.getElementById("auth-data-previsao").value = v.previsaoPagamento || "";
     document.getElementById("auth-nova-senha-pin").value = "";
@@ -3103,27 +4294,42 @@
   function renderizarCarnePrivado(v) {
     const cotas = garantirEstruturaCotas(v);
     const totalCotas = cotas.length;
+    const deps = obterDependentes(v);
+    const qtdPessoas = obterQtdPessoas(v);
+    const valIndividual = obterValorParcelaIndividual();
     const valParcela = obterValorParcelaInscricao(v);
-    const pagas = cotas.filter(c => c.pago).length;
-    const restantes = Math.max(0, totalCotas - pagas);
+
+    const pagas = contarCotasPagas(v);
+    const emAnalise = contarCotasEmAnalise(v);
+    const restantes = Math.max(0, totalCotas - pagas - emAnalise);
     const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
-    const valorPago = pagas * valParcela;
-    const valorTotal = totalCotas * valParcela;
+
+    const valorPago = calcularValorArrecadadoInscricao(v);
+    const valorTotal = obterValorTotalInscricao(v);
     const valorFalta = Math.max(0, valorTotal - valorPago);
 
     document.getElementById("auth-casal-nome").innerText = v.nome;
-    document.getElementById("auth-dep-info").innerText = (v.temDependente && v.nomeDependente)
-      ? `👥 Responsável por 2 pessoas: Você + ${v.nomeDependente} (${v.parentescoDependente || 'Dependente'})`
-      : "👤 Inscrição Individual (1 pessoa)";
+    if (deps.length > 0) {
+      const listaDeps = deps.map(d => `${d.nome} (${d.parentesco})`).join(", ");
+      document.getElementById("auth-dep-info").innerText = `👥 ${qtdPessoas} pessoas na inscrição: Você + ${listaDeps}`;
+    } else {
+      document.getElementById("auth-dep-info").innerText = "👤 Inscrição Individual (1 pessoa)";
+    }
+
+    // Credencial VIP se 100% quitado
+    const boxCred = document.getElementById("auth-box-credencial-vip");
+    if (boxCred) boxCred.style.display = (pagas >= totalCotas) ? "block" : "none";
 
     document.getElementById("auth-val-total").innerText = `R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
     document.getElementById("auth-cotas-total-txt").innerText = `${totalCotas} cotas de R$ ${valParcela.toFixed(2).replace('.', ',')}`;
 
     document.getElementById("auth-val-pago").innerText = `R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-    document.getElementById("auth-cotas-pagas-txt").innerText = `${pagas} ${pagas === 1 ? 'cota paga' : 'cotas pagas'}`;
+    document.getElementById("auth-cotas-pagas-txt").innerText = `${pagas} ${pagas === 1 ? 'cota validada' : 'cotas validadas'}`;
 
     document.getElementById("auth-val-falta").innerText = `R$ ${valorFalta.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-    document.getElementById("auth-cotas-falta-txt").innerText = restantes === 0 ? "Tudo quitado!" : `${restantes} ${restantes === 1 ? 'cota restante' : 'cotas restantes'}`;
+    document.getElementById("auth-cotas-falta-txt").innerText = restantes === 0
+      ? (emAnalise > 0 ? `${emAnalise} em conferência` : "Tudo quitado!")
+      : `${restantes} ${restantes === 1 ? 'cota restante' : 'cotas restantes'}`;
 
     document.getElementById("auth-progress-fill").style.width = `${perc}%`;
     document.getElementById("auth-progress-label").innerText = `${perc}% Concluído (${pagas} de ${totalCotas} cotas)`;
@@ -3132,7 +4338,7 @@
     if (perc >= 100) tituloIncentivo = "🏆 Missão Cumprida — 100% Quitado!";
     else if (perc >= 70) tituloIncentivo = "🔥 Reta Final — Falta Muito Pouco!";
     else if (perc >= 40) tituloIncentivo = "🛡️ Firme no Propósito — Excelente Ritmo!";
-    else if (perc > 0) tituloIncentivo = "⚔️ Ótimo Começo — Continue Avançando!";
+    else if (perc > 0 || emAnalise > 0) tituloIncentivo = "⚔️ Ótimo Começo — Continue Avançando!";
     document.getElementById("auth-encouragement-title").innerText = tituloIncentivo;
 
     const aval = avaliarStatusPrazo(v);
@@ -3141,49 +4347,75 @@
       deadlineContainer.innerHTML = `
         <div class="deadline-alert-box ${aval.tipoAlerta}">
           <div>
-            <strong style="display:block; margin-bottom:2px;">${aval.titulo}</strong>
-            <span>${aval.mensagem}</span>
+            <strong style="display:block; margin-bottom:2px;">${esc(aval.titulo)}</strong>
+            <span>${esc(aval.mensagem)}</span>
           </div>
         </div>
       `;
     } else {
-      deadlineContainer.innerHTML = `<div class="deadline-ok-pill">${aval.mensagem}</div>`;
+      deadlineContainer.innerHTML = `<div class="deadline-ok-pill">${esc(aval.mensagem)}</div>`;
     }
 
     const grid = document.getElementById("auth-carne-grid");
     grid.innerHTML = "";
 
     cotas.forEach(c => {
+      const isPago = (c.status === "pago" || c.pago === true);
+      const isAnalise = (c.status === "em_analise");
       const selecionada = cotasSelecionadasMembro.includes(c.numero);
+
       const card = document.createElement("div");
-      card.className = `cota-card ${c.pago ? 'pago' : ''} ${selecionada ? 'selecionada' : ''}`;
+      card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''} ${selecionada ? 'selecionada' : ''}`;
 
       let statusHtml = `<span class="cota-status st-pend">Pendente</span>`;
-      if (c.pago) statusHtml = `<span class="cota-status st-pago">✅ Pago</span>`;
+      if (isPago) statusHtml = `<span class="cota-status st-pago">✅ Pago</span>`;
+      else if (isAnalise) statusHtml = `<span class="cota-status st-analise">⏳ Em Conferência</span>`;
       else if (selecionada) statusHtml = `<span class="cota-status st-sel">Selecionada</span>`;
 
+      const multBadge = qtdPessoas > 1 ? `<span class="cota-mult-tag">👥 ${qtdPessoas}x</span>` : ``;
+
       let inner = `
+        ${multBadge}
         <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
         <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
         ${statusHtml}
       `;
 
-      if (c.pago && c.compId) {
-        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${c.compId}', '${v.nome} — Cota ${c.numero}')">📎 Recibo</button>`;
+      if ((isPago || isAnalise) && c.compId) {
+        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(v.nome)} — Cota ${c.numero}')">📎 Recibo</button>`;
       }
 
       card.innerHTML = inner;
-      if (!c.pago) card.onclick = () => toggleSelecaoCotaMembro(v.id, c.numero);
+      if (!isPago && !isAnalise) card.onclick = () => toggleSelecaoCotaMembro(v.id, c.numero);
       grid.appendChild(card);
     });
 
     const painelPag = document.getElementById("auth-painel-pagamento");
+    const breakdownBox = document.getElementById("auth-checkout-breakdown");
+
     if (cotasSelecionadasMembro.length > 0) {
       painelPag.style.display = "block";
       const qtdSel = cotasSelecionadasMembro.length;
       const totalSel = qtdSel * valParcela;
       document.getElementById("auth-selecao-titulo").innerText = `${qtdSel} ${qtdSel === 1 ? 'cota selecionada' : 'cotas selecionadas'} (${cotasSelecionadasMembro.sort((a,b)=>a-b).join(', ')})`;
       document.getElementById("auth-selecao-valor").innerText = `Total: R$ ${totalSel.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+
+      // Mini-Recibo transparente quando há dependentes
+      if (deps.length > 0 && breakdownBox) {
+        let rowsHtml = `<div class="checkout-breakdown-row"><span>👤 ${esc(v.nome)} (Titular • ${qtdSel}x R$ ${valIndividual.toFixed(2).replace('.', ',')})</span><strong>R$ ${(qtdSel * valIndividual).toFixed(2).replace('.', ',')}</strong></div>`;
+        deps.forEach(d => {
+          rowsHtml += `<div class="checkout-breakdown-row"><span>👥 ${esc(d.nome)} (${esc(d.parentesco)} • ${qtdSel}x R$ ${valIndividual.toFixed(2).replace('.', ',')})</span><strong>R$ ${(qtdSel * valIndividual).toFixed(2).replace('.', ',')}</strong></div>`;
+        });
+        rowsHtml += `<div class="checkout-breakdown-total"><span>Total referente a ${qtdPessoas} pessoas</span><span>R$ ${totalSel.toFixed(2).replace('.', ',')}</span></div>`;
+        breakdownBox.innerHTML = rowsHtml;
+        breakdownBox.style.display = "block";
+      } else if (breakdownBox) {
+        breakdownBox.style.display = "none";
+      }
+
+      if (document.getElementById("auth-forma-pagamento").value === "pix") {
+        renderizarQRCodePix('auth', totalSel, `BENDID${v.id}C${cotasSelecionadasMembro.join('')}`);
+      }
     } else {
       painelPag.style.display = "none";
     }
@@ -3193,6 +4425,7 @@
     const idx = cotasSelecionadasMembro.indexOf(numeroCota);
     if (idx > -1) cotasSelecionadasMembro.splice(idx, 1);
     else cotasSelecionadasMembro.push(numeroCota);
+    salvarSessaoMembroLocal(varaoId, cotasSelecionadasMembro);
     const v = varoes.find(x => x.id === varaoId);
     if (v) renderizarCarnePrivado(v);
   };
@@ -3203,10 +4436,9 @@
     if (!v || cotasSelecionadasMembro.length === 0) return;
 
     const forma = document.getElementById("auth-forma-pagamento").value;
-    const fileInput = document.getElementById("auth-comprovante-file");
 
-    if (forma === "pix" && fileInput.files.length === 0) {
-      return alert("Anexe o comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
+    if (forma === "pix" && !anexoTemporario.auth) {
+      return alert("Anexe ou cole o print do comprovante do Pix para confirmar o pagamento das cotas selecionadas.");
     }
 
     const btn = document.getElementById("btn-confirmar-cotas-membro");
@@ -3215,19 +4447,22 @@
 
     try {
       let compId = "";
-      if (fileInput.files.length > 0) {
-        const base64 = await processarComprovanteOtimizado(fileInput.files[0]);
-        if (!base64) return;
-        compId = await salvarComprovanteNuvem(base64);
+      if (anexoTemporario.auth && anexoTemporario.auth.base64) {
+        compId = await salvarComprovanteNuvem(anexoTemporario.auth.base64);
       }
 
       const hojeISO = new Date().toISOString().split('T')[0];
       const cotas = garantirEstruturaCotas(v);
+      const exigirAuditoria = (configuracoes.exigirAuditoriaPix || "sim") === "sim";
+      const valParcela = obterValorParcelaInscricao(v);
+      const novoStatus = (forma === "pix" && exigirAuditoria) ? "em_analise" : "pago";
 
       cotasSelecionadasMembro.forEach(num => {
         const cotaObj = cotas.find(c => c.numero === num);
         if (cotaObj) {
-          cotaObj.pago = true;
+          cotaObj.status = novoStatus;
+          cotaObj.pago = (novoStatus === "pago");
+          cotaObj.valorPago = (novoStatus === "pago") ? valParcela : 0;
           cotaObj.dataPagamento = hojeISO;
           cotaObj.forma = forma;
           if (compId) cotaObj.compId = compId;
@@ -3239,13 +4474,19 @@
       if (prevInput) v.previsaoPagamento = prevInput;
 
       cotasSelecionadasMembro = [];
-      fileInput.value = "";
+      limparComprovanteAnexado("auth");
+      salvarSessaoMembroLocal(v.id, []);
 
       await salvarNoBanco();
       renderizarLista();
       atualizarMensagemIncentivo();
       renderizarCarnePrivado(v);
-      alert("✅ Pagamento registrado com sucesso! Veja seu progresso atualizado.");
+
+      if (novoStatus === "em_analise") {
+        alert("✅ Comprovante enviado com sucesso!\n\nSuas cotas foram marcadas como 'Em Conferência' e serão validadas pela tesouraria em breve.");
+      } else {
+        alert("✅ Pagamento registrado com sucesso! Veja seu progresso atualizado.");
+      }
     } finally {
       btn.disabled = false;
       btn.innerText = "✅ Confirmar Pagamento";
@@ -3278,6 +4519,44 @@
     alert(`✅ Sua senha de 4 dígitos foi alterada para ${nova} com sucesso!`);
   };
 
+  // --- CREDENCIAL DIGITAL VIP ---
+  window.abrirCredencialDigitalVIP = function() {
+    const id = parseInt(document.getElementById("auth-casal-id").value);
+    const v = varoes.find(x => x.id === id);
+    if (!v) return;
+
+    const deps = obterDependentes(v);
+    document.getElementById("cred-subtitulo").innerText = configuracoes.subtituloEvento || "IBAC • ENCONTRO DOS VARÕES";
+    document.getElementById("cred-evento-titulo").innerText = `${configuracoes.tituloEvento || 'BENDITOS'} ${configuracoes.anoEvento || '2027'}`;
+    document.getElementById("cred-titular-nome").innerText = v.nomeCompleto || v.nome;
+
+    const boxDeps = document.getElementById("cred-dependentes-box");
+    if (deps.length > 0) {
+      document.getElementById("cred-dependentes-lista").innerText = deps.map(d => `${d.nome} (${d.parentesco})`).join(" • ");
+      boxDeps.style.display = "block";
+    } else {
+      boxDeps.style.display = "none";
+    }
+
+    const qtdP = obterQtdPessoas(v);
+    document.getElementById("cred-qtd-pessoas").innerText = `${qtdP} ${qtdP > 1 ? 'Pessoas' : 'Pessoa'}`;
+    document.getElementById("cred-transporte").innerText = labelTransporte(v.transporte).replace(/^[^\w]+/, '');
+    document.getElementById("cred-registro-id").innerText = `#${String(v.id).padStart(3, '0')}`;
+
+    document.getElementById("modal-credencial-vip").classList.add("active");
+  };
+
+  window.baixarCredencialPDF = function() {
+    const el = document.getElementById("credencial-print-area");
+    html2pdf().set({
+      margin: 10,
+      filename: `Credencial_${configuracoes.tituloEvento || 'Benditos'}_${configuracoes.anoEvento || '2027'}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a5', orientation: 'landscape' }
+    }).from(el).save();
+  };
+
   // ==========================================
   // GERENCIADOR ADMINISTRATIVO DE COTAS
   // ==========================================
@@ -3293,12 +4572,13 @@
     const cotas = garantirEstruturaCotas(v);
     const totalCotas = cotas.length;
     const valParcela = obterValorParcelaInscricao(v);
-    const pagas = cotas.filter(c => c.pago).length;
+    const pagas = contarCotasPagas(v);
     const perc = Math.min(100, Math.round((pagas / totalCotas) * 100));
-    const valorPago = pagas * valParcela;
-    const valorTotal = totalCotas * valParcela;
+    const valorPago = calcularValorArrecadadoInscricao(v);
+    const valorTotal = obterValorTotalInscricao(v);
 
-    const depTxt = (v.temDependente && v.nomeDependente) ? ` + ${v.nomeDependente} (${v.parentescoDependente})` : "";
+    const deps = obterDependentes(v);
+    const depTxt = deps.length > 0 ? ` + ${deps.map(d => `${d.nome} (${d.parentesco})`).join(', ')}` : "";
     document.getElementById("admin-cotas-nome").innerText = `${v.nome}${depTxt}`;
     document.getElementById("admin-cotas-resumo").innerText = `Quitadas: ${pagas}/${totalCotas} cotas • Arrecadado: R$ ${valorPago.toLocaleString('pt-BR', {minimumFractionDigits:2})} / R$ ${valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
     document.getElementById("admin-progress-fill").style.width = `${perc}%`;
@@ -3308,17 +4588,23 @@
     grid.innerHTML = "";
 
     cotas.forEach(c => {
+      const isPago = (c.status === "pago" || c.pago === true);
+      const isAnalise = (c.status === "em_analise");
+
       const card = document.createElement("div");
-      card.className = `cota-card ${c.pago ? 'pago' : ''}`;
+      card.className = `cota-card ${isPago ? 'pago' : ''} ${isAnalise ? 'analise' : ''}`;
+
+      let stClass = isPago ? 'st-pago' : (isAnalise ? 'st-analise' : 'st-pend');
+      let stTxt = isPago ? '✅ Pago' : (isAnalise ? '⏳ Conferir' : 'Pendente');
 
       let inner = `
         <span class="cota-num">Cota ${String(c.numero).padStart(2, '0')}</span>
         <span class="cota-val">R$ ${valParcela.toFixed(2).replace('.', ',')}</span>
-        <span class="cota-status ${c.pago ? 'st-pago' : 'st-pend'}">${c.pago ? '✅ Pago' : 'Pendente'}</span>
+        <span class="cota-status ${stClass}">${stTxt}</span>
       `;
 
-      if (c.pago && c.compId) {
-        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${c.compId}', '${v.nome} — Cota ${c.numero}')">📎 Recibo</button>`;
+      if ((isPago || isAnalise) && c.compId) {
+        inner += `<button type="button" class="btn-cota-recibo" onclick="event.stopPropagation(); abrirModalComprovante('${esc(c.compId)}', '${esc(v.nome)} — Cota ${c.numero}')">📎 Recibo</button>`;
       }
 
       card.innerHTML = inner;
@@ -3334,14 +4620,18 @@
     const cota = cotas.find(c => c.numero === numeroCota);
     if (!cota) return;
 
-    if (cota.pago) {
+    if (cota.status === "pago" || cota.pago) {
       if (!confirm(`Estornar a Cota ${numeroCota} de ${v.nome} para Pendente?`)) return;
+      cota.status = "pendente";
       cota.pago = false;
+      cota.valorPago = 0;
       cota.dataPagamento = "";
       cota.compId = "";
     } else {
+      cota.status = "pago";
       cota.pago = true;
-      cota.dataPagamento = new Date().toISOString().split('T')[0];
+      cota.valorPago = obterValorParcelaInscricao(v);
+      cota.dataPagamento = cota.dataPagamento || new Date().toISOString().split('T')[0];
       if (!cota.forma) cota.forma = v.formaPagamento !== 'indefinido' ? v.formaPagamento : 'dinheiro';
     }
 
@@ -3357,24 +4647,21 @@
     const n = document.getElementById("add-nome").value.trim().toUpperCase();
     const t1 = document.getElementById("add-tel1").value;
     const t2 = document.getElementById("add-tel2").value;
+    const transporte = document.getElementById("add-transporte").value;
     const prev = document.getElementById("add-previsao").value;
-    const temDep = document.getElementById("add-tem-dep").checked;
-    const depNome = document.getElementById("add-dep-nome").value.trim().toUpperCase();
-    const depParentesco = document.getElementById("add-dep-parentesco").value;
+    const dependentes = lerDependentesDoForm("add");
 
     if (!n) return alert("Digite o nome completo do titular!");
     if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
     if (t2 && !validarTelefone(t2, false)) return alert("Telefone 2 inválido!");
-    if (temDep && !depNome) return alert("Informe o nome do dependente!");
 
     const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
     varoes.push({
       id: novoId,
       nome: n,
       nomeCompleto: n,
-      temDependente: temDep,
-      nomeDependente: temDep ? depNome : "",
-      parentescoDependente: temDep ? depParentesco : "",
+      dependentes: dependentes,
+      transporte: transporte,
       confirmado: false,
       biometriaAtiva: false,
       tel1: t1 ? t1.replace(/\D/g, '') : "",
@@ -3390,9 +4677,7 @@
     document.getElementById("add-tel1").value = "";
     document.getElementById("add-tel2").value = "";
     document.getElementById("add-previsao").value = "";
-    document.getElementById("add-tem-dep").checked = false;
-    document.getElementById("add-dep-campos").style.display = "none";
-    document.getElementById("add-dep-nome").value = "";
+    document.getElementById("add-lista-dependentes").innerHTML = "";
     alert("Participante adicionado com sucesso!");
   };
 
@@ -3405,10 +4690,12 @@
     inputNome.disabled = !(isAlfa || isAnalista);
     document.getElementById("edit-tel1").value = v.tel1 || "";
     document.getElementById("edit-tel2").value = v.tel2 || "";
-    document.getElementById("edit-tem-dep").checked = !!v.temDependente;
-    document.getElementById("edit-dep-campos").style.display = v.temDependente ? "block" : "none";
-    document.getElementById("edit-dep-nome").value = v.nomeDependente || "";
-    document.getElementById("edit-dep-parentesco").value = v.parentescoDependente || "Filho";
+    document.getElementById("edit-transporte").value = v.transporte || "proprio";
+
+    const containerDeps = document.getElementById("edit-lista-dependentes");
+    containerDeps.innerHTML = "";
+    obterDependentes(v).forEach(d => adicionarCampoDependenteUI("edit", d.nome, d.parentesco));
+
     document.getElementById("edit-data-previsao").value = v.previsaoPagamento || "";
     document.getElementById("edit-forma-pagamento").value = v.formaPagamento || "indefinido";
     document.getElementById("edit-codigo-acesso").value = v.codigoAcesso || "";
@@ -3419,23 +4706,24 @@
     const id = parseInt(document.getElementById("edit-id-casal").value);
     const t1 = document.getElementById("edit-tel1").value;
     const t2 = document.getElementById("edit-tel2").value;
-    const temDep = document.getElementById("edit-tem-dep").checked;
-    const depNome = document.getElementById("edit-dep-nome").value.trim().toUpperCase();
-    const depParentesco = document.getElementById("edit-dep-parentesco").value;
+    const dependentes = lerDependentesDoForm("edit");
     const novoPin = document.getElementById("edit-codigo-acesso").value.trim();
 
     if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
     if (t2 && !validarTelefone(t2, false)) return alert("Telefone 2 inválido!");
-    if (temDep && !depNome) return alert("Informe o nome do dependente!");
     if (novoPin && !validarPin4Digitos(novoPin)) return alert("A senha de acesso deve ter 4 dígitos numéricos.");
 
     const v = varoes.find(x => x.id === id);
     if (isAlfa || isAnalista) v.nome = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
     v.tel1 = t1 ? t1.replace(/\D/g, '') : "";
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
-    v.temDependente = temDep;
-    v.nomeDependente = temDep ? depNome : "";
-    v.parentescoDependente = temDep ? depParentesco : "";
+    v.transporte = document.getElementById("edit-transporte").value;
+    v.dependentes = dependentes;
+    // Limpa campos legados para manter estrutura unificada
+    delete v.temDependente;
+    delete v.nomeDependente;
+    delete v.parentescoDependente;
+
     v.previsaoPagamento = document.getElementById("edit-data-previsao").value;
     v.formaPagamento = document.getElementById("edit-forma-pagamento").value;
     if (novoPin) v.codigoAcesso = novoPin;
@@ -3479,7 +4767,7 @@
     lideres.forEach(l => {
       const cargoDesc = l.cargo ? ` (${l.cargo})` : '';
       const statusTag = l.bloqueado ? ' [🚫 BLOQUEADO]' : '';
-      sel.innerHTML += `<option value="${l.nome}">${l.nome}${cargoDesc}${statusTag}</option>`;
+      sel.innerHTML += `<option value="${esc(l.nome)}">${esc(l.nome)}${esc(cargoDesc)}${statusTag}</option>`;
     });
     document.getElementById("senha-input").value = "";
     document.getElementById("senha-input").type = "password";
@@ -3493,7 +4781,7 @@
     const l = lideres.find(x => x.nome === nomeSel);
 
     if (!l) return alert("Selecione um perfil.");
-    if (l.bloqueado) return alert(`⚠️ ACESSO BLOQUEADO!\n\nO perfil de ${l.nome} está bloqueado. Peça a outro líder para desbloquear ou a um Analista para redefinir a senha.`);
+    if (l.bloqueado) return alert(`⚠️ ACESSO BLOQUEADO!\n\nO perfil de ${l.nome} está bloqueado.`);
 
     if (l.senha === s) {
       if (l.primeiroAcesso === true || l.primeiroAcesso === undefined) {
@@ -3557,7 +4845,7 @@
     badgeCargo.innerText = isAnalista ? "ANALISTA" : (isAlfa ? "LÍDER ALFA" : "LÍDER");
     badgeCargo.style.background = isAnalista ? "#e0e7ff" : "var(--bronze)";
     badgeCargo.style.color = isAnalista ? "#3730a3" : "var(--iron)";
-    document.querySelector('.btn-lider').innerHTML = "Sair (" + liderAtual.split(' ')[0] + ")";
+    document.querySelector('.btn-lider').innerHTML = "Sair (" + esc(liderAtual.split(' ')[0]) + ")";
 
     atualizarIndicadorBiometriaLider(l);
 
@@ -3598,9 +4886,9 @@
     lideres.forEach(l => {
       const tr = document.createElement("tr");
       let acaoHtml = "";
-      if (l.bloqueado) acaoHtml += `<button onclick="desbloquearLider('${l.nome}')" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔓 Desbloquear</button>`;
-      if (isAnalista) acaoHtml += `<button onclick="abrirRedefinirSenha('${l.nome}')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔑 Senha</button>`;
-      if (!l.fixo) acaoHtml += `<button onclick="removerLider('${l.nome}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;">🗑️</button>`;
+      if (l.bloqueado) acaoHtml += `<button onclick="desbloquearLider('${esc(l.nome)}')" style="background:#dcfce7; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔓 Desbloquear</button>`;
+      if (isAnalista) acaoHtml += `<button onclick="abrirRedefinirSenha('${esc(l.nome)}')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;">🔑 Senha</button>`;
+      if (!l.fixo) acaoHtml += `<button onclick="removerLider('${esc(l.nome)}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;">🗑️</button>`;
       else acaoHtml += `<span style="color:var(--text-muted); font-size:11px;">Vitalício</span>`;
 
       let badgeClass = l.cargo === "Analista" ? 'badge-analista-tag' : (l.alfa ? 'badge-alfa-tag' : 'badge-op-tag');
@@ -3611,7 +4899,7 @@
         ? ` <span class="badge-cargo" style="background:var(--bronze-soft); color:var(--bronze-dark);">👆 Biometria</span>`
         : ``;
 
-      tr.innerHTML = `<td><strong>${l.nome}</strong></td><td><span class="badge-cargo ${badgeClass}">${l.cargo}</span></td><td>${statusBadge}${bioBadge}</td><td style="text-align:right;">${acaoHtml}</td>`;
+      tr.innerHTML = `<td><strong>${esc(l.nome)}</strong></td><td><span class="badge-cargo ${badgeClass}">${esc(l.cargo)}</span></td><td>${statusBadge}${bioBadge}</td><td style="text-align:right;">${acaoHtml}</td>`;
       corpo.appendChild(tr);
     });
   }
@@ -3683,31 +4971,34 @@
 
     if (tipo === 'presenca') {
       nomeArquivo = `Participantes_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
-      linhas.push(["ID", "Titular", "Dependente", "Vinculo", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
+      linhas.push(["ID", "Titular", "Dependentes", "Qtd Pessoas", "Transporte", "Presenca", "WhatsApp 1"]);
       varoesFiltrados.forEach(v => {
+        const deps = obterDependentes(v);
+        const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
         linhas.push([
           v.id,
           `"${v.nome}"`,
-          `"${v.nomeDependente || '-'}"`,
-          `"${v.parentescoDependente || '-'}"`,
+          `"${depStr}"`,
           obterQtdPessoas(v),
+          `"${labelTransporte(v.transporte)}"`,
           v.confirmado ? "Confirmado" : "Pendente",
           `"${v.tel1 ? formatarTelefoneVisual(v.tel1) : ''}"`
         ]);
       });
     } else {
       nomeArquivo = `Financeiro_${configuracoes.tituloEvento || 'Benditos'}_${ano}.csv`;
-      linhas.push(["ID", "Titular", "Dependente", "Pessoas", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)", "Status Prazo"]);
+      linhas.push(["ID", "Titular", "Dependentes", "Pessoas", "Cotas Pagas", "Total Cotas", "Arrecadado (R$)", "Restante (R$)", "Status Prazo"]);
       varoesFiltrados.forEach(v => {
         const pagas = contarCotasPagas(v);
-        const valParc = obterValorParcelaInscricao(v);
-        const pagoVal = pagas * valParc;
-        const faltaVal = Math.max(0, (totalCotas - pagas) * valParc);
+        const deps = obterDependentes(v);
+        const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
+        const pagoVal = calcularValorArrecadadoInscricao(v);
+        const faltaVal = Math.max(0, obterValorTotalInscricao(v) - pagoVal);
         const aval = avaliarStatusPrazo(v);
         linhas.push([
           v.id,
           `"${v.nome}"`,
-          `"${v.nomeDependente || '-'}"`,
+          `"${depStr}"`,
           obterQtdPessoas(v),
           pagas,
           totalCotas,
@@ -3737,36 +5028,39 @@
       const qp = obterQtdPessoas(v);
       totalPessoas += qp;
       if (v.confirmado) confirmadosPessoas += qp;
-      arrecadado += contarCotasPagas(v) * obterValorParcelaInscricao(v);
+      arrecadado += calcularValorArrecadadoInscricao(v);
     });
 
     const colunas = tipo === 'presenca'
-      ? ["Nº", "Titular", "Dependente", "Pessoas", "Presença", "WhatsApp"]
-      : ["Nº", "Titular", "Dependente", "Pessoas", "Cotas", "Arrecadado", "Restante"];
+      ? ["Nº", "Titular", "Dependentes", "Pessoas", "Transporte", "Presença", "WhatsApp"]
+      : ["Nº", "Titular", "Dependentes", "Pessoas", "Cotas", "Arrecadado", "Restante"];
 
     const dadosLinhas = varoesFiltrados.map(v => {
       const qp = obterQtdPessoas(v);
-      const depStr = v.temDependente && v.nomeDependente ? `${v.nomeDependente} (${v.parentescoDependente})` : "-";
+      const deps = obterDependentes(v);
+      const depStr = deps.length > 0 ? deps.map(d => `${esc(d.nome)} (${esc(d.parentesco)})`).join(", ") : "-";
       if (tipo === 'presenca') {
         return [
           v.id,
-          v.nome,
+          esc(v.nome),
           depStr,
           qp,
+          esc(labelTransporte(v.transporte)),
           v.confirmado ? '<span style="color:#1b7a43; font-weight:bold;">Confirmado</span>' : 'Pendente',
           v.tel1 ? formatarTelefoneVisual(v.tel1) : '-'
         ];
       } else {
         const pagas = contarCotasPagas(v);
-        const valParc = obterValorParcelaInscricao(v);
+        const pagoVal = calcularValorArrecadadoInscricao(v);
+        const faltaVal = Math.max(0, obterValorTotalInscricao(v) - pagoVal);
         return [
           v.id,
-          v.nome,
+          esc(v.nome),
           depStr,
           qp,
           `${pagas}/${totalCotas}`,
-          `R$ ${(pagas * valParc).toFixed(2).replace('.', ',')}`,
-          `R$ ${(Math.max(0, totalCotas - pagas) * valParc).toFixed(2).replace('.', ',')}`
+          `R$ ${pagoVal.toFixed(2).replace('.', ',')}`,
+          `R$ ${faltaVal.toFixed(2).replace('.', ',')}`
         ];
       }
     });
@@ -3777,8 +5071,8 @@
     containerPDF.innerHTML = `
       <div style="border-bottom: 3px solid #b87d4b; padding-bottom: 10px; margin-bottom: 16px; display:flex; justify-content:space-between;">
         <div>
-          <h2 style="margin:0; color:#16191d;">${tituloEv}</h2>
-          <small style="color:#5c6370;">${configuracoes.subtituloEvento || 'Encontro dos Varões • IBAC'}</small>
+          <h2 style="margin:0; color:#16191d;">${esc(tituloEv)}</h2>
+          <small style="color:#5c6370;">${esc(configuracoes.subtituloEvento || 'Encontro dos Varões • IBAC')}</small>
         </div>
         <div style="text-align:right;">
           <strong style="color:#b87d4b;">${titulo}</strong><br>
@@ -3791,10 +5085,10 @@
         <div><strong>Confirmados:</strong> ${confirmadosPessoas}</div>
         <div><strong>Arrecadado:</strong> R$ ${arrecadado.toLocaleString('pt-BR', {minimumFractionDigits:2})}</div>
       </div>
-      <table style="width:100%; border-collapse:collapse; font-size:11px;">
+      <table style="width:100%; border-collapse:collapse; font-size:10.5px;">
         <thead>
           <tr style="background:#16191d; color:#fff;">
-            ${colunas.map(c => `<th style="padding:7px; text-align:left;">${c}</th>`).join('')}
+            ${colunas.map(c => `<th style="padding:6px; text-align:left;">${c}</th>`).join('')}
           </tr>
         </thead>
         <tbody>
@@ -3818,7 +5112,7 @@
     if (!file) return;
     const reader = new FileReader();
     reader.onload = async function(e) {
-      const lines = e.target.result.split('\n');
+      const lines = e.target.result.split(/\r?\n/);
       let adicionados = 0;
       lines.forEach((line, index) => {
         if (index === 0 && (line.toLowerCase().includes('nome') || line.toLowerCase().includes('titular') || line.toLowerCase().includes('sep='))) return;
@@ -3833,9 +5127,8 @@
               id: novoId,
               nome,
               nomeCompleto: nome,
-              temDependente: false,
-              nomeDependente: "",
-              parentescoDependente: "",
+              dependentes: [],
+              transporte: "proprio",
               confirmado: false,
               biometriaAtiva: false,
               tel1: cols.length > 3 ? cols[3].replace(/['"\D]/g, '') : "",
@@ -3854,7 +5147,7 @@
       alert(`${adicionados} participantes importados!`);
       event.target.value = '';
     };
-    reader.readAsText(file);
+    reader.readAsText(file, 'UTF-8');
   };
 
   function iniciarContagem() {
