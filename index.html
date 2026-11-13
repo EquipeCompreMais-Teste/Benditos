@@ -1113,11 +1113,14 @@
   <!-- PAINEL ADMINISTRATIVO PAGINADO POR ABAS -->
   <div class="dashboard" id="dashboard-panel">
     <div class="dash-header-top">
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
         <h2 style="margin:0; font-family:'Cinzel', serif; font-size:18px; color:var(--bronze);">⚔️ Comando Administrativo</h2>
         <div class="sync-status"><div class="sync-dot"></div> Nuvem Ativa</div>
       </div>
-      <span id="badge-cargo-painel" style="display:none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;"></span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button type="button" onclick="sincronizarManualAdmin()" style="background:rgba(255,255,255,0.08); color:#f8fafc; border:1px solid rgba(184,125,75,0.5); padding:5px 10px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Buscar atualizações da nuvem">🔄 Atualizar Dados</button>
+        <span id="badge-cargo-painel" style="display:none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;"></span>
+      </div>
     </div>
 
     <!-- BARRA DE BIOMETRIA DA LIDERANÇA NO PAINEL -->
@@ -1419,7 +1422,7 @@
     <div class="admin-tab-panel" id="tab-alfa">
       <h4 style="margin-top:0; color:var(--iron);">Cadastrar Novo Perfil de Liderança</h4>
       <div class="btn-row">
-        <input type="text" id="novo-lider-nome" placeholder="Nome">
+        <input type="text" id="novo-lider-nome" placeholder="Nome" onkeydown="if(event.key==='Enter'){ event.preventDefault(); document.getElementById('novo-lider-senha').focus(); }">
         <div class="password-wrapper">
           <input type="password" id="novo-lider-senha" placeholder="Senha Padrão" onkeydown="if(event.key==='Enter'){ event.preventDefault(); cadastrarLider(); }">
           <button type="button" class="btn-eye" onclick="toggleMostrarSenha('novo-lider-senha')">👁️</button>
@@ -1510,7 +1513,7 @@
 <div class="modal" id="modal-login">
   <div class="modal-content" style="max-width: 430px;">
     <h3>Acesso da Liderança</h3>
-    <select id="select-lider" onchange="atualizarEstadoModalLoginBio()"></select>
+    <select id="select-lider" onchange="atualizarEstadoModalLoginBio()" onkeydown="if(event.key==='Enter'){ event.preventDefault(); document.getElementById('senha-input').focus(); }"></select>
     <div class="password-wrapper">
       <input type="password" id="senha-input" placeholder="Digite sua Senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); fazerLogin(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('senha-input')">👁️</button>
@@ -1617,7 +1620,7 @@
       </div>
       <div id="reg-lista-dependentes" style="margin-top:8px;"></div>
       <small id="reg-dep-aviso" style="font-size:11px; color:var(--bronze-dark); display:none; margin-top:4px;">
-        * Cada pessoa adicionada gera um carnê individual separado dentro da sua conta para você acompanhar facilmente de quem é cada cota.
+        * Cada pessoa adicionada gera um carnê individual separado dentro da sua conta para você visualizar claramente de quem é cada boleto.
       </small>
     </div>
     
@@ -2058,7 +2061,7 @@
   <div class="modal-content" style="max-width: 420px;">
     <h3>⚙️ Editar Usuário</h3>
     <input type="hidden" id="edit-lider-original">
-    <input type="text" id="edit-lider-nome" placeholder="Novo Nome">
+    <input type="text" id="edit-lider-nome" placeholder="Novo Nome" onkeydown="if(event.key==='Enter'){ event.preventDefault(); document.getElementById('edit-lider-senha').focus(); }">
     <div class="password-wrapper">
       <input type="password" id="edit-lider-senha" placeholder="Nova Senha" onkeydown="if(event.key==='Enter'){ event.preventDefault(); salvarEdicaoCredencial(); }">
       <button type="button" class="btn-eye" onclick="toggleMostrarSenha('edit-lider-senha')">👁️</button>
@@ -2101,9 +2104,8 @@
   let tipoGraficoFinancas = 'doughnut';
 
   let paginaAtual = 1;
-  // Cada item selecionado guarda { ownerType: 'titular' | 'dep', depIdx: number, numero: number, ownerName: string, ownerRole: string }
   let cotasSelecionadasMembro = [];
-  let filtroDonoCarneAtual = "todos"; // 'todos', 'titular', 'dep_0', 'dep_1', ...
+  let filtroDonoCarneAtual = "todos";
   let cacheComprovantes = {};
 
   let anexoTemporario = { reg: null, auth: null };
@@ -2982,7 +2984,6 @@ self.addEventListener('fetch', (event) => {
     const deps = obterDependentes(v);
     deps.forEach(d => {
       if (!Array.isArray(d.cotas)) {
-        // Migração retrocompatível: se o titular tinha cotas antigas pagas antes da separação, espelha o status inicial
         d.cotas = v.cotas.map(c => ({
           numero: c.numero,
           status: c.status || (c.pago ? "pago" : "pendente"),
@@ -2999,7 +3000,6 @@ self.addEventListener('fetch', (event) => {
     return v.cotas;
   }
 
-  // Retorna todas as cotas individuais (titular + cada dependente)
   function obterTodasCotasIndividuais(v) {
     garantirEstruturaCotas(v);
     const todas = [];
@@ -3029,7 +3029,6 @@ self.addEventListener('fetch', (event) => {
     return obterTodasCotasIndividuais(v).reduce((acc, item) => {
       const c = item.cota;
       if (c.status === "pago" || c.pago === true) {
-        // Se for registro legado que guardou valor dobrado numa única cota, normaliza para o valor individual
         const vp = (typeof c.valorPago === "number" && c.valorPago > 0 && c.valorPago <= valIndiv * 1.1) ? c.valorPago : valIndiv;
         return acc + vp;
       }
@@ -3408,7 +3407,6 @@ self.addEventListener('fetch', (event) => {
 
         if (dados.lideres && Array.isArray(dados.lideres) && dados.lideres.length > 0) {
           lideres = dados.lideres;
-          // Garante apenas que Bispo Jader exista como Líder Alfa
           if (!lideres.find(l => ehBispoJader(l))) {
             lideres.unshift({ nome: "Bispo Jader", cargo: "Líder Alfa", senha: "jader2027", alfa: true, bloqueado: false, primeiroAcesso: true, biometriaAtiva: false });
           }
@@ -3484,13 +3482,13 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
+  // Sincronização em segundo plano: pausa automaticamente enquanto o painel de liderança
+  // está aberto ou quando algum campo/modal está em uso para nunca apagar o que está sendo digitado
   async function sincronizarEmSegundoPlano() {
-    if (emProcessamentoNuvem) return;
-    // Se algum modal estiver aberto ou se um líder estiver trabalhando no painel administrativo,
-    // NÃO sobrescreve dados/campos em edição!
+    if (emProcessamentoNuvem || isLider || isAnalista) return;
     const modaisAbertos = document.querySelectorAll('.modal.active');
     const focoEmCampo = document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
-    if (modaisAbertos.length > 0 || focoEmCampo || isLider || isAnalista) return;
+    if (modaisAbertos.length > 0 || focoEmCampo) return;
 
     try {
       const res = await fetch(DB_URL);
@@ -3518,7 +3516,29 @@ self.addEventListener('fetch', (event) => {
     } catch (e) {}
   }
 
-  // Preenche os inputs da aba Configurações APENAS quando explicitamente solicitado
+  window.sincronizarManualAdmin = async function() {
+    if (emProcessamentoNuvem) return;
+    try {
+      const res = await fetch(DB_URL);
+      const dados = await res.json();
+      if (!dados || !dados.varoes) return;
+      varoes = dados.varoes;
+      varoes.forEach(v => garantirEstruturaCotas(v));
+      if (dados.lideres) lideres = dados.lideres;
+      if (Array.isArray(dados.despesas)) despesas = dados.despesas;
+      if (dados.configuracoes) configuracoes = { ...configuracoes, ...dados.configuracoes };
+
+      preencherInputsConfiguracoes();
+      atualizarElementosVisuaisConfig();
+      renderizarLista();
+      atualizarAlertaBloqueio();
+      if (isAlfa || isAnalista) renderizarTabelaLideres();
+      alert("✅ Dados sincronizados com a nuvem!");
+    } catch (e) {
+      alert("Não foi possível atualizar agora. Verifique sua conexão.");
+    }
+  };
+
   function preencherInputsConfiguracoes() {
     function setVal(id, val) {
       const el = document.getElementById(id);
@@ -3548,7 +3568,6 @@ self.addEventListener('fetch', (event) => {
     alternarCampoVersiculoFixo();
   }
 
-  // Atualiza apenas os textos públicos da tela (nunca apaga campos de formulário)
   function atualizarElementosVisuaisConfig() {
     const titulo = (configuracoes.tituloEvento || "BENDITOS").toUpperCase();
     const ano = configuracoes.anoEvento || "2027";
@@ -4616,8 +4635,6 @@ self.addEventListener('fetch', (event) => {
         })
       : [];
 
-    // Se recebeu um comprovante compartilhado do app do banco e nenhuma cota estava selecionada,
-    // seleciona automaticamente a próxima cota pendente para sugerir o vínculo imediato
     if ((comprovanteRecebidoViaShare || anexoTemporario.auth) && selecaoInicial.length === 0) {
       const todas = obterTodasCotasIndividuais(v);
       const proximaPendente = todas.find(item => item.cota.status !== "pago" && !item.cota.pago && item.cota.status !== "em_analise");
@@ -4684,7 +4701,6 @@ self.addEventListener('fetch', (event) => {
       document.getElementById("auth-dep-info").innerText = "👤 Inscrição Individual (1 pessoa)";
     }
 
-    // Abas de filtro por pessoa quando há dependentes
     const tabsContainer = document.getElementById("auth-owner-tabs-container");
     if (deps.length > 0) {
       const pagasTit = v.cotas.filter(c => c.status === "pago" || c.pago).length;
@@ -4704,7 +4720,6 @@ self.addEventListener('fetch', (event) => {
       filtroDonoCarneAtual = "todos";
     }
 
-    // Define quais blocos de pessoas exibir conforme a aba selecionada
     const secoesPessoas = [];
     if (filtroDonoCarneAtual === "todos" || filtroDonoCarneAtual === "titular") {
       secoesPessoas.push({
@@ -4727,7 +4742,6 @@ self.addEventListener('fetch', (event) => {
       }
     });
 
-    // Calcula resumo financeiro conforme a visualização ativa (Individual ou Todos)
     let totalCotasExibidas = 0;
     let pagasExibidas = 0;
     let emAnaliseExibidas = 0;
@@ -4751,7 +4765,6 @@ self.addEventListener('fetch', (event) => {
     const valorFaltaExibido = Math.max(0, valorTotalExibido - valorPagoExibido);
     const perc = totalCotasExibidas > 0 ? Math.min(100, Math.round((pagasExibidas / totalCotasExibidas) * 100)) : 0;
 
-    // Credencial VIP (baseada na quitação total da inscrição)
     const todasIndiv = obterTodasCotasIndividuais(v);
     const pagasGeral = contarCotasIndividuaisPagas(v);
     const boxCred = document.getElementById("auth-box-credencial-vip");
@@ -4774,7 +4787,6 @@ self.addEventListener('fetch', (event) => {
     document.getElementById("auth-progress-fill").style.width = `${perc}%`;
     document.getElementById("auth-progress-label").innerText = `${perc}% Concluído (${pagasExibidas} de ${totalCotasExibidas} cotas)`;
 
-    // Mensagem automática do sistema baseada no progresso
     atualizarMensagemIncentivoAutomatica(perc, pagasExibidas, restantesExibidas);
 
     const aval = avaliarStatusPrazo(v);
@@ -4792,7 +4804,6 @@ self.addEventListener('fetch', (event) => {
       deadlineContainer.innerHTML = `<div class="deadline-ok-pill">${esc(aval.mensagem)}</div>`;
     }
 
-    // Renderiza os carnês claramente separados por pessoa
     const sectionsContainer = document.getElementById("auth-carne-sections-container");
     sectionsContainer.innerHTML = "";
 
@@ -4856,7 +4867,6 @@ self.addEventListener('fetch', (event) => {
       sectionsContainer.appendChild(secBox);
     });
 
-    // Painel de Checkout com discriminação exata de quem é cada cota selecionada
     const painelPag = document.getElementById("auth-painel-pagamento");
     const breakdownBox = document.getElementById("auth-checkout-breakdown");
 
@@ -5224,7 +5234,6 @@ self.addEventListener('fetch', (event) => {
     const v = varoes.find(x => x.id === id);
     const antigosDeps = obterDependentes(v);
 
-    // Preserva o histórico de cotas dos dependentes já existentes ao editar
     const depsAtualizados = formDeps.map((fd, idx) => {
       const existente = antigosDeps.find(ad => ad.nome === fd.nome) || antigosDeps[idx];
       return {
@@ -5419,7 +5428,6 @@ self.addEventListener('fetch', (event) => {
       if (protegido) {
         acaoHtml += `<span style="color:var(--bronze-dark); font-size:11px; font-weight:700;">🛡️ Fundador / Protegido</span>`;
       } else {
-        // Qualquer Líder Alfa ou Analista pode promover para Alfa ou rebaixar para Operacional
         if (isAlfa || isAnalista) {
           if (ehCargoAlfaOuAnalista) {
             acaoHtml += `<button onclick="alterarCargoLider('${esc(l.nome)}', 'Líder Operacional')" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;" title="Rebaixar para Operacional">⬇️ Operacional</button>`;
@@ -5427,7 +5435,6 @@ self.addEventListener('fetch', (event) => {
             acaoHtml += `<button onclick="alterarCargoLider('${esc(l.nome)}', 'Líder Alfa')" style="background:var(--bronze-soft); color:var(--bronze-dark); border:1px solid var(--bronze); padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px; font-size:11px; font-weight:bold;" title="Promover para Líder Alfa">⬆️ Promover Alfa</button>`;
           }
         }
-        // Todos os líderes exceto Bispo Jader podem ser excluídos
         acaoHtml += `<button onclick="removerLider('${esc(l.nome)}')" style="background:#fee2e2; color:#dc2626; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;" title="Excluir líder">🗑️</button>`;
       }
 
@@ -5524,6 +5531,10 @@ self.addEventListener('fetch', (event) => {
     if (confirm(`Remover definitivamente o perfil de ${n}?`)) {
       lideres = lideres.filter(l => l.nome !== n || ehBispoJader(l));
       await salvarNoBanco();
+      if (liderAtual === n) {
+        abrirLogin();
+        return;
+      }
       renderizarTabelaLideres();
     }
   };
