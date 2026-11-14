@@ -1742,9 +1742,10 @@
 
       <button class="primary-btn bronze-btn" onclick="salvarConfiguracoes()">💾 Salvar Informações do Evento</button>
 
-      <div id="zona-nova-edicao" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson);">
-        <p style="font-size:12px; color:var(--crimson); margin:0 0 8px 0; font-weight:700;">⚠️ Zona de Transição de Ano (Exclusivo Líder Alfa / Analista):</p>
-        <button type="button" class="primary-btn" style="background:var(--crimson); border-color:var(--crimson); color:#fff;" onclick="iniciarNovaEdicaoAnual()">🔄 Iniciar Novo Ano (Limpar Inscritos e Manter Apenas Bispo Jader)</button>
+      <div id="zona-zerar-dados" style="display:none; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--crimson); text-align: left;">
+        <p style="font-size:12px; color:var(--crimson); margin:0 0 6px 0; font-weight:700;">⚠️ Limpeza de Base (Exclusivo Líder Alfa / Analista):</p>
+        <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 10px 0;">Quando encerrar um encontro e quiser preparar o painel para uma nova edição (ex: 2028), use o botão abaixo para zerar inscritos e despesas atuais.</p>
+        <button type="button" class="primary-btn" style="background:var(--crimson); border-color:var(--crimson); color:#fff;" onclick="zerarDadosAtuais()">🗑️ Zerar Dados Atuais (Limpar Inscritos e Despesas)</button>
       </div>
     </div>
 
@@ -2347,39 +2348,76 @@
   </div>
 </div>
 
-<!-- Modal: Editar Participante (Admin) -->
+<!-- Modal: Editar Participante (Acesso Total Líder Alfa / Analista) -->
 <div class="modal" id="modal-editar-lider">
-  <div class="modal-content">
-    <h3>✏️ Editar Inscrição</h3>
+  <div class="modal-content" style="max-width: 560px;">
+    <h3>✏️ Editar Dados do Participante</h3>
+    <p id="edit-subtitulo-permissao" style="font-size: 12px; color: var(--text-muted); margin-top: -6px; margin-bottom: 12px;"></p>
     <input type="hidden" id="edit-id-casal">
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Nome do Titular</label>
-    <input type="text" id="edit-nomes-casal" disabled>
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">WhatsApp Principal</label>
-    <input type="text" id="edit-tel1" placeholder="Telefone 1">
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Telefone Secundário</label>
-    <input type="text" id="edit-tel2" placeholder="Telefone 2">
+
+    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">Nome Completo (Registro Oficial)</label>
+    <input type="text" id="edit-nome-completo" placeholder="Nome Completo do Titular">
+
+    <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">Nome de Exibição na Lista Pública</label>
+    <div class="btn-row" style="margin-bottom:10px;">
+      <input type="text" id="edit-nomes-casal" placeholder="Ex: JOÃO SILVA" style="flex:2;">
+      <button type="button" id="btn-edit-auto-nome" class="btn-outline-bronze" style="flex:1; justify-content:center;" onclick="aplicarPrimeiroUltimoEdicao()">⚡ 1º e Último</button>
+    </div>
+
+    <div class="btn-row">
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">WhatsApp Principal</label>
+        <input type="text" id="edit-tel1" placeholder="Com DDD (10 ou 11 dígitos)">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">Telefone Secundário</label>
+        <input type="text" id="edit-tel2" placeholder="Opcional">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">Status de Presença</label>
+        <select id="edit-confirmado">
+          <option value="false">⏳ Aguardando Confirmação</option>
+          <option value="true">✅ Presença Confirmada</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">📅 Prazo / Previsão de Pagamento</label>
+        <input type="date" id="edit-data-previsao">
+      </div>
+    </div>
 
     <div class="box-dependente">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
         <span style="font-size:13px; font-weight:700; color:var(--iron);">👥 Dependentes / Acompanhantes</span>
-        <button type="button" class="btn-outline-bronze" onclick="adicionarCampoDependenteUI('edit')">+ Adicionar Dependente</button>
+        <button type="button" id="btn-edit-add-dep" class="btn-outline-bronze" onclick="adicionarCampoDependenteUI('edit')">+ Adicionar Dependente</button>
       </div>
       <div id="edit-lista-dependentes" style="margin-top:8px;"></div>
     </div>
 
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">📅 Prazo / Previsão de Pagamento</label>
-    <input type="date" id="edit-data-previsao">
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Forma Preferida</label>
-    <select id="edit-forma-pagamento">
-      <option value="indefinido">Ainda não sabe</option>
-      <option value="pix">Pix</option>
-      <option value="credito">Cartão de Crédito</option>
-      <option value="debito">Cartão de Débito</option>
-      <option value="dinheiro">Dinheiro</option>
-    </select>
-    <label style="font-size:12px; text-align:left; display:block; margin-bottom:4px;">Senha de 4 Dígitos:</label>
-    <input type="text" id="edit-codigo-acesso" maxlength="4" style="background:var(--stone); font-family:monospace; font-weight:bold;">
-    <button class="primary-btn bronze-btn" onclick="salvarEdicaoLider()">Salvar Alterações</button>
+    <div class="btn-row">
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">Forma de Pagamento Preferida</label>
+        <select id="edit-forma-pagamento">
+          <option value="indefinido">Ainda não sabe</option>
+          <option value="pix">Pix</option>
+          <option value="credito">Cartão de Crédito</option>
+          <option value="debito">Cartão de Débito</option>
+          <option value="dinheiro">Dinheiro</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:700; text-align:left; display:block; margin-bottom:4px;">🔑 Senha de 4 Dígitos (PIN)</label>
+        <div style="display:flex; gap:6px;">
+          <input type="text" id="edit-codigo-acesso" maxlength="4" inputmode="numeric" style="background:var(--stone); font-family:monospace; font-weight:bold; letter-spacing:2px; margin-bottom:0;">
+          <button type="button" id="btn-edit-gerar-pin" class="btn-outline-bronze" style="white-space:nowrap;" onclick="gerarNovoPinEdicao()" title="Gerar nova senha de 4 dígitos">🔄 Gerar</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="primary-btn bronze-btn" style="margin-top:10px;" onclick="salvarEdicaoLider()">💾 Salvar Alterações</button>
     <button class="btn-close" onclick="fecharModal('modal-editar-lider')">Cancelar</button>
   </div>
 </div>
@@ -3289,21 +3327,21 @@
   }
 
   // UI Dinâmica para Múltiplos Dependentes
-  window.adicionarCampoDependenteUI = function(prefixo, nomeVal = "", parentescoVal = "Filho") {
+  window.adicionarCampoDependenteUI = function(prefixo, nomeVal = "", parentescoVal = "Filho", desabilitado = false) {
     const container = document.getElementById(`${prefixo}-lista-dependentes`);
     if (!container) return;
     const row = document.createElement("div");
     row.className = "dep-row-item";
     row.innerHTML = `
-      <input type="text" class="dep-input-nome" value="${esc(nomeVal)}" placeholder="Nome Completo do Dependente">
-      <select class="dep-input-parentesco">
+      <input type="text" class="dep-input-nome" value="${esc(nomeVal)}" placeholder="Nome Completo do Dependente" ${desabilitado ? 'disabled' : ''}>
+      <select class="dep-input-parentesco" ${desabilitado ? 'disabled' : ''}>
         <option value="Filho" ${parentescoVal === 'Filho' ? 'selected' : ''}>Filho</option>
         <option value="Irmão" ${parentescoVal === 'Irmão' ? 'selected' : ''}>Irmão</option>
         <option value="Pai" ${parentescoVal === 'Pai' ? 'selected' : ''}>Pai</option>
         <option value="Sobrinho" ${parentescoVal === 'Sobrinho' ? 'selected' : ''}>Sobrinho</option>
         <option value="Outro" ${parentescoVal === 'Outro' ? 'selected' : ''}>Acompanhante</option>
       </select>
-      <button type="button" class="btn-remove-dep" title="Remover" onclick="removerCampoDependenteUI(this, '${prefixo}')">✕</button>
+      ${desabilitado ? '' : `<button type="button" class="btn-remove-dep" title="Remover" onclick="removerCampoDependenteUI(this, '${prefixo}')">✕</button>`}
     `;
     container.appendChild(row);
     if (prefixo === "reg") {
@@ -3721,8 +3759,6 @@
     }
   }
 
-  // Sincronização automática contínua (tanto na tela pública quanto no painel da liderança),
-  // pausando apenas enquanto o usuário digita em algum campo ou interage com um modal.
   async function sincronizarEmSegundoPlano() {
     if (emProcessamentoNuvem) return;
     const modaisAbertos = document.querySelectorAll('.modal.active');
@@ -3897,32 +3933,17 @@
     alert("Informações do evento salvas com sucesso!");
   };
 
-  window.iniciarNovaEdicaoAnual = async function() {
+  window.zerarDadosAtuais = async function() {
     if (!isAlfa && !isAnalista) return;
-    const novoAno = document.getElementById('config-ano').value.trim() || "2028";
-    const ok1 = confirm(`ATENÇÃO: Você está prestes a iniciar uma nova edição (${novoAno}).\n\nIsso removerá todos os inscritos e despesas atuais (mantendo apenas o Bispo Jader zerado) para começar o novo ano do zero.\n\nCertifique-se de ter exportado os relatórios PDF/Excel antes.\n\nDeseja continuar?`);
+    const ok1 = confirm(`ATENÇÃO: Você está prestes a ZERAR todos os dados atuais.\n\nIsso apagará todos os inscritos, cotas pagas e despesas registradas no painel.\n\nCertifique-se de ter exportado os relatórios PDF e Excel antes.\n\nDeseja continuar?`);
     if (!ok1) return;
 
-    varoes = [
-      {
-        id: 1,
-        nome: "BISPO JADER",
-        nomeCompleto: "BISPO JADER SANTOS",
-        dependentes: [],
-        confirmado: false,
-        tel1: "",
-        tel2: "",
-        formaPagamento: "indefinido",
-        previsaoPagamento: "",
-        codigoAcesso: gerarCodigoAcessoUnico(),
-        cotas: gerarCotasIniciais()
-      }
-    ];
+    varoes = [];
     despesas = [];
     await salvarNoBanco();
     paginaAtual = 1;
     renderizarLista();
-    alert(`Base reiniciada com sucesso para a edição ${novoAno}!`);
+    alert("Dados zerados com sucesso! Agora você já pode atualizar o nome/ano do evento acima e salvar.");
   };
 
   window.trocarAbaAdmin = function(tabId, btnEl) {
@@ -3992,7 +4013,6 @@
     const filtroPrazo = document.getElementById("filtro-prazo") ? document.getElementById("filtro-prazo").value : 'todos';
     const filtroDep = document.getElementById("filtro-dependente") ? document.getElementById("filtro-dependente").value : 'todos';
 
-    // Atualiza contadores da barra de resumo público
     let totalPessoasGeral = 0;
     let totalConfirmadosGeral = 0;
     varoes.forEach(v => {
@@ -4024,7 +4044,7 @@
       const deps = obterDependentes(v);
       const avalPrazo = avaliarStatusPrazo(v);
       const nomesDepsStr = deps.map(d => d.nome).join(" ");
-      const textoBusca = `${v.nome} ${nomesDepsStr}`.toLowerCase();
+      const textoBusca = `${v.nome} ${v.nomeCompleto || ''} ${nomesDepsStr}`.toLowerCase();
       if (!textoBusca.includes(termo)) return;
 
       if (isLider || isAnalista) {
@@ -4130,7 +4150,7 @@
         html += `<button class="btn-pagamento ${classeCota}" onclick="abrirGerenciadorCotasAdmin(${v.id})">💳 Cotas (${pagasIndiv}/${totalCotasIndiv})</button>`;
         html += `<button class="btn-recibos-row ${classeReciboBtn}" title="Ver ou anexar comprovantes deste participante" onclick="abrirModalRecibosVarao(${v.id})">📎 Recibos (${qtdRecibos})</button>`;
         html += `<button class="${classZap}" title="Enviar WhatsApp" onclick="enviarWhatsApp(${v.id})">${iconeWhatsApp}</button>`;
-        html += `<button class="btn-icon btn-edit" title="Editar" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
+        html += `<button class="btn-icon btn-edit" title="Editar dados" onclick="abrirEdicaoLider(${v.id})">✏️</button>`;
         if (isAlfa || isAnalista) html += `<button class="btn-icon btn-trash" title="Excluir" onclick="excluirVarao(${v.id})">🗑️</button>`;
       } else {
         const vagasTxt = qtdPessoas > 1 ? `👥 ${qtdPessoas} Vagas` : `👤 1 Vaga`;
@@ -5576,7 +5596,7 @@
   };
 
   // ==========================================
-  // CRUD ADMINISTRATIVO DE PARTICIPANTES
+  // CRUD ADMINISTRATIVO DE PARTICIPANTES (EDIÇÃO TOTAL LÍDER ALFA)
   // ==========================================
   window.adicionarVaraoAdmin = async function() {
     const n = document.getElementById("add-nome").value.trim().toUpperCase();
@@ -5596,7 +5616,7 @@
     const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
     varoes.push({
       id: novoId,
-      nome: n,
+      nome: obterPrimeiroEUltimoNome(n),
       nomeCompleto: n,
       dependentes: dependentes,
       confirmado: false,
@@ -5618,53 +5638,108 @@
     alert("Participante adicionado com sucesso!");
   };
 
+  window.aplicarPrimeiroUltimoEdicao = function() {
+    const comp = document.getElementById("edit-nome-completo").value.trim();
+    if (!comp) return;
+    document.getElementById("edit-nomes-casal").value = obterPrimeiroEUltimoNome(comp);
+  };
+
+  window.gerarNovoPinEdicao = function() {
+    document.getElementById("edit-codigo-acesso").value = gerarCodigoAcessoUnico();
+  };
+
   window.abrirEdicaoLider = function(id) {
     const v = varoes.find(x => x.id === id);
     if (!v) return;
+
+    const podeTudo = (isAlfa || isAnalista);
     document.getElementById("edit-id-casal").value = id;
-    const inputNome = document.getElementById("edit-nomes-casal");
-    inputNome.value = v.nome;
-    inputNome.disabled = !(isAlfa || isAnalista);
+
+    const sub = document.getElementById("edit-subtitulo-permissao");
+    if (sub) {
+      sub.innerText = podeTudo
+        ? "👑 Acesso Líder Alfa: você pode alterar livremente todos os campos deste participante."
+        : "Edição básica de contatos e previsão de pagamento.";
+    }
+
+    const inputNomeComp = document.getElementById("edit-nome-completo");
+    const inputNomeExib = document.getElementById("edit-nomes-casal");
+    const btnAutoNome = document.getElementById("btn-edit-auto-nome");
+    const selConfirmado = document.getElementById("edit-confirmado");
+    const btnAddDep = document.getElementById("btn-edit-add-dep");
+    const inputPin = document.getElementById("edit-codigo-acesso");
+    const btnGerarPin = document.getElementById("btn-edit-gerar-pin");
+
+    inputNomeComp.value = v.nomeCompleto || v.nome || "";
+    inputNomeComp.disabled = !podeTudo;
+
+    inputNomeExib.value = v.nome || "";
+    inputNomeExib.disabled = !podeTudo;
+    if (btnAutoNome) btnAutoNome.style.display = podeTudo ? "inline-flex" : "none";
+
     document.getElementById("edit-tel1").value = v.tel1 || "";
     document.getElementById("edit-tel2").value = v.tel2 || "";
 
+    selConfirmado.value = v.confirmado ? "true" : "false";
+    selConfirmado.disabled = !podeTudo;
+
     const containerDeps = document.getElementById("edit-lista-dependentes");
     containerDeps.innerHTML = "";
-    obterDependentes(v).forEach(d => adicionarCampoDependenteUI("edit", d.nome, d.parentesco));
+    obterDependentes(v).forEach(d => adicionarCampoDependenteUI("edit", d.nome, d.parentesco, !podeTudo));
+    if (btnAddDep) btnAddDep.style.display = podeTudo ? "inline-flex" : "none";
 
     document.getElementById("edit-data-previsao").value = v.previsaoPagamento || "";
     document.getElementById("edit-forma-pagamento").value = v.formaPagamento || "indefinido";
-    document.getElementById("edit-codigo-acesso").value = v.codigoAcesso || "";
+
+    inputPin.value = v.codigoAcesso || "";
+    inputPin.disabled = !podeTudo;
+    if (btnGerarPin) btnGerarPin.style.display = podeTudo ? "inline-flex" : "none";
+
     document.getElementById("modal-editar-lider").classList.add("active");
   };
 
   window.salvarEdicaoLider = async function() {
     const id = parseInt(document.getElementById("edit-id-casal").value);
+    const podeTudo = (isAlfa || isAnalista);
+
     const t1 = document.getElementById("edit-tel1").value;
     const t2 = document.getElementById("edit-tel2").value;
-    const formDeps = lerDependentesDoForm("edit");
     const novoPin = document.getElementById("edit-codigo-acesso").value.trim();
 
     if (t1 && !validarTelefone(t1, false)) return alert("Telefone 1 inválido!");
     if (t2 && !validarTelefone(t2, false)) return alert("Telefone 2 inválido!");
-    if (novoPin && !validarPin4Digitos(novoPin)) return alert("A senha de acesso deve ter 4 dígitos numéricos.");
+    if (podeTudo && novoPin && !validarPin4Digitos(novoPin)) {
+      return alert("A senha de acesso deve ter exatamente 4 dígitos numéricos.");
+    }
 
     const v = varoes.find(x => x.id === id);
-    const antigosDeps = obterDependentes(v);
+    if (!v) return;
 
-    const depsAtualizados = formDeps.map((fd, idx) => {
-      const existente = antigosDeps.find(ad => ad.nome === fd.nome) || antigosDeps[idx];
-      return {
-        nome: fd.nome,
-        parentesco: fd.parentesco,
-        cotas: (existente && Array.isArray(existente.cotas)) ? existente.cotas : gerarCotasIniciais()
-      };
-    });
+    if (podeTudo) {
+      const nomeComp = document.getElementById("edit-nome-completo").value.trim().toUpperCase();
+      const nomeExib = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
+      if (!nomeComp && !nomeExib) return alert("Informe o nome do participante!");
 
-    if (isAlfa || isAnalista) v.nome = document.getElementById("edit-nomes-casal").value.trim().toUpperCase();
+      v.nomeCompleto = nomeComp || nomeExib;
+      v.nome = nomeExib || obterPrimeiroEUltimoNome(nomeComp);
+      v.confirmado = (document.getElementById("edit-confirmado").value === "true");
+
+      const formDeps = lerDependentesDoForm("edit");
+      const antigosDeps = obterDependentes(v);
+      v.dependentes = formDeps.map((fd, idx) => {
+        const existente = antigosDeps.find(ad => ad.nome === fd.nome) || antigosDeps[idx];
+        return {
+          nome: fd.nome,
+          parentesco: fd.parentesco,
+          cotas: (existente && Array.isArray(existente.cotas)) ? existente.cotas : gerarCotasIniciais()
+        };
+      });
+
+      if (novoPin) v.codigoAcesso = novoPin;
+    }
+
     v.tel1 = t1 ? t1.replace(/\D/g, '') : "";
     v.tel2 = t2 ? t2.replace(/\D/g, '') : "";
-    v.dependentes = depsAtualizados;
     delete v.temDependente;
     delete v.nomeDependente;
     delete v.parentescoDependente;
@@ -5672,7 +5747,6 @@
 
     v.previsaoPagamento = document.getElementById("edit-data-previsao").value;
     v.formaPagamento = document.getElementById("edit-forma-pagamento").value;
-    if (novoPin) v.codigoAcesso = novoPin;
 
     await salvarNoBanco();
     renderizarLista();
@@ -5797,7 +5871,7 @@
     preencherInputsConfiguracoes();
 
     document.getElementById("btn-tab-alfa").style.display = (isAlfa || isAnalista) ? "block" : "none";
-    document.getElementById("zona-nova-edicao").style.display = (isAlfa || isAnalista) ? "block" : "none";
+    document.getElementById("zona-zerar-dados").style.display = (isAlfa || isAnalista) ? "block" : "none";
     if (isAlfa || isAnalista) renderizarTabelaLideres();
     atualizarAlertaBloqueio();
     renderizarLista();
@@ -5982,13 +6056,14 @@
 
     if (tipo === 'presenca') {
       nomeArquivo = `Participantes_${evNome}_${ano}.csv`;
-      linhas.push(["ID", "Titular", "Dependentes", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
+      linhas.push(["ID", "Titular", "Nome Completo", "Dependentes", "Qtd Pessoas", "Presenca", "WhatsApp 1"]);
       varoesFiltrados.forEach(v => {
         const deps = obterDependentes(v);
         const depStr = deps.length > 0 ? deps.map(d => `${d.nome} (${d.parentesco})`).join(" | ") : "-";
         linhas.push([
           v.id,
           `"${v.nome}"`,
+          `"${v.nomeCompleto || v.nome}"`,
           `"${depStr}"`,
           obterQtdPessoas(v),
           v.confirmado ? "Confirmado" : "Pendente",
@@ -6254,11 +6329,11 @@
         if (cols.length > 0 && cols[0].trim() !== '') {
           let nomeRaw = cols.length > 1 && !isNaN(cols[0].trim()) ? cols[1] : cols[0];
           let nome = nomeRaw.replace(/['"]/g, '').trim().toUpperCase();
-          if (nome && !varoes.find(v => v.nome === nome)) {
+          if (nome && !varoes.find(v => v.nome === nome || v.nomeCompleto === nome)) {
             const novoId = varoes.length ? Math.max(...varoes.map(v => v.id)) + 1 : 1;
             varoes.push({
               id: novoId,
-              nome,
+              nome: obterPrimeiroEUltimoNome(nome),
               nomeCompleto: nome,
               dependentes: [],
               confirmado: false,
